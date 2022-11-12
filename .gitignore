@@ -10,6 +10,7 @@
 # artifacts
 /hardhat/artifacts
 /hardhat/cache
+/hardhat/typechain-types
 
 # testing
 /coverage
