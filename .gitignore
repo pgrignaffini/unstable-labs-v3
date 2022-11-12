@@ -7,6 +7,10 @@
 /.pnp
 .pnp.js
 
+# artifacts
+/hardhat/artifacts
+/hardhat/cache
+
 # testing
 /coverage
 
