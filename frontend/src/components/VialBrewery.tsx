@@ -1,10 +1,8 @@
 import React from 'react'
-// import MintButton from './MintButton'
 import Card from '@components/Card'
-import MintButton from '@components/MintButton'
-// import { Vials } from "../utils/vials"
 import type { Vial, Style } from "../types/types"
 import { VialImageURL, PreviewImageURL } from "@utils/images"
+import MintVialButton from '@components/MintVialButton'
 
 type Props = {
     styles: Style[]
@@ -15,6 +13,8 @@ function VialBrewery({ styles }: Props) {
     const [numVials, setNumVials] = React.useState<number>(1)
     const [vial, setVial] = React.useState<Vial>()
     const price = (0.0001 * numVials)
+
+    console.log("Styles", styles)
 
     const buyVialModal = vial && (
         <>
@@ -38,13 +38,10 @@ function VialBrewery({ styles }: Props) {
                                 </div>
                                 <p className='text-md text-black'>Price: {price.toFixed(4)}</p>
                                 {price > 0 &&
-                                    <MintButton
-                                        metadata={{
-                                            image: vial.image,
-                                            name: vial.name,
-                                            description: vial?.description,
-                                        }}
-                                        isVial={true} numVials={numVials} />}
+                                    <MintVialButton
+                                        index={vial.type}
+                                        numberOfVials={numVials}
+                                    />}
                             </div>
                         </div>
                     </div>
@@ -63,9 +60,8 @@ function VialBrewery({ styles }: Props) {
                     base = base.replace("-concept", "")
                     const image = VialImageURL + `/${index}.png`
                     const preview = PreviewImageURL + `/${base}.png`
-                    console.log("preview", preview)
                     const name = base.replaceAll("-", " ")
-                    const vial = { image, name, preview, type: 1 }
+                    const vial = { image, name, preview, type: index, style: style.name }
                     return (
                         <label htmlFor="buy-vial-modal" onClick={() => setVial(vial)} className='cursor-pointer mt-4'>
                             <Card key={index} nft={vial} isVial />

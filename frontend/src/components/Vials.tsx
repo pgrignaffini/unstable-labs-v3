@@ -58,8 +58,6 @@ function Vials({ setVialToBurn, vialToBurn }: Props) {
     })
 
     const vialInfoModal = (vial: Vial) => {
-        const preview = vial?.name.replaceAll(" ", "-")
-        const previewSrc = PreviewImageURL + `/${preview}.png`
         return (
             <>
                 <input type="checkbox" id="info-vial-modal" className="modal-toggle" />
@@ -71,7 +69,7 @@ function Vials({ setVialToBurn, vialToBurn }: Props) {
                                 <img className='w-1/3' src={vial?.image} alt="banner" />
                                 <div className='flex flex-col space-y-10 items-start'>
                                     <p className='font-pixel text-sm text-black'>{vial?.name} vial</p>
-                                    <img className='w-full' src={previewSrc} alt="preview" />
+                                    <img className='w-full' src={vial?.preview} alt="preview" />
                                 </div>
                             </div>
                         </div>
@@ -81,7 +79,7 @@ function Vials({ setVialToBurn, vialToBurn }: Props) {
         )
     }
 
-    const groupedVials = vials ? groupBy(vials, 'type') : []
+    const groupedVials = vials ? groupBy(vials, 'style') : []
 
     const displayVialCards = (
         <div className="col-span-2 grid grid-rows-4 gap-8 grid-cols-3 2xl:grid-cols-4">
@@ -97,17 +95,17 @@ function Vials({ setVialToBurn, vialToBurn }: Props) {
         </div>
     )
 
-    const displayVialSelectionGrid = (<></>
-        // <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 p-2 gap-4">
-        //     {Object.keys(groupedVials).map((key, index) => {
-        //         const vials = groupedVials[key]
-        //         return (vials.length > 0 &&
-        //             <div key={index} onClick={() => setVialToBurn?.(vials[0] as Vial)}>
-        //                 <VialSelectionContainer selected={vialToBurn === (vials[0] as Vial)} vial={vials[0] as Vial} multiple={vials.length} />
-        //             </div>
-        //         )
-        //     })}
-        // </div>
+    const displayVialSelectionGrid = (
+        <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 p-2 gap-4">
+            {Object.keys(groupedVials).map((key, index) => {
+                const vials = groupedVials[key]
+                return (vials.length > 0 &&
+                    <div key={index} onClick={() => setVialToBurn?.(vials[0] as Vial)}>
+                        <VialSelectionContainer selected={vialToBurn === (vials[0] as Vial)} vial={vials[0]} multiple={vials.length} />
+                    </div>
+                )
+            })}
+        </div>
     )
 
     return (
