@@ -10,6 +10,16 @@ export type Vial = {
     style: string;
 }
 
+export type Experiment = {
+    tokenId?: BigNumber;
+    name: string;
+    image: string;
+    type: number;
+    description?: string;
+    preview: string;
+    style: string;
+}
+
 export type Style = {
     name: string,
     prompt: string,

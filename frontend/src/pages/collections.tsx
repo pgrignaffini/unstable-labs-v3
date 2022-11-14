@@ -1,21 +1,16 @@
 import type { NextPage } from "next";
 import { useState } from "react";
-// import Vials from "../components/Vials";
 import dynamic from "next/dynamic";
 import VialBrewery from "@components/VialBrewery";
 import Vials from "@components/Vials";
 import axios from "axios";
 import { Style } from "../types/types";
+import Experiments from "@components/Experiments";
 
 const CollectionSidebar = dynamic(
     () => import('@components/CollectionSidebar'),
     { ssr: false }
 )
-
-// const YourNfts = dynamic(
-//     () => import('../components/YourNfts'),
-//     { ssr: false }
-// )
 
 type Props = {
     styles: Style[]
@@ -30,11 +25,13 @@ const Collections = ({ styles }: Props) => {
             <div className="col-span-1">
                 <CollectionSidebar setSelectedTab={setSelectedTab} />
             </div>
-            {/* {selectedTab === 'trending' && <Trending />} */}
-            {/* {selectedTab === 'your-nfts' && <YourNfts />} */}
-            {selectedTab === 'vials' && <Vials />}
-            {selectedTab === 'vial-brewery' && <VialBrewery styles={styles} />}
-            {/* {selectedTab === 'marketplace' && <AvailableNftsOnMarket />} */}
+            <div className="col-span-2 grid grid-rows-4 gap-8 grid-cols-3 2xl:grid-cols-4">
+                {/* {selectedTab === 'trending' && <Trending />} */}
+                {selectedTab === 'experiments' && <Experiments />}
+                {selectedTab === 'vials' && <Vials />}
+                {selectedTab === 'vial-brewery' && <VialBrewery styles={styles} />}
+                {/* {selectedTab === 'marketplace' && <AvailableNftsOnMarket />} */}
+            </div>
         </div>
     );
 }

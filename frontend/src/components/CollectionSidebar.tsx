@@ -22,7 +22,7 @@ function CollectionSidebar({ setSelectedTab }: Props) {
             <CollectionSideBarRow title="Favorites" type='star' onClick={() => setSelectedTab('favorites')} /> */}
             {isConnected && (
                 <>
-                    <CollectionSideBarRow title="Experiments" type='nfts' onClick={() => setSelectedTab('your-nfts')} />
+                    <CollectionSideBarRow title="Experiments" type='nfts' onClick={() => setSelectedTab('experiments')} />
                     <CollectionSideBarRow title="Vials" type='rocket' onClick={() => setSelectedTab('vials')} />
                 </>
             )}

@@ -54,21 +54,19 @@ function VialBrewery({ styles }: Props) {
     return (
         <>
             {buyVialModal}
-            <div className="col-span-2 grid grid-rows-4 gap-8 grid-cols-3 2xl:grid-cols-4">
-                {styles.map((style, index) => {
-                    let base = style.name.replace("-collection", "").toLowerCase()
-                    base = base.replace("-concept", "")
-                    const image = VialImageURL + `/${index}.png`
-                    const preview = PreviewImageURL + `/${base}.png`
-                    const name = base.replaceAll("-", " ")
-                    const vial = { image, name, preview, type: index, style: style.name }
-                    return (
-                        <label htmlFor="buy-vial-modal" onClick={() => setVial(vial)} className='cursor-pointer mt-4'>
-                            <Card key={index} nft={vial} isVial />
-                        </label>
-                    )
-                })}
-            </div>
+            {styles.map((style, index) => {
+                let base = style.name.replace("-collection", "").toLowerCase()
+                base = base.replace("-concept", "")
+                const image = VialImageURL + `/${index}.png`
+                const preview = PreviewImageURL + `/${base}.png`
+                const name = base.replaceAll("-", " ")
+                const vial = { image, name, preview, type: index, style: style.name }
+                return (
+                    <label htmlFor="buy-vial-modal" onClick={() => setVial(vial)} className='cursor-pointer mt-4'>
+                        <Card key={index} nft={vial} isVial />
+                    </label>
+                )
+            })}
         </>
     )
 }

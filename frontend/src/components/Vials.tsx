@@ -82,7 +82,7 @@ function Vials({ setVialToBurn, vialToBurn }: Props) {
     const groupedVials = vials ? groupBy(vials, 'style') : []
 
     const displayVialCards = (
-        <div className="col-span-2 grid grid-rows-4 gap-8 grid-cols-3 2xl:grid-cols-4">
+        <>
             {Object.keys(groupedVials).map((key, index) => {
                 const vials: Vial[] = groupedVials[key]
                 return (
@@ -92,7 +92,7 @@ function Vials({ setVialToBurn, vialToBurn }: Props) {
                     </label>
                 )
             })}
-        </div>
+        </>
     )
 
     const displayVialSelectionGrid = (
