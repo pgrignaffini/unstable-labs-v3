@@ -7,7 +7,6 @@ export type Metadata = {
     name: string;
     description?: string | undefined;
     image: string;
-    prompt?: string;
 }
 
 export const uploadMetadataToIPFS = async ({ ...props }: Metadata) => {
@@ -15,7 +14,6 @@ export const uploadMetadataToIPFS = async ({ ...props }: Metadata) => {
         name: props?.name,
         description: props?.description,
         image: props?.image,
-        prompt: props?.prompt,
     }
     console.log(nftJSON)
     try {
@@ -37,7 +35,6 @@ export const uploadJSONToIPFS = async (JSONBody: Metadata) => {
             "name": JSONBody.name,
             "description": JSONBody.description,
             "image": JSONBody.image,
-            "prompt": JSONBody.prompt,
         }
     })
 

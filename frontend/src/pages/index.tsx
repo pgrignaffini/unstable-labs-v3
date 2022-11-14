@@ -12,6 +12,7 @@ import { checkProgress, getImages, text2Image } from "@utils/stableDiffusion"
 import axios from "axios";
 import { trpc } from "../utils/trpc";
 import TxHash from "@components/TxHash";
+import ResultCarousel from "@components/ResultCarousel";
 
 const Home: NextPage = () => {
 
@@ -134,14 +135,7 @@ const Home: NextPage = () => {
         </div>
         <div className="container mx-auto">
           {progressData?.eta_relative ? <p className="font-pixel text-sm text-center">Wait time: {progressData.eta_relative.toFixed(0)}s</p> : null}
-          <div className='grid grid-cols-4 gap-4'>
-            {images && images.map((image: string, index: number) => {
-              return (
-                <img className={`cursor-pointer hover:border-4 hover:border-acid ${selectedImage === image ? "border-4 border-acid" : null}`} onClick={() => setSelectedImage(image)}
-                  key={index} src={`data:image/.webp;base64,${image}`} />
-              )
-            })}
-          </div>
+          {images ? <ResultCarousel images={images} /> : null}
         </div>
       </main>
     </>
