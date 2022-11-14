@@ -1,0 +1,2 @@
+export const VialImageURL = `${process.env.NEXT_PUBLIC_PINATA_GATEWAY}/QmbDaPQEAQcwXQkMQPSP37csye6wcd88JCuAXE1efTbduq`
+export const PreviewImageURL = `${process.env.NEXT_PUBLIC_PINATA_GATEWAY}/QmYUwhoaRbi2m6iH2F1fBXWVaiuFZg2v7mAPZJEavotQp5`

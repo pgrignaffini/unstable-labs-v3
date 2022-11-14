@@ -8,10 +8,10 @@ const config: HardhatUserConfig = {
     hardhat: {
       chainId: 80001
     },
-    // mumbai: {
-    //   url: process.env.ALCHEMY_URL,
-    //   accounts: [process.env.PRIVATE_KEY]
-    // },
+    aurora: {
+      url: `https://aurora-testnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+      accounts: [`0x${process.env.AURORA_PRIVATE_KEY}`],
+    }
   },
   solidity: {
     version: "0.8.4",
