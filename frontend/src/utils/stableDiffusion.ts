@@ -28,7 +28,7 @@ export const checkProgress = async (req: Request) => {
         .catch((err) => {
             console.log(err)
         })
-    let progress: Progress = response?.data
+    const progress: Progress = response?.data
     progress.state.done = false
     console.log("Progress", progress)
     if (progress.state.job_no === req.job_no &&

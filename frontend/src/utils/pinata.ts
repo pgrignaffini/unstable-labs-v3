@@ -1,7 +1,7 @@
 const pinataGateway = process.env.NEXT_PUBLIC_PINATA_GATEWAY
 const jwt = process.env.NEXT_PUBLIC_PINATA_JWT;
-const axios = require('axios');
-const FormData = require('form-data');
+import axios from 'axios'
+import FormData from 'form-data'
 
 export type Metadata = {
     name: string;
@@ -38,7 +38,7 @@ export const uploadJSONToIPFS = async (JSONBody: Metadata) => {
         }
     })
 
-    var config = {
+    const config = {
         method: 'post',
         url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
         headers: {
@@ -54,10 +54,10 @@ export const uploadJSONToIPFS = async (JSONBody: Metadata) => {
 
 export const uploadFileToIPFS = async (file: any) => {
     //making axios POST request to Pinata ⬇️
-    let data = new FormData();
+    const data = new FormData();
     data.append('file', file);
 
-    var config = {
+    const config = {
         method: 'post',
         url: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
         headers: {

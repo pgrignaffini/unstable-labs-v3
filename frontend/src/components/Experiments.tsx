@@ -8,9 +8,7 @@ import axios from 'axios'
 import type { Experiment, NftURI } from "../types/types"
 import { useExperiments } from '@hooks/useExperiments'
 
-type Props = {}
-
-function Experiments({ }: Props) {
+function Experiments() {
 
     const [selectedExperiment, setSelectedExperiment] = React.useState<Experiment | undefined>(undefined)
     const [selectedImage, setSelectedImage] = React.useState<string | undefined>(undefined)
