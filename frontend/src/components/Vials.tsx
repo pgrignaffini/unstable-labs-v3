@@ -1,61 +1,14 @@
 import React from 'react'
-import vialContractInfo from "@abi/vial.json"
-import { useAccount, useContractRead } from "wagmi"
-import type { NftURI, Vial } from "../types/types";
-import { useQuery } from 'react-query'
-import axios from 'axios'
+import type { Vial } from "../types/types";
 import Card from '@components/Card';
 import { groupBy } from '@utils/helpers'
-import VialSelectionContainer from './VialSelectionContainer';
-import { PreviewImageURL } from "@utils/images"
+import { useVials } from "@hooks/useVials"
 
-type Props = {
-    vialToBurn?: Vial | undefined
-    setVialToBurn?: React.Dispatch<React.SetStateAction<Vial | undefined>>
-}
 
-function Vials({ setVialToBurn, vialToBurn }: Props) {
+function Vials() {
 
-    const { address } = useAccount()
     const [selectedVial, setSelectedVial] = React.useState<Vial | undefined>(undefined)
-
-    const { data: ownedTokenIds } = useContractRead({
-        address: vialContractInfo.address,
-        abi: vialContractInfo.abi,
-        functionName: 'getVialsOwnedByMe',
-        args: [{ from: address }],
-        onSuccess(data) {
-            console.log('Vial ids: ', data)
-        }
-    })
-
-    const { data: ownedTokenURIs } = useContractRead({
-        address: vialContractInfo.address,
-        abi: vialContractInfo.abi,
-        functionName: 'getTokenURIs',
-        args: [ownedTokenIds],
-        enabled: !!ownedTokenIds,
-        onSuccess(data) {
-            console.log('Vial uris: ', data)
-        }
-    })
-
-    const getOwnedVials = async (): Promise<Vial[]> => {
-        const ownedNfts = await Promise.all(
-            (ownedTokenURIs as NftURI[])?.map(async (nftURI): Promise<Vial> => {
-                const { data: nft } = await axios.get(nftURI.tokenURI)
-                const tokenId = nftURI.tokenId.toString()
-                return { tokenId, ...nft }
-            })
-        )
-        console.log("Owned vials: ", ownedNfts)
-        return ownedNfts
-    }
-
-    const { data: vials, refetch: refetchVials, isLoading } = useQuery(['your-vials', address], getOwnedVials, {
-        enabled: !!ownedTokenURIs,
-        refetchOnWindowFocus: true,
-    })
+    const { vials } = useVials()
 
     const vialInfoModal = (vial: Vial) => {
         return (
@@ -81,8 +34,9 @@ function Vials({ setVialToBurn, vialToBurn }: Props) {
 
     const groupedVials = vials ? groupBy(vials, 'style') : []
 
-    const displayVialCards = (
+    return (
         <>
+            {vialInfoModal(selectedVial as Vial)}
             {Object.keys(groupedVials).map((key, index) => {
                 const vials: Vial[] = groupedVials[key]
                 return (
@@ -92,26 +46,6 @@ function Vials({ setVialToBurn, vialToBurn }: Props) {
                     </label>
                 )
             })}
-        </>
-    )
-
-    const displayVialSelectionGrid = (
-        <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 p-2 gap-4">
-            {Object.keys(groupedVials).map((key, index) => {
-                const vials = groupedVials[key]
-                return (vials.length > 0 &&
-                    <div key={index} onClick={() => setVialToBurn?.(vials[0] as Vial)}>
-                        <VialSelectionContainer selected={vialToBurn === (vials[0] as Vial)} vial={vials[0]} multiple={vials.length} />
-                    </div>
-                )
-            })}
-        </div>
-    )
-
-    return (
-        <>
-            {vialInfoModal(selectedVial as Vial)}
-            {setVialToBurn ? displayVialSelectionGrid : displayVialCards}
         </>
     )
 }

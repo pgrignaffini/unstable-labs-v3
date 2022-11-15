@@ -1,1 +1,1 @@
-export const VialMetadataURL = `${process.env.NEXT_PUBLIC_PINATA_GATEWAY}/QmQwDcCT9yixjR64trVzqarzk4hAxji6FgagXnoBXRc5vD`
+export const VialMetadataURL = `${process.env.NEXT_PUBLIC_PINATA_GATEWAY}/QmavDnt4QWGqPFhFERMXgM9PabrYUeB1BvKzMvVcZ5WnWF`

@@ -17,6 +17,9 @@
       "@styles/*": [
         "styles/*"
       ],
+      "@hooks/*": [
+        "hooks/*"
+      ],
     },
     "target": "es2017",
     "lib": [

@@ -3,32 +3,22 @@ import MintExperimentButton from "@components/MintExperimentButton"
 
 type Props = {
     images: string[]
+    setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>
+    selectedImages: string[]
 }
 
-function ResultCarousel({ images }: Props) {
+function ResultGrid({ images, setSelectedImages, selectedImages }: Props) {
 
     const [imageToShow, setImageToShow] = useState<string>("")
     const [name, setName] = useState<string>("")
     const [description, setDescription] = useState<string>("")
 
-    const zoomModal = (
+    const mintModal = (
         <>
-            <input type="checkbox" id="zoom-modal" className="modal-toggle" />
-            <div className="modal">
-                <div className="relative">
-                    <label htmlFor="zoom-modal" className="absolute right-2 top-2 font-pixel text-2xl text-white cursor-pointer">X</label>
-                    <img className='w-full h-full object-cover' src={"data:image/.webp;base64," + imageToShow} alt="banner" />
-                </div>
-            </div>
-        </>
-    )
-
-    const resultModal = (
-        <>
-            <input type="checkbox" id="result-modal" className="modal-toggle" />
+            <input type="checkbox" id="mint-modal" className="modal-toggle" />
             <div className="modal">
                 <div className="w-1/2">
-                    <label htmlFor="result-modal" className="font-pixel text-2xl text-white cursor-pointer" onClick={() => {
+                    <label htmlFor="mint-modal" className="font-pixel text-2xl text-white cursor-pointer" onClick={() => {
                         setName("")
                         setDescription("")
                         setImageToShow("")
@@ -67,19 +57,17 @@ function ResultCarousel({ images }: Props) {
 
     return (
         <div>
-            {zoomModal}
-            {resultModal}
-            <div className='bg-gray-400 p-4 overflow-x-auto flex space-x-4'>
+            {mintModal}
+            <div className='grid grid-cols-4 gap-4'>
                 {images?.map((image: string, index: number) => (
-                    <div className="flex flex-col space-y-4 items-center " key={index}>
-                        <div onClick={() => setImageToShow(image)}>
-                            <div className='bg-gray-200 p-4 w-60 h-124 flex-none shadow-xl'>
-                                <label htmlFor="zoom-modal" className='cursor-pointer'>
-                                    <img src={"data:image/.webp;base64," + image} />
-                                </label>
-                            </div>
-                        </div>
-                        <label htmlFor="result-modal" className='cursor-pointer mt-4'>
+                    <div className="flex flex-col space-y-4 items-center" key={index}
+                        onClick={() => {
+                            if (selectedImages.includes(image)) return
+                            else setSelectedImages((prev: string[]) => [...prev, image])
+                        }}>
+                        <img className={`cursor-pointer hover:border-4 hover:border-acid`}
+                            src={"data:image/.webp;base64," + image} />
+                        <label htmlFor="mint-modal" className='cursor-pointer mt-4'>
                             <div className="group flex space-x-2 items-end  w-fit bg-acid py-4 px-10"
                                 onClick={() => setImageToShow(image)}>
                                 <p className="font-pixel text-md text-white">Brew</p>
@@ -95,4 +83,4 @@ function ResultCarousel({ images }: Props) {
     )
 }
 
-export default ResultCarousel
+export default ResultGrid

@@ -24,7 +24,7 @@ function Card({ nft, multiple, isVial }: Props) {
             <div className="p-4">
                 <img className='w-64 h-64 object-contain' src={src} alt="image" />
                 <div className='flex justify-between'>
-                    <p className='font-pixel text-sm'>{`${nft?.name} ${isVial ? "vial" : ""}`}</p>
+                    <p className='font-pixel text-sm'>{nft?.name}</p>
                     {multiple && <p className='font-pixel text-sm'>{multiple}x</p>}
                     {/* {onSale && <p className='font-pixel text-sm'>{parseNftPrice(nft as Nft & MarketItem)}</p>} */}
                 </div>

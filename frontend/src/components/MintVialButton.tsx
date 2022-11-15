@@ -4,6 +4,7 @@ import TxHash from '@components/TxHash'
 import { useContractWrite, useWaitForTransaction, usePrepareContractWrite, useContractRead, useFeeData } from 'wagmi'
 import { VialMetadataURL } from "@utils/metadata"
 import { BigNumber } from 'ethers'
+import { useVials } from '@hooks/useVials'
 
 type Props = {
     index: number;
@@ -15,6 +16,7 @@ function MintVialButton({ index, numberOfVials }: Props) {
     const [vialPrice, setVialPrice] = React.useState<BigNumber>()
     const [isMinting, setIsMinting] = React.useState<boolean>(false)
     const { data: feeData } = useFeeData()
+    const { refetchVials } = useVials()
 
     const tokenURI = VialMetadataURL + `/${index}.json`
 
@@ -50,6 +52,7 @@ function MintVialButton({ index, numberOfVials }: Props) {
         },
         onSuccess() {
             setIsMinting(false)
+            refetchVials()
         }
     })
 

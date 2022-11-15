@@ -1,29 +1,47 @@
 import { type NextPage } from "next";
 import React from "react";
 import Head from "next/head";
-import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { usePrepareContractWrite, useContractWrite, useWaitForTransaction, useAccount } from "wagmi"
 import vialContractInfo from "@abi/vial.json"
-import Vials from "@components/Vials";
 import type { Vial, Style, Request, Progress } from "../types/types"
-import { useQuery, useQueryClient } from 'react-query'
-import { checkProgress, getImages, text2Image } from "@utils/stableDiffusion"
-import axios from "axios";
+import { useQuery } from 'react-query'
+import { checkProgress, getImages, text2Image, image2Image } from "@utils/stableDiffusion"
+import type { SendTransactionResult } from "@wagmi/core"
 import { trpc } from "../utils/trpc";
+import { groupBy } from '@utils/helpers'
 import TxHash from "@components/TxHash";
-import ResultCarousel from "@components/ResultCarousel";
+import ResultGrid from "@components/ResultGrid";
+import { useVials } from "@hooks/useVials";
+import VialSelectionContainer from "@components/VialSelectionContainer";
 
 const Home: NextPage = () => {
 
-  const { address } = useAccount()
+  const { vials, refetchVials } = useVials()
+  const groupedVials = vials ? groupBy(vials, 'style') : []
   const [vialToBurn, setVialToBurn] = React.useState<Vial | undefined>(undefined);
   const [request, setRequest] = React.useState<Request | undefined>(undefined)
   const [progress, setProgress] = React.useState<Progress | undefined>(undefined)
-  const [selectedImage, setSelectedImage] = React.useState<string>('')
+  const [selectedImages, setSelectedImages] = React.useState<string[]>([])
+  const [selectedImage, setSelectedImage] = React.useState<string>("")
   const [prompt, setPrompt] = React.useState<string>('')
+  const [burnData, setBurnData] = React.useState<SendTransactionResult | undefined>(undefined)
+  const [originalStyleToRemix, setOriginalStyleToRemix] = React.useState<string | undefined>(undefined)
+  const [originalPrompt, setOriginalPrompt] = React.useState<string | undefined>(undefined)
+  const [isRemixing, setIsRemixing] = React.useState<boolean>(false)
 
-  const queryClient = useQueryClient()
+  React.useEffect(() => {
+    // to replace with remix vial
+    if (selectedImages.length > 0) {
+      setSelectedImage(selectedImages[0] as string)
+      const remixVials = groupedVials["space-hologram-collection"]
+      setVialToBurn(remixVials[0])
+    }
+    else if (selectedImages.length === 0 &&
+      vialToBurn?.name === "Space Hologram Vial") {
+      setVialToBurn(undefined)
+    }
+  }, [selectedImages])
 
   const { data: progressData } = useQuery("progress", () => checkProgress(request as Request), {
     enabled: !!request && (progress?.state.done === false || progress === undefined),
@@ -55,7 +73,12 @@ const Home: NextPage = () => {
     }
   })
 
-  const { data: burnData, write: burnVial } = useContractWrite(config)
+  const { write: burnVial } = useContractWrite({
+    ...config,
+    onSuccess(data) {
+      setBurnData(data)
+    }
+  })
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -67,12 +90,28 @@ const Home: NextPage = () => {
     hash: burnData?.hash,
     enabled: !!burnData?.hash,
     onSuccess: async () => {
-      const req: Request = await text2Image(prompt, vialToBurn?.style as string)
+      if (vialToBurn?.name !== "Space Hologram Vial") {
+        setOriginalStyleToRemix(vialToBurn?.style as string)
+        setOriginalPrompt(prompt)
+      }
+      const req: Request = isRemixing ?
+        await image2Image(originalPrompt!, originalStyleToRemix!, selectedImage) :
+        await text2Image(prompt, vialToBurn?.style as string)
       setRequest(req)
       setVialToBurn(undefined)
-      queryClient.invalidateQueries(`your-vials, ${address}`)
+      setBurnData(undefined)
+      refetchVials()
     }
   })
+
+  const removeImage = (index: number) => {
+    if (selectedImage === selectedImages[index]) setSelectedImage('')
+    setSelectedImages(selectedImages.filter((_, i) => i !== index))
+  }
+
+  console.log("Original Prompt", originalPrompt)
+  console.log("Original Style", originalStyleToRemix)
+  console.log("isRemixing", isRemixing)
 
 
   const selectVialModal = (
@@ -83,7 +122,16 @@ const Home: NextPage = () => {
           <label htmlFor="select-vial-modal" className="font-pixel text-2xl text-white cursor-pointer"
             onClick={() => setVialToBurn(undefined)}>X</label>
           <div className="bg-gray-400 bg-opacity-50 backdrop-blur-xl p-8">
-            <Vials setVialToBurn={setVialToBurn} vialToBurn={vialToBurn} />
+            <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 p-2 gap-4">
+              {Object.keys(groupedVials).map((key, index) => {
+                const vials = groupedVials[key]
+                return (vials.length > 0 &&
+                  <div key={index} onClick={() => setVialToBurn?.(vials[0] as Vial)}>
+                    <VialSelectionContainer selected={vialToBurn === (vials[0] as Vial)} vial={vials[0]} multiple={vials.length} />
+                  </div>
+                )
+              })}
+            </div>
             <div className="flex sm:text-center justify-end">
               <label htmlFor="select-vial-modal"
                 className="p-2 border-acid border-2 w-fit font-pixel text-lg text-white cursor-pointer hover:bg-slate-400">Select</label>
@@ -115,27 +163,48 @@ const Home: NextPage = () => {
           <p className="font-bold text-3xl text-white">Step into the Brewery</p>
         </div>
         <img src="/brewery-animated.gif" className="w-72 mx-auto mt-16" />
-        <div className="bg-gray-400 p-6 w-2/3 mx-auto mt-16 row-start-3 col-start-3">
+        <div className={`${selectedImages.length > 0 ? "bg-blue-400" : "bg-gray-400"} p-6 w-2/3 mx-auto mt-16 row-start-3 col-start-3`}>
           {vialToBurn && <p className="text-[0.5rem] text-black">{vialToBurn.name}</p>}
           <div className="flex items-center space-x-3 justify-between">
             <label htmlFor="select-vial-modal" className="cursor-pointer" >
               <div className="h-12 w-12 border-2 border-acid bg-white">
-                {vialToBurn && <img src={vialToBurn.image} alt="vial" className="p-1 h-12 w-12 object-contain" />}
+                {vialToBurn && <img src={vialToBurn.image} alt="vial" className="pb-1 h-12 w-12 object-contain" />}
               </div>
             </label>
-            {!vialToBurn && <p className="pt-2 text-[0.6rem] text-red-500">Please select a vial to start</p>}
-            {vialToBurn &&
-              <form className='flex space-x-5 items-center' onSubmit={handleSubmit}>
+            {/* this should be the remix vial */}
+            {vialToBurn && vialToBurn.name !== "Space Hologram Vial" ?
+              <form className='flex space-x-5 items-center' onSubmit={(e) => {
+                setIsRemixing(false)
+                handleSubmit(e)
+              }}>
                 <input onChange={(e) => setPrompt(e.target.value)} className='w-full p-4 bg-white text-black outline-none font-pixel' required placeholder="prompt..." />
                 <button type="submit" className="p-4 bg-acid text-white">Brew</button>
-                {burnData && <TxHash hash={burnData?.hash} />}
-              </form>
-            }
+              </form> : vialToBurn && vialToBurn.name === "Space Hologram Vial" && selectedImage.length ? (
+                <form className='flex space-x-5 items-center' onSubmit={(e) => {
+                  setIsRemixing(true)
+                  handleSubmit(e)
+                }}>
+                  <button type="submit" className="p-4 bg-blue-600 text-white">Remix</button>
+                </form>
+              ) : <p className="pt-2 text-[0.6rem] text-red-500">Please select a vial to start</p>}
           </div>
         </div>
         <div className="container mx-auto">
+          {selectedImages.length > 0 ?
+            <div className='bg-gray-400 p-4 overflow-x-auto flex space-x-4'>
+              {selectedImages.map((image, index) => (
+                <div className="relative" key={index}>
+                  <p className='absolute -top-4 left-0 text-2xl text-red-500 cursor-pointer' onClick={() => removeImage(index)}>X</p>
+                  <img onClick={() => setSelectedImage(image)} src={"data:image/.webp;base64," + image} alt="images" className={`h-32 w-32 object-contain cursor-pointer ${selectedImage === image ? "border-4 border-acid" : null}`} />
+                </div>
+              ))}
+            </div> : null
+          }
+        </div>
+        <div className="container mx-auto">
+          {burnData?.hash && <TxHash hash={burnData?.hash} />}
           {progressData?.eta_relative ? <p className="font-pixel text-sm text-center">Wait time: {progressData.eta_relative.toFixed(0)}s</p> : null}
-          {images ? <ResultCarousel images={images} /> : null}
+          {images ? <ResultGrid selectedImages={selectedImages} setSelectedImages={setSelectedImages} images={images} /> : null}
         </div>
       </main>
     </>

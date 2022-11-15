@@ -62,8 +62,8 @@ function VialBrewery({ styles }: Props) {
                 const name = base.replaceAll("-", " ")
                 const vial = { image, name, preview, type: index, style: style.name }
                 return (
-                    <label htmlFor="buy-vial-modal" onClick={() => setVial(vial)} className='cursor-pointer mt-4'>
-                        <Card key={index} nft={vial} isVial />
+                    <label key={index} htmlFor="buy-vial-modal" onClick={() => setVial(vial)} className='cursor-pointer mt-4'>
+                        <Card nft={vial} isVial />
                     </label>
                 )
             })}
