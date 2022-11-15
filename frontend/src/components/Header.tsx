@@ -19,8 +19,8 @@ function Header() {
                     <img src="/flask.png" alt="flask" className="w-10" />
                 </div>
             </div>
-            <Link className='font-xl text-white cursor-pointer' href="/collections">
-                Collections
+            <Link className='font-xl text-white cursor-pointer border-acid hover:border-b-2' href="/collections">
+                Lab Collections
             </Link>
             {isConnected && address && !session &&
                 <p className="font-xl text-white cursor-pointer" onClick={() => signIn("discord")}>

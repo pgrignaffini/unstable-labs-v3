@@ -17,16 +17,16 @@ function CollectionSidebar({ setSelectedTab }: Props) {
     const { isConnected } = useAccount()
 
     return (
-        <div className='flex flex-col col-span-2 items-center space-y-8 w-fit md:items-start border-r-2 border-b-2'>
+        <div className='flex flex-col col-span-2 items-center space-y-8 w-fit md:items-start border-r-2 border-b-2 border-acid'>
             {/* <CollectionSideBarRow title="Trending" type='rocket' onClick={() => setSelectedTab('trending')} />
             <CollectionSideBarRow title="Favorites" type='star' onClick={() => setSelectedTab('favorites')} /> */}
             {isConnected && (
                 <>
-                    <CollectionSideBarRow title="Experiments" type='nfts' onClick={() => setSelectedTab('experiments')} />
-                    <CollectionSideBarRow title="Vials" type='rocket' onClick={() => setSelectedTab('vials')} />
+                    <CollectionSideBarRow title="Experiments" type='blob' onClick={() => setSelectedTab('experiments')} />
+                    <CollectionSideBarRow title="Vials" type='vial' onClick={() => setSelectedTab('vials')} />
                 </>
             )}
-            <CollectionSideBarRow title="Vial Brewery" type='star' onClick={() => setSelectedTab('vial-brewery')} />
+            <CollectionSideBarRow title="Brewery" type='brewery' onClick={() => setSelectedTab('vial-brewery')} />
             {/* <CollectionSideBarRow title="Marketplace" type='star' onClick={() => setSelectedTab('marketplace')} /> */}
         </div>
     )

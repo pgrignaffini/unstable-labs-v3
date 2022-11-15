@@ -57,7 +57,7 @@ const MintExperimentButton = ({ image, id, className }: Props) => {
                                                 recklesslySetUnpreparedArgs: [tokenUri, { gasPrice: feeData?.gasPrice }]
                                             })
                                         }}>Mint</button>
-                                    {tokenData && <TxHash hash={tokenData?.hash} />}
+                                    {tokenData && <TxHash className='text-black' hash={tokenData?.hash} />}
                                 </div>
                             </form>
                         </div>

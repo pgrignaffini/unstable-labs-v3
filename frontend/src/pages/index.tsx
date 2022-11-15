@@ -52,7 +52,7 @@ const Home: NextPage = () => {
     },
   })
 
-  const { data: images } = useQuery("images", () => getImages(request as Request), {
+  const { data: images, isLoading: isLoadingImages } = useQuery("images", () => getImages(request as Request), {
     enabled: !!progress && !!request && progress.state.done,
     onSuccess: () => {
       setRequest(undefined)
@@ -149,7 +149,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="container mx-auto flex min-h-screen flex-col items-center space-y-10 justify-center p-4">
         {selectVialModal}
-        <div className="relative ">
+        <div className="relative w-full">
           <img src="/lab-top.png" alt="lab-top" className="w-full" />
           <div className="w-full absolute bg-black bottom-1/2 ">
             <p className="font-bold text-3xl text-white text-center">Welcome to <span className="text-acid">Unstable</span>Labs!</p>
@@ -157,34 +157,38 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div className="flex mt-10 justify-center items-center ">
-          <p className="font-bold text-3xl text-white">Step into the Brewery</p>
+          <p className="font-bold text-3xl text-white">Step into the Lab!</p>
         </div>
-        <img src="/brewery-animated.gif" className="w-72 mx-auto mt-16" />
-        <div className={`${selectedImages.length > 0 ? "bg-blue-400" : "bg-gray-400"} p-6 w-2/3 mx-auto mt-16 row-start-3 col-start-3`}>
-          {vialToBurn && <p className="text-[0.5rem] text-black">{vialToBurn.name}</p>}
-          <div className="flex items-center space-x-3 justify-between">
-            <label htmlFor="select-vial-modal" className="cursor-pointer" >
-              <div className="h-12 w-12 border-2 border-acid bg-white">
-                {vialToBurn && <img src={vialToBurn.image} alt="vial" className="pb-1 h-12 w-12 object-contain" />}
-              </div>
-            </label>
-            {/* this should be the remix vial */}
-            {vialToBurn && vialToBurn.name !== "Space Hologram Vial" ?
-              <form className='flex space-x-5 items-center' onSubmit={(e) => {
-                setIsRemixing(false)
-                handleSubmit(e)
-              }}>
-                <input onChange={(e) => setPrompt(e.target.value)} className='w-full p-4 bg-white text-black outline-none font-pixel' required placeholder="prompt..." />
-                <button type="submit" className="p-4 bg-acid text-white">Brew</button>
-              </form> : vialToBurn && vialToBurn.name === "Space Hologram Vial" && selectedImage.length ? (
+        <div className="flex items-center justify-between w-full">
+          <img src="/pc-animated-left.gif" alt="pc-animated-left" className="w-48 h-48" />
+          <div className={`${selectedImages.length > 0 ? "bg-blue-400" : "bg-gray-400"} p-6 mx-auto row-start-3 col-start-3`}>
+            <div className="flex items-center space-x-3 justify-between">
+              <label htmlFor="select-vial-modal" className="cursor-pointer" >
+                <div className="h-12 w-12 border-2 border-acid bg-white">
+                  {vialToBurn ? <img src={vialToBurn.image} alt="vial" className="pb-1 h-12 w-12 object-contain" /> : <p className="text-black pt-2 text-[0.55rem]">Press Me!</p>}
+                </div>
+              </label>
+              {vialToBurn && <p className="text-[0.7rem] text-black">{vialToBurn.name}</p>}
+              {/* this should be the remix vial */}
+              {vialToBurn && vialToBurn.name !== "Space Hologram Vial" ?
                 <form className='flex space-x-5 items-center' onSubmit={(e) => {
-                  setIsRemixing(true)
+                  setIsRemixing(false)
                   handleSubmit(e)
                 }}>
-                  <button type="submit" className="p-4 bg-blue-600 text-white">Remix</button>
-                </form>
-              ) : <p className="pt-2 text-[0.6rem] text-red-500">Please select a vial to start</p>}
+                  <input onChange={(e) => setPrompt(e.target.value)} className='w-full p-4 bg-white text-black outline-none font-pixel' required placeholder="prompt..." />
+                  <button type="submit" className="p-4 bg-acid text-white">Brew</button>
+                </form> : vialToBurn && vialToBurn.name === "Space Hologram Vial" && selectedImage.length ? (
+                  <form className='flex space-x-5 items-center' onSubmit={(e) => {
+                    setIsRemixing(true)
+                    handleSubmit(e)
+                  }}>
+                    <button type="submit" className="p-4 bg-blue-600 text-white">Remix</button>
+                  </form>
+                ) :
+                  <p className="text-sm text-center text-dark-acid">Select a vial to start</p>}
+            </div>
           </div>
+          <img src="/pc-animated-right.gif" alt="pc-animated-left" className="w-48 h-48" />
         </div>
         <div className="container mx-auto">
           {selectedImages.length > 0 ?
@@ -195,7 +199,8 @@ const Home: NextPage = () => {
                     <p className='absolute -top-4 left-0 text-2xl text-red-500 cursor-pointer' onClick={() => removeImage(index)}>X</p>
                     <img onClick={() => setSelectedImage(image)} src={"data:image/.webp;base64," + image} alt="images" className={`h-32 w-32 object-contain cursor-pointer ${selectedImage === image ? "border-4 border-acid" : null}`} />
                   </div>
-                  <MintExperimentButton className="p-2 text-[0.8rem] text-white text-center bg-acid"
+                  <MintExperimentButton
+                    className="p-2 text-[0.8rem] text-white text-center bg-acid cursor-pointer"
                     id={index.toString()} image={image} />
                 </div>
               ))}
@@ -203,10 +208,20 @@ const Home: NextPage = () => {
           }
         </div>
         <div className="container mx-auto">
-          {burnData?.hash && <TxHash hash={burnData?.hash} />}
-          {progressData?.eta_relative ? <p className="font-pixel text-sm text-center">Wait time: {progressData.eta_relative.toFixed(0)}s</p> : null}
+          {burnData?.hash && <TxHash className="text-center text-md text-white" hash={burnData?.hash} />}
+          {progressData?.eta_relative ?
+            <div className="flex flex-col space-y-4 items-center justify-center">
+              <p className="text-sm text-center">Wait time: {progressData.eta_relative.toFixed(0)}s</p>
+              <img src="/flask-combining.gif" alt="loading" className="w-64" />
+            </div>
+            : null}
+          {isLoadingImages ? <div className="flex flex-col space-y-4 items-center justify-center">
+            <img src="/flask-combining.gif" alt="loading" className="w-64" />
+            <p className="text-sm text-center">We are fetching your images, hang in there!</p>
+          </div> : null}
           {images ? <ResultGrid selectedImages={selectedImages} setSelectedImages={setSelectedImages} images={images} /> : null}
         </div>
+        <img src="/lab-bottom.png" className="w-full" />
       </main>
     </>
   );
