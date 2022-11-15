@@ -14,6 +14,7 @@ import TxHash from "@components/TxHash";
 import ResultGrid from "@components/ResultGrid";
 import { useVials } from "@hooks/useVials";
 import VialSelectionContainer from "@components/VialSelectionContainer";
+import MintExperimentButton from "@components/MintExperimentButton";
 
 const Home: NextPage = () => {
 
@@ -109,20 +110,15 @@ const Home: NextPage = () => {
     setSelectedImages(selectedImages.filter((_, i) => i !== index))
   }
 
-  console.log("Original Prompt", originalPrompt)
-  console.log("Original Style", originalStyleToRemix)
-  console.log("isRemixing", isRemixing)
-
-
   const selectVialModal = (
     <>
       <input type="checkbox" id="select-vial-modal" className="modal-toggle" />
       <div className="modal">
-        <div className="w-2/3 h-1/3">
+        <div className="w-1/3 h-1/2">
           <label htmlFor="select-vial-modal" className="font-pixel text-2xl text-white cursor-pointer"
             onClick={() => setVialToBurn(undefined)}>X</label>
           <div className="bg-gray-400 bg-opacity-50 backdrop-blur-xl p-8">
-            <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 p-2 gap-4">
+            <div className="flex flex-col space-y-4 overflow-y-scroll">
               {Object.keys(groupedVials).map((key, index) => {
                 const vials = groupedVials[key]
                 return (vials.length > 0 &&
@@ -131,11 +127,12 @@ const Home: NextPage = () => {
                   </div>
                 )
               })}
+              <div className="flex sm:text-center justify-end">
+                <label htmlFor="select-vial-modal"
+                  className="p-2 border-acid border-2 w-fit font-pixel text-lg text-white cursor-pointer hover:bg-slate-400">Select</label>
+              </div>
             </div>
-            <div className="flex sm:text-center justify-end">
-              <label htmlFor="select-vial-modal"
-                className="p-2 border-acid border-2 w-fit font-pixel text-lg text-white cursor-pointer hover:bg-slate-400">Select</label>
-            </div>
+
           </div>
         </div>
       </div>
@@ -193,9 +190,13 @@ const Home: NextPage = () => {
           {selectedImages.length > 0 ?
             <div className='bg-gray-400 p-4 overflow-x-auto flex space-x-4'>
               {selectedImages.map((image, index) => (
-                <div className="relative" key={index}>
-                  <p className='absolute -top-4 left-0 text-2xl text-red-500 cursor-pointer' onClick={() => removeImage(index)}>X</p>
-                  <img onClick={() => setSelectedImage(image)} src={"data:image/.webp;base64," + image} alt="images" className={`h-32 w-32 object-contain cursor-pointer ${selectedImage === image ? "border-4 border-acid" : null}`} />
+                <div className="flex flex-col space-y-2">
+                  <div className="relative" key={index}>
+                    <p className='absolute -top-4 left-0 text-2xl text-red-500 cursor-pointer' onClick={() => removeImage(index)}>X</p>
+                    <img onClick={() => setSelectedImage(image)} src={"data:image/.webp;base64," + image} alt="images" className={`h-32 w-32 object-contain cursor-pointer ${selectedImage === image ? "border-4 border-acid" : null}`} />
+                  </div>
+                  <MintExperimentButton className="p-2 text-[0.8rem] text-white text-center bg-acid"
+                    id={index.toString()} image={image} />
                 </div>
               ))}
             </div> : null

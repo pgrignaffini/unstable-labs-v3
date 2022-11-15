@@ -59,9 +59,7 @@ function MintVialButton({ index, numberOfVials }: Props) {
 
     return (
         <div className='flex flex-col space-y-2 items-center justify-center'>
-            {vialData &&
-                <TxHash hash={vialData?.hash} />
-            }
+            {vialData && <TxHash hash={vialData?.hash} />}
             <button className='p-4 bg-acid text-white hover:bg-dark-acid' type='button' onClick={() => mintVials?.()}>
                 Mint
             </button>
