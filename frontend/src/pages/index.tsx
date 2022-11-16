@@ -35,11 +35,11 @@ const Home: NextPage = () => {
     // to replace with remix vial
     if (selectedImages.length > 0) {
       setSelectedImage(selectedImages[0] as string)
-      const remixVials = groupedVials["space-hologram-collection"]
+      const remixVials = groupedVials["remix"]
       setVialToBurn(remixVials[0])
     }
     else if (selectedImages.length === 0 &&
-      vialToBurn?.name === "Space Hologram Vial") {
+      vialToBurn?.name === "Remix Vial") {
       setVialToBurn(undefined)
     }
   }, [selectedImages])
@@ -170,14 +170,14 @@ const Home: NextPage = () => {
               </label>
               {vialToBurn && <p className="text-[0.7rem] text-black">{vialToBurn.name}</p>}
               {/* this should be the remix vial */}
-              {vialToBurn && vialToBurn.name !== "Space Hologram Vial" ?
+              {vialToBurn && vialToBurn.name !== "Remix Vial" ?
                 <form className='flex space-x-5 items-center' onSubmit={(e) => {
                   setIsRemixing(false)
                   handleSubmit(e)
                 }}>
                   <input onChange={(e) => setPrompt(e.target.value)} className='w-full p-4 bg-white text-black outline-none font-pixel' required placeholder="prompt..." />
                   <button type="submit" className="p-4 bg-acid text-white">Brew</button>
-                </form> : vialToBurn && vialToBurn.name === "Space Hologram Vial" && selectedImage.length ? (
+                </form> : vialToBurn && vialToBurn.name === "Remix Vial" && selectedImage.length ? (
                   <form className='flex space-x-5 items-center' onSubmit={(e) => {
                     setIsRemixing(true)
                     handleSubmit(e)
