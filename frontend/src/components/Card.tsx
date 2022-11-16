@@ -10,6 +10,7 @@ type Props = {
         image: string
         name: string
         description?: string
+        preview?: string
     }
     multiple?: number
     isVial?: boolean

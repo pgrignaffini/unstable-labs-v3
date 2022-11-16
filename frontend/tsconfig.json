@@ -20,6 +20,9 @@
       "@hooks/*": [
         "hooks/*"
       ],
+      "@data/*": [
+        "data/*"
+      ],
     },
     "target": "es2017",
     "lib": [

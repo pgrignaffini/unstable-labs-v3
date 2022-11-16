@@ -2,23 +2,24 @@ import React from 'react'
 import vialContractInfo from "@abi/vial.json"
 import TxHash from '@components/TxHash'
 import { useContractWrite, useWaitForTransaction, usePrepareContractWrite, useContractRead, useFeeData } from 'wagmi'
-import { VialMetadataURL } from "@utils/metadata"
+import { CollectionMetadataURL, ConceptMetadataURL, RemixMetadataURL } from "@utils/metadata"
 import { BigNumber } from 'ethers'
 import { useVials } from '@hooks/useVials'
 
 type Props = {
     index: number;
     numberOfVials: number;
+    type: "concept" | "collection" | "remix" | undefined;
 }
 
-function MintVialButton({ index, numberOfVials }: Props) {
+function MintVialButton({ index, numberOfVials, type }: Props) {
 
     const [vialPrice, setVialPrice] = React.useState<BigNumber>()
     const [isMinting, setIsMinting] = React.useState<boolean>(false)
     const { data: feeData } = useFeeData()
     const { refetchVials } = useVials()
 
-    const tokenURI = VialMetadataURL + `/${index}.json`
+    const tokenURI = type === "remix" ? RemixMetadataURL : type === "concept" ? `${ConceptMetadataURL}/${index}.json` : type === "collection" ? `${CollectionMetadataURL}/${index}.json` : ''
 
     useContractRead({
         address: vialContractInfo.address,

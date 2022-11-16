@@ -23,7 +23,7 @@ export type Experiment = {
 export type Style = {
     name: string,
     prompt: string,
-    negative_prompt: string,
+    negative_prompt: null,
 }
 
 export type NftURI = {
@@ -51,4 +51,10 @@ export type Progress = {
         skipped: boolean,
         done: boolean,
     }
+}
+
+export type Base = {
+    name: string,
+    image: string,
+    preview: string,
 }
