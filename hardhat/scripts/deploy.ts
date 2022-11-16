@@ -1,6 +1,8 @@
-const { ethers } = require("hardhat");
+import { ethers } from "hardhat";
 const hre = require("hardhat");
 const fs = require("fs");
+
+export const baseURI = "https://myURI.com/"
 
 async function main() {
 

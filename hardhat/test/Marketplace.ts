@@ -1,4 +1,5 @@
 const { expect } = require("chai");
+import { ethers } from "hardhat";
 
 describe("Marketplace contract", function () {
     async function deployMarketplaceFixture() {
