@@ -132,7 +132,6 @@ const Home: NextPage = () => {
                   className="p-2 border-acid border-2 w-fit font-pixel text-lg text-white cursor-pointer hover:bg-slate-400">Select</label>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -190,6 +189,10 @@ const Home: NextPage = () => {
           </div>
           <img src="/pc-animated-right.gif" alt="pc-animated-left" className="w-48 h-48" />
         </div>
+        {vialToBurn && <div className="container mx-auto flex flex-col space-y-4">
+          <p className="text-center">Like this pic?</p>
+          <img src={vialToBurn?.preview} alt="preview" className="mx-auto w-1/6" />
+        </div>}
         <div className="container mx-auto">
           {selectedImages.length > 0 ?
             <div className='bg-gray-400 p-4 overflow-x-auto flex space-x-4'>
