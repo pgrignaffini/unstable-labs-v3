@@ -133,7 +133,7 @@ function VialBrewery({ concepts, collections }: Props) {
                     <p className='text-2xl'>Back</p>
                 </div>}
             {showConcepts && concepts.map((concept, index) => {
-                let base = concept.name
+                const base = concept.name
                 const image = ConceptVialImageURL + `/${index}.png`
                 const preview = ConceptPreviewImageURL + `/${base}.png`
                 const name = base.replaceAll("-", " ")
@@ -154,7 +154,7 @@ function VialBrewery({ concepts, collections }: Props) {
                 </div>}
             {showCollections &&
                 collections.map((collection, index) => {
-                    let base = collection.name
+                    const base = collection.name
                     const image = CollectionVialImageURL + `/${index}.png`
                     const preview = CollectionPreviewImageURL + `/${base}.png`
                     const name = base.replaceAll("-", " ")
