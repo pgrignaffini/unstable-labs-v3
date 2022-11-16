@@ -22,16 +22,20 @@ function Card({ nft, multiple, isVial }: Props) {
 
     return (
         <div className='border-2 cursor-pointer hover:border-4 hover:border-acid p-4'>
-            <div className='flex justify-between items-center'>
-                <p className='font-pixel text-sm'>{nft?.name} {multiple && `${multiple}x`}</p>
-                <img className='w-12 h-12 object-contain' src={src} alt="image" />
-                {/* {onSale && <p className='font-pixel text-sm'>{parseNftPrice(nft as Nft & MarketItem)}</p>} */}
-            </div>
-            {
-                nft?.preview && nft?.name !== "Freestyle" ? (
-                    <img className='w-64 h-64 object-contain' src={nft.preview} alt="image" />
-                ) : <img className='w-64 h-64 object-contain' src="/freestyle-collage.jpg" alt="image" />
+            {isVial ?
+                <div className='flex justify-between items-center'>
+                    <p className='font-pixel text-sm'>{nft?.name} {multiple && `${multiple}x`}</p>
+                    <img className='w-12 h-12 object-contain' src={src} alt="image" />
+                    {/* {onSale && <p className='font-pixel text-sm'>{parseNftPrice(nft as Nft & MarketItem)}</p>} */}
+                </div> :
+                <div className='flex flex-col space-y-4'>
+                    <img className='w-64 h-64 object-contain' src={src} alt="" />
+                    <p className='text-center'>{nft?.name}</p>
+                </div>
             }
+            {isVial && nft?.preview && nft?.name !== "Freestyle" &&
+                <img className='w-64 h-64 object-contain' src={nft.preview} alt="image" />}
+            {isVial && nft?.preview && nft?.name == "Freestyle" && <img className='w-64 h-64 object-contain' src="/freestyle-collage.jpg" alt="image" />}
         </div>
     )
 }
