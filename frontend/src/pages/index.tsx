@@ -15,6 +15,8 @@ import ResultGrid from "@components/ResultGrid";
 import { useVials } from "@hooks/useVials";
 import VialSelectionContainer from "@components/VialSelectionContainer";
 import MintExperimentButton from "@components/MintExperimentButton";
+import SolidButton from "@components/SolidButton";
+import Link from "next/link";
 
 const Home: NextPage = () => {
 
@@ -118,10 +120,10 @@ const Home: NextPage = () => {
           <label htmlFor="select-vial-modal" className="font-pixel text-2xl text-white cursor-pointer"
             onClick={() => setVialToBurn(undefined)}>X</label>
           <div className="bg-gray-400 bg-opacity-50 backdrop-blur-xl p-8">
-            <div className="flex flex-col space-y-4 overflow-y-scroll">
+            {vials?.length ? <div className="flex flex-col space-y-4 overflow-y-scroll">
               {Object.keys(groupedVials).map((key, index) => {
                 const vials = groupedVials[key]
-                return (vials.length > 0 &&
+                return (
                   <div key={index} onClick={() => setVialToBurn?.(vials[0] as Vial)}>
                     <VialSelectionContainer selected={vialToBurn === (vials[0] as Vial)} vial={vials[0]} multiple={vials.length} />
                   </div>
@@ -131,7 +133,10 @@ const Home: NextPage = () => {
                 <label htmlFor="select-vial-modal"
                   className="p-2 border-acid border-2 w-fit font-pixel text-lg text-white cursor-pointer hover:bg-slate-400">Select</label>
               </div>
-            </div>
+            </div> : <div className="flex flex-col justify-center items-center">
+              <p className="text-white font-pixel text-lg">It seems there aren't any vials here...go grab some in the
+                <Link href="/collections" className="underline text-acid"> Brewery!</Link></p>
+            </div>}
           </div>
         </div>
       </div>
@@ -155,27 +160,28 @@ const Home: NextPage = () => {
             <p className="font-bold text-lg text-gray-400 text-center">a lab to brew AI-generated NFTs</p>
           </div>
         </div>
-        <div className="flex mt-10 justify-center items-center ">
+        <div className="flex flex-col justify-center items-center ">
           <p className="font-bold text-3xl text-white">Step into the Lab!</p>
+          <p className="text-[0.6rem]">Don't know where to find some Aurora ETH? Check out <Link href="https://aurora.dev/faucet" target="_blank" className="underline text-acid">here</Link></p>
         </div>
         <div className="flex items-center justify-between w-full">
           <img src="/pc-animated-left.gif" alt="pc-animated-left" className="w-48 h-48" />
           <div className={`${selectedImages.length > 0 ? "bg-blue-400" : "bg-gray-400"} p-6 mx-auto row-start-3 col-start-3`}>
             <div className="flex items-center space-x-3 justify-between">
               <label htmlFor="select-vial-modal" className="cursor-pointer" >
-                <div className="h-12 w-12 border-2 border-acid bg-white">
-                  {vialToBurn ? <img src={vialToBurn.image} alt="vial" className="pb-1 h-12 w-12 object-contain" /> : <p className="text-black pt-2 text-[0.55rem]">Press Me!</p>}
-                </div>
+                {vialToBurn ? <img src={vialToBurn.image} alt="vial" className="h-12 w-12 object-contain border-2 border-black" /> :
+                  <SolidButton text="Press Me!" className='w-16 text-white text-[0.6rem]' rounded label="select-vial-modal" />
+                }
               </label>
-              {vialToBurn && <p className="text-[0.7rem] text-black">{vialToBurn.name}</p>}
-              {/* this should be the remix vial */}
+              {vialToBurn && <p className="text-[0.7rem] w-24 whitespace-pre-line text-black">{vialToBurn.name}</p>}
               {vialToBurn && vialToBurn.name !== "Remix Vial" ?
                 <form className='flex space-x-5 items-center' onSubmit={(e) => {
                   setIsRemixing(false)
                   handleSubmit(e)
                 }}>
                   <input onChange={(e) => setPrompt(e.target.value)} className='w-full p-4 bg-white text-black outline-none font-pixel' required placeholder="prompt..." />
-                  <button type="submit" className="p-4 bg-acid text-white">Brew</button>
+                  <SolidButton text="Brew" type="submit" className='text-white' />
+                  {/* <button type="submit" className="p-4 bg-acid text-white">Brew</button> */}
                 </form> : vialToBurn && vialToBurn.name === "Remix Vial" && selectedImage.length ? (
                   <form className='flex space-x-5 items-center' onSubmit={(e) => {
                     setIsRemixing(true)
@@ -184,7 +190,7 @@ const Home: NextPage = () => {
                     <button type="submit" className="p-4 bg-blue-600 text-white">Remix</button>
                   </form>
                 ) :
-                  <p className="text-sm text-center text-dark-acid">Select a vial to start</p>}
+                  <p className="text-sm lg:text-md 2xl:text-lg text-center text-dark-acid">Select a vial to start</p>}
             </div>
           </div>
           <img src="/pc-animated-right.gif" alt="pc-animated-left" className="w-48 h-48" />
@@ -259,11 +265,5 @@ export default Home;
 //     </div>
 //   );
 // };
-
-type TechnologyCardProps = {
-  name: string;
-  description: string;
-  documentation: string;
-};
 
 
