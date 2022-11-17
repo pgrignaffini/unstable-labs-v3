@@ -190,7 +190,7 @@ const Home: NextPage = () => {
                     <button type="submit" className="p-4 bg-blue-600 text-white">Remix</button>
                   </form>
                 ) :
-                  <p className="text-sm lg:text-md 2xl:text-lg text-center text-dark-acid">Select a vial to start</p>}
+                  <p className="text-sm lg:text-md 2xl:text-lg text-center text-white bg-gray-600 px-4 py-6 shadow-md">Select a vial to start</p>}
             </div>
           </div>
           <img src="/pc-animated-right.gif" alt="pc-animated-left" className="w-48 h-48" />

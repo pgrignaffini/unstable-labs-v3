@@ -50,7 +50,7 @@ function VialBrewery() {
                             <img className='w-1/4' src={baseToShow?.image} alt="banner" />
                             <div className='flex flex-col space-y-10 items-center'>
                                 <p className='text-sm lg:text-lg 2xl:text-2xl text-black'>{baseToShow?.name}</p>
-                                <img className='w-full' src={baseToShow?.preview} alt="preview" />
+                                <img className='w-full' src={`${baseToShow?.name === "Freestyle" ? "/freestyle-collage.jpg" : baseToShow?.preview}`} alt="preview" />
                             </div>
                         </div>
                     </div>
@@ -108,9 +108,9 @@ function VialBrewery() {
                 !showConcepts && !showCollections &&
                 (
                     <>
-                        <div className='cursor-pointer'>
+                        <label htmlFor="info-vial-modal" className='cursor-pointer' onClick={() => setBaseToShow(base[0])} >
                             <Card nft={base[0] as BaseVial} isVial />
-                        </div>
+                        </label>
                         <div className='cursor-pointer' onClick={() => setShowCollections(true)}>
                             <Card nft={base[1] as BaseVial} isVial />
                         </div>
@@ -138,32 +138,39 @@ function VialBrewery() {
                 )
 
             }
-            {showConcepts &&
+            {
+                showConcepts &&
                 <div className='border-2 hover:text-acid cursor-pointer hover:border-4 my-auto h-1/2 flex justify-center items-center hover:border-acid'
                     onClick={() => setShowConcepts(false)}>
                     <p className='text-2xl '>Back</p>
-                </div>}
-            {showConcepts && concepts.map((concept, index) => {
-                const base = concept.name
-                const image = ConceptVialImageURL + `/${index}.png`
-                const preview = ConceptPreviewImageURL + `/${base}.png`
-                const name = base.replaceAll("-", " ")
-                const vial = { image, name, preview, type: index, style: concept.name }
-                return (
-                    <label key={index} htmlFor="buy-vial-modal" onClick={() => {
-                        setVial(vial)
-                        setType('concept')
-                    }} className='cursor-pointer'>
-                        <Card nft={vial} isVial />
-                    </label>
-                )
-            })}
-            {showCollections &&
+                </div>
+            }
+            {
+                showConcepts && concepts.map((concept, index) => {
+                    const base = concept.name
+                    const image = ConceptVialImageURL + `/${index}.png`
+                    const preview = ConceptPreviewImageURL + `/${base}.png`
+                    const name = base.replaceAll("-", " ")
+                    const vial = { image, name, preview, type: index, style: concept.name }
+                    return (
+                        <label key={index} htmlFor="buy-vial-modal" onClick={() => {
+                            setVial(vial)
+                            setType('concept')
+                        }} className='cursor-pointer'>
+                            <Card nft={vial} isVial />
+                        </label>
+                    )
+                })
+            }
+            {
+                showCollections &&
                 <div className='border-2  hover:text-acid cursor-pointer hover:border-4 my-auto h-1/2 flex justify-center items-center hover:border-acid'
                     onClick={() => setShowCollections(false)}>
                     <p className='text-2xl'>Back</p>
-                </div>}
-            {showCollections &&
+                </div>
+            }
+            {
+                showCollections &&
                 collections.map((collection, index) => {
                     const base = collection.name
                     const image = CollectionVialImageURL + `/${index}.png`
@@ -178,7 +185,8 @@ function VialBrewery() {
                             <Card nft={vial} isVial />
                         </label>
                     )
-                })}
+                })
+            }
         </>
     )
 }
