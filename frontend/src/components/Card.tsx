@@ -20,14 +20,14 @@ function Card({ nft, multiple, isVial }: Props) {
 
     const showNftModal = (
         <>
-            <input type="checkbox" id="show-nft-modal" className="modal-toggle" />
+            <input type="checkbox" id={nft.name} className="modal-toggle" />
             <div className="modal h-full w-full">
                 <div className="flex flex-col space-y-3">
-                    <label htmlFor="show-nft-modal" className="text-2xl text-white cursor-pointer">X</label>
+                    <label htmlFor={nft.name} className="text-2xl text-white cursor-pointer">X</label>
                     <img src={src} alt={nft?.name} className="w-full" />
                     <div className="flex flex-col items-center justify-center">
                         <h1 className="text-sm lg:text-lg 2xl:text-2xl font-bold">{nft?.name}</h1>
-                        <p className="text-sm lg:text-lg 2xl:text-xl">{nft?.description}</p>
+                        {nft?.description && <p className="text-sm lg:text-md 2xl:text-lg italic">&quot;{nft.description}&quot;</p>}
                     </div>
                 </div>
             </div>
@@ -52,7 +52,7 @@ function Card({ nft, multiple, isVial }: Props) {
 
     const nftLayout = (
         <div className="flex flex-col">
-            <label htmlFor="show-nft-modal" className='cursor-pointer space-y-2'>
+            <label htmlFor={nft.name} className='cursor-pointer space-y-2'>
                 <div className='w-auto h-32 md:h-48 2xl:h-60 relative'>
                     <Image src={src} alt={nft?.name} fill objectFit='cover' />
                 </div>

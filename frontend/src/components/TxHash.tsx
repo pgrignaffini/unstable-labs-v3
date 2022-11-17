@@ -13,7 +13,7 @@ function TxHash({ hash, className }: Props) {
             <Link target="_blank"
                 href={`https://testnet.aurorascan.dev/tx/${hash}`}
                 className={`hover:underline hover:text-blue-600 cursor-pointer ${className}`}>
-                {hash.slice(0, 25) + "..."}
+                {hash.slice(0, 5) + "..."}
             </Link>
         </div>
     )

@@ -9,6 +9,37 @@ export const useExperiments = () => {
 
     const { address } = useAccount()
 
+    const { data: tokenIds } = useContractRead({
+        address: experimentContractInfo.address,
+        abi: experimentContractInfo.abi,
+        functionName: 'getTokenIds',
+        onSuccess(data) {
+            console.log('Token ids: ', data)
+        }
+    })
+
+    const { data: tokenURIs } = useContractRead({
+        address: experimentContractInfo.address,
+        abi: experimentContractInfo.abi,
+        functionName: 'getTokenURIs',
+        args: [tokenIds],
+        enabled: !!tokenIds,
+        onSuccess(data) {
+            console.log('Token uris: ', data)
+        }
+    })
+
+    const getAllExperiments = async (): Promise<Experiment[]> => {
+        const allExperiments = await Promise.all(
+            (tokenURIs as NftURI[])?.map(async (nftURI): Promise<Experiment> => {
+                const { data: nft } = await axios.get(nftURI.tokenURI)
+                const tokenId = nftURI.tokenId.toString()
+                return { tokenId, ...nft }
+            })
+        )
+        return allExperiments
+    }
+
     const { data: ownedTokenIds } = useContractRead({
         address: experimentContractInfo.address,
         abi: experimentContractInfo.abi,
@@ -41,11 +72,17 @@ export const useExperiments = () => {
         return ownedExperiments
     }
 
+    const { data: allExperiments, isLoading: isLoadingAllExperiments, refetch: refetchAllExperiments } = useQuery('all-experiments', getAllExperiments, {
+        enabled: !!tokenURIs,
+        refetchOnWindowFocus: true,
+        refetchInterval: 10000,
+    })
+
     const { data: experiments, isLoading: isLoadingExperiments, refetch: refetchExperiments } = useQuery(['your-experiments', address], getOwnedExperiments, {
         enabled: !!ownedTokenURIs,
         refetchOnWindowFocus: true,
         refetchInterval: 10000,
     })
 
-    return { experiments, refetchExperiments, isLoadingExperiments }
+    return { experiments, refetchExperiments, isLoadingExperiments, allExperiments, refetchAllExperiments, isLoadingAllExperiments }
 }

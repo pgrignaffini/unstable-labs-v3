@@ -6,7 +6,7 @@ import React from 'react'
 type Props = {
     title: string
     onClick?: () => void
-    type?: "blob" | "vial" | "brewery"
+    type?: "blob" | "vial" | "brewery" | "microscope"
 }
 
 function CollectionSideBarRow({ title, onClick, type }: Props) {
@@ -16,6 +16,7 @@ function CollectionSideBarRow({ title, onClick, type }: Props) {
             {type === "blob" && <img src="/blob-animated.gif" className="w-8 h-8" />}
             {type === "vial" && <img src="/flask-animated.gif" className="w-6 h-8" />}
             {type === "brewery" && <img src="/brewery-animated.gif" className="w-8 h-8" />}
+            {type === "microscope" && <img src="/microscope-animated.gif" className="w-8 h-10" />}
         </div>
     )
 }

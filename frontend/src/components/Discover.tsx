@@ -1,14 +1,14 @@
 import Card from '@components/Card'
-import type { Experiment, NftURI } from "../types/types"
+import type { Experiment } from "../types/types"
 import { useExperiments } from '@hooks/useExperiments'
 
 function Experiments() {
 
-    const { experiments } = useExperiments()
+    const { allExperiments } = useExperiments()
 
     return (
         <>
-            {experiments?.map((experiment: Experiment, index: number) => (
+            {allExperiments?.map((experiment: Experiment, index: number) => (
                 <Card key={index} nft={experiment} />
             ))}
         </>

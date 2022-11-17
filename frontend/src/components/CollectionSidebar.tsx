@@ -27,6 +27,7 @@ function CollectionSidebar({ setSelectedTab }: Props) {
                 </>
             )}
             <CollectionSideBarRow title="Brewery" type='brewery' onClick={() => setSelectedTab('vial-brewery')} />
+            <CollectionSideBarRow title="Discover" type='microscope' onClick={() => setSelectedTab('discover')} />
             {/* <CollectionSideBarRow title="Marketplace" type='star' onClick={() => setSelectedTab('marketplace')} /> */}
         </div>
     )

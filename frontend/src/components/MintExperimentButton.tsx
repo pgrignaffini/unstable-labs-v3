@@ -49,7 +49,7 @@ const MintExperimentButton = ({ image, id, className }: Props) => {
                               outline-none text-black text-sm placeholder:text-sm"
                                     placeholder="Enter description..." onChange={(e) => setDescription(e.target.value)} />
                                 <div className="mx-auto flex flex-col space-y-4">
-                                    <button className='p-4 text-white bg-acid' type='button'
+                                    <button className='p-4 text-white bg-acid hover:bg-dark-acid' type='button'
                                         onClick={async () => {
                                             const metadata: Metadata = { image, name, description }
                                             const tokenUri = await uploadMetadataToIPFS(metadata)

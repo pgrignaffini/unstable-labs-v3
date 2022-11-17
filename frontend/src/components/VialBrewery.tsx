@@ -108,11 +108,13 @@ function VialBrewery() {
                 !showConcepts && !showCollections &&
                 (
                     <>
-                        <Card nft={base[0] as BaseVial} isVial />
-                        <div onClick={() => setShowCollections(true)}>
+                        <div className='cursor-pointer'>
+                            <Card nft={base[0] as BaseVial} isVial />
+                        </div>
+                        <div className='cursor-pointer' onClick={() => setShowCollections(true)}>
                             <Card nft={base[1] as BaseVial} isVial />
                         </div>
-                        <div onClick={() => setShowConcepts(true)}>
+                        <div className='cursor-pointer' onClick={() => setShowConcepts(true)}>
                             <Card nft={base[2] as BaseVial} isVial />
                         </div>
                         <label htmlFor='buy-vial-modal' className='cursor-pointer'

@@ -6,6 +6,7 @@ import Vials from "@components/Vials";
 import axios from "axios";
 import { Style } from "../types/types";
 import Experiments from "@components/Experiments";
+import Discover from "@components/Discover";
 
 
 const CollectionSidebar = dynamic(
@@ -32,6 +33,7 @@ const Collections = () => {
                 {selectedTab === 'experiments' && <Experiments />}
                 {selectedTab === 'vials' && <Vials />}
                 {selectedTab === 'vial-brewery' && <VialBrewery />}
+                {selectedTab === 'discover' && <Discover />}
                 {/* {selectedTab === 'marketplace' && <AvailableNftsOnMarket />} */}
             </div>
         </div>

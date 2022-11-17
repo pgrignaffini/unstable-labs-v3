@@ -38,7 +38,7 @@ const Home: NextPage = () => {
     if (selectedImages.length > 0) {
       setSelectedImage(selectedImages[0] as string)
       const remixVials = groupedVials["remix"]
-      setVialToBurn(remixVials[0])
+      if (remixVials?.length) setVialToBurn(remixVials[0])
     }
     else if (selectedImages.length === 0 &&
       vialToBurn?.name === "Remix Vial") {
@@ -134,7 +134,7 @@ const Home: NextPage = () => {
                   className="p-2 border-acid border-2 w-fit font-pixel text-lg text-white cursor-pointer hover:bg-slate-400">Select</label>
               </div>
             </div> : <div className="flex flex-col justify-center items-center">
-              <p className="text-white font-pixel text-lg">It seems there aren't any vials here...go grab some in the
+              <p className="text-white font-pixel text-lg">It seems there aren&apos;t any vials here...go grab some in the
                 <Link href="/collections" className="underline text-acid"> Brewery!</Link></p>
             </div>}
           </div>
@@ -162,7 +162,7 @@ const Home: NextPage = () => {
         </div>
         <div className="flex flex-col justify-center items-center ">
           <p className="font-bold text-3xl text-white">Step into the Lab!</p>
-          <p className="text-[0.6rem]">Don't know where to find some Aurora ETH? Check out <Link href="https://aurora.dev/faucet" target="_blank" className="underline text-acid">here</Link></p>
+          <p className="text-[0.6rem]">Don&apos;t know where to find some Aurora ETH? Check out <Link href="https://aurora.dev/faucet" target="_blank" className="underline text-acid">here</Link></p>
         </div>
         <div className="flex items-center justify-between w-full">
           <img src="/pc-animated-left.gif" alt="pc-animated-left" className="w-48 h-48" />
