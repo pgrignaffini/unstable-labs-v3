@@ -21,7 +21,7 @@ const CollectionSidebar = dynamic(
 
 const Collections = () => {
 
-    const [selectedTab, setSelectedTab] = useState('experiments')
+    const [selectedTab, setSelectedTab] = useState('vial-brewery')
 
     return (
         <div className="grid grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-8 p-10 w-full mx-auto min-h-screen">

@@ -170,7 +170,7 @@ const Home: NextPage = () => {
             <div className="flex items-center space-x-3 justify-between">
               <label htmlFor="select-vial-modal" className="cursor-pointer" >
                 {vialToBurn ? <img src={vialToBurn.image} alt="vial" className="h-12 w-12 object-contain border-2 border-black" /> :
-                  <SolidButton text="Press Me!" className='w-16 text-white text-[0.6rem]' rounded label="select-vial-modal" />
+                  <SolidButton text="Press Me!" className='w-16 text-white text-[0.6rem]' rounded label="select-vial-modal" onClick={() => refetchVials()} />
                 }
               </label>
               {vialToBurn && <p className="text-[0.7rem] w-24 whitespace-pre-line text-black">{vialToBurn.name}</p>}
