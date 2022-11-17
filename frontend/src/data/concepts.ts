@@ -40,9 +40,9 @@ export const concepts = [
         "prompt": "(PaperCut style) {prompt}",
         "negative_prompt": null
     },
-    {
-        "name": "voxel-concept",
-        "prompt": "{prompt} in VoxelArt style, highly detailed",
-        "negative_prompt": null
-    }
+    // {
+    //     "name": "voxel-concept",
+    //     "prompt": "{prompt} in VoxelArt style, highly detailed",
+    //     "negative_prompt": null
+    // }
 ]

@@ -18,12 +18,12 @@ function Experiments() {
     return (
         <>
             {experiments?.map((experiment: Experiment, index: number) => (
-                <label htmlFor="remix-modal" className='cursor-pointer mt-4'
+                <label htmlFor="remix-modal"
                     key={index} onClick={() => {
                         setSelectedExperiment(experiment)
                         setSelectedImage(experiment.image)
                     }}>
-                    <Card nft={experiment} isVial={false} />
+                    <Card nft={experiment} />
                 </label>
             ))}
         </>

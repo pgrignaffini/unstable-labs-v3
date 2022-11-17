@@ -3,6 +3,7 @@ import type { Vial } from "../types/types";
 import Card from '@components/Card';
 import { groupBy } from '@utils/helpers'
 import { useVials } from "@hooks/useVials"
+import Image from 'next/image';
 
 
 function Vials() {
@@ -14,15 +15,17 @@ function Vials() {
         return (
             <>
                 <input type="checkbox" id="info-vial-modal" className="modal-toggle" />
-                <div className="modal">
-                    <div className="w-1/3">
-                        <label htmlFor="info-vial-modal" className="font-pixel text-2xl text-white cursor-pointer">X</label>
-                        <div className="bg-white bg-opacity-50 backdrop-blur-xl p-8">
-                            <div className="flex items-center space-x-10">
-                                <img className='w-1/3' src={vial?.image} alt="banner" />
-                                <div className='flex flex-col space-y-10 items-start'>
-                                    <p className='font-pixel text-sm text-black'>{vial?.name} vial</p>
-                                    <img className='w-full' src={vial?.preview} alt="preview" />
+                <div className="modal w-full h-full ">
+                    <div className='flex flex-col w-1/3 h-auto'>
+                        <label htmlFor="info-vial-modal" className="text-2xl text-white cursor-pointer">X</label>
+                        <div className='bg-white bg-opacity-50 backdrop-blur-xl w-full h-full p-4'>
+                            <div className='flex flex-col space-y-4 items-center'>
+                                <div className="flex items-center space-x-8">
+                                    <img src={vial?.image} alt="banner" className='h-16 lg:h-24 2xl:h-32' />
+                                    <p className='text-black text-sm lg:text-lg 2xl:text-2xl'>{vial?.name}</p>
+                                </div>
+                                <div className='relative w-48 h-32 lg:w-64 lg:h-48 2xl:w-96 2xl:h-80'>
+                                    <Image src={vial?.preview} alt="preview" layout="fill" />
                                 </div>
                             </div>
                         </div>

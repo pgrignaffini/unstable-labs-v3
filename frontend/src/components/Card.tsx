@@ -1,9 +1,7 @@
-import React from 'react'
-// import Star from './icons/Star'
-// import StarFilled from './icons/StarFilled'
 // import { MarketItem } from '../../typings';
 // import { parseNftPrice } from '../utils/helpers';
-// import CancelButton from './CancelButton';
+import Image from 'next/image';
+import { RemixPreviewImageURL } from '@utils/images';
 
 type Props = {
     nft: {
@@ -20,23 +18,57 @@ function Card({ nft, multiple, isVial }: Props) {
 
     const src = isVial ? nft?.image : "data:image/.webp;base64," + nft?.image
 
-    return (
-        <div className='border-2 cursor-pointer hover:border-4 hover:border-acid p-4'>
-            {isVial ?
-                <div className='flex justify-between items-center'>
-                    <p className='font-pixel text-sm'>{nft?.name} {multiple && `${multiple}x`}</p>
-                    <img className='w-12 h-12 object-contain' src={src} alt="image" />
-                    {/* {onSale && <p className='font-pixel text-sm'>{parseNftPrice(nft as Nft & MarketItem)}</p>} */}
-                </div> :
-                <div className='flex flex-col space-y-4'>
-                    <img className='w-64 h-64 object-contain' src={src} alt="" />
-                    <p className='text-center'>{nft?.name}</p>
+    const showNftModal = (
+        <>
+            <input type="checkbox" id="show-nft-modal" className="modal-toggle" />
+            <div className="modal h-full w-full">
+                <div className="flex flex-col space-y-3">
+                    <label htmlFor="show-nft-modal" className="text-2xl text-white cursor-pointer">X</label>
+                    <img src={src} alt={nft?.name} className="w-full" />
+                    <div className="flex flex-col items-center justify-center">
+                        <h1 className="text-sm lg:text-lg 2xl:text-2xl font-bold">{nft?.name}</h1>
+                        <p className="text-sm lg:text-lg 2xl:text-xl">{nft?.description}</p>
+                    </div>
                 </div>
-            }
-            {isVial && nft?.preview && nft?.name !== "Freestyle" &&
-                <img className='w-64 h-64 object-contain' src={nft.preview} alt="image" />}
-            {isVial && nft?.preview && nft?.name == "Freestyle" && <img className='w-64 h-64 object-contain' src="/freestyle-collage.jpg" alt="image" />}
+            </div>
+        </>
+    )
+
+
+    const vialLayout = (
+        <div className='flex flex-col justify-between items-center'>
+            <div className='flex items-center justify-between'>
+                <p className='font-pixel text-sm'>{nft?.name} {multiple && `${multiple}x`}</p>
+                <img className='w-12 h-12 object-contain' src={src} alt="image" />
+                {/* onSale && <p className='font-pixel text-sm'>{parseNftPrice(nft as Nft & MarketItem)}</p> */}
+            </div>
+            {nft.name === "Freestyle" ? <img src="/freestyle-collage.jpg" className='w-16 h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-48 xl:h-48 2xl:h-64 2xl:w-64 mt-4' /> :
+                <div className='w-64 h-64 relative mt-4'>
+                    <Image src={nft?.preview as string} alt="preview" placeholder='blur' blurDataURL={RemixPreviewImageURL} fill objectFit='contain' />
+                </div>}
         </div>
+
+    )
+
+    const nftLayout = (
+        <div className="flex flex-col">
+            <label htmlFor="show-nft-modal" className='cursor-pointer space-y-2'>
+                <div className='w-auto h-32 md:h-48 2xl:h-60 relative'>
+                    <Image src={src} alt={nft?.name} fill objectFit='cover' />
+                </div>
+                <div className="text-white text-center text-sm lg:text-lg 2xl:text-xl font-bold">{nft?.name}</div>
+            </label>
+        </div>
+    )
+
+
+    return (
+        <>
+            {isVial ? null : showNftModal}
+            <div className='border-2 hover:border-4 hover:border-acid p-4'>
+                {isVial ? vialLayout : nftLayout}
+            </div>
+        </>
     )
 }
 
