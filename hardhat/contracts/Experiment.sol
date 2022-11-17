@@ -46,6 +46,14 @@ contract Experiment is ERC721URIStorage {
         return newItemId;
     }
 
+    function getTokenIds() public view returns (uint256[] memory) {
+        uint256[] memory tokenIds = new uint256[](_tokenIds.current());
+        for (uint256 i = 0; i < _tokenIds.current(); i++) {
+            tokenIds[i] = i + 1;
+        }
+        return tokenIds;
+    }
+
     function getTokenURI(uint256 tokenId) public view returns (NFTData memory) {
         return NFTData(tokenId, tokenURIs[tokenId]);
     }
