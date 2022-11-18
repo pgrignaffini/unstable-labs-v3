@@ -18,7 +18,7 @@ function SolidButton({ className, onClick, text, rounded, label, type, loading }
 
   return (
     <>
-      <button type={type} className={`relative ${className}`} onPointerOver={() => setClicked(false)} onClick={(e) => {
+      <button type={type} disabled={loading} className={`relative ${className}`} onPointerOver={() => setClicked(false)} onClick={(e) => {
         setClicked(true)
         onClick?.()
       }}>
