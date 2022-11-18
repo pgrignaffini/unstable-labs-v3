@@ -17,6 +17,7 @@ import VialSelectionContainer from "@components/VialSelectionContainer";
 import MintExperimentButton from "@components/MintExperimentButton";
 import SolidButton from "@components/SolidButton";
 import Link from "next/link";
+import Airdrop from "@components/Airdrop";
 
 const Home: NextPage = () => {
 
@@ -230,7 +231,12 @@ const Home: NextPage = () => {
           </div> : null}
           {images ? <ResultGrid selectedImages={selectedImages} setSelectedImages={setSelectedImages} images={images} /> : null}
         </div>
-        <img src="/lab-bottom.png" className="w-full" />
+        <div className="relative w-full">
+          <img src="/lab-bottom.png" className="w-full" />
+          <div className="w-full absolute p-4 bottom-1/3 ">
+            <Airdrop />
+          </div>
+        </div>
       </main>
     </>
   );

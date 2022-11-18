@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { router, publicProcedure } from "../trpc";
 
-export const exampleRouter = router({
+export const userRouter = router({
     updateClaim: publicProcedure
         .input(z.object({ id: z.string().min(1) }))
         .mutation(({ ctx, input }) => {
