@@ -1,3 +1,4 @@
+import Link from "next/link"
 
 function Footer() {
     return (
@@ -7,11 +8,11 @@ function Footer() {
                 <p>UnstableLabs<br />Providing awesome NFTs since 2022</p>
             </div>
             <div className="flex flex-col items-center">
-                <p className="font-xl cursor-pointer hover:underline">About Us</p>
+                <Link href="about-us" className="font-xl cursor-pointer hover:underline">About Us</Link>
                 <img src="/us.png" alt="us" className="w-24 h-18" />
             </div>
             <div className="flex flex-col items-center">
-                <p className="font-xl cursor-pointer hover:underline">Our Vision</p>
+                <Link href="/vision" className="font-xl cursor-pointer hover:underline">Our Vision</Link>
                 <img src="/glasses.png" alt="vision" className="w-48 h-18" />
             </div>
             <div>
