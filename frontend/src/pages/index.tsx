@@ -116,11 +116,11 @@ const Home: NextPage = () => {
     <>
       <input type="checkbox" id="select-vial-modal" className="modal-toggle" />
       <div className="modal">
-        <div className="w-1/3 h-1/2">
+        <div className="w-1/3 h-2/3 overflow-y-scroll">
           <label htmlFor="select-vial-modal" className="font-pixel text-2xl text-white cursor-pointer"
             onClick={() => setVialToBurn(undefined)}>X</label>
           <div className="bg-gray-400 bg-opacity-50 backdrop-blur-xl p-8">
-            {vials?.length ? <div className="flex flex-col space-y-4 overflow-y-scroll">
+            {vials?.length ? <div className="flex flex-col space-y-4 ">
               {Object.keys(groupedVials).map((key, index) => {
                 const vials = groupedVials[key]
                 return (

@@ -75,7 +75,7 @@ function VialBrewery() {
                                 <div className='relative w-48 h-32 lg:w-64 lg:h-48 2xl:w-96 2xl:h-80'>
                                     <Image src={vial.preview} alt="preview" layout="fill" />
                                 </div>
-                                <div className='flex flex-col items-center justify-evenly'>
+                                <div className='flex flex-col space-y-4 items-center justify-evenly'>
                                     <div className="flex items-center justify-evenly">
                                         <p className='text-sm lg:text-md 2xl:text-lg text-black'>Quantity:</p>
                                         <input type="number" placeholder="Price" step={1}
@@ -84,12 +84,14 @@ function VialBrewery() {
                                     outline-none text-black placeholder:font-pixel text-sm lg:text-md 2xl:text-lg"
                                             onChange={(e) => setNumVials(parseInt(e.target.value))} />
                                     </div>
-                                    <p className='text-sm lg:text-md 2xl:text-lg text-black'>Price: {price.toFixed(4)}</p>
-                                    {price > 0 &&
-                                        <MintVialButton
-                                            index={vial.type}
-                                            type={type}
-                                            numberOfVials={numVials} />}
+                                    <div className="flex flex-col items-center space-x-8">
+                                        <p className='text-sm lg:text-md 2xl:text-lg text-black'>Price: {price.toFixed(4)}</p>
+                                        {price > 0 &&
+                                            <MintVialButton
+                                                index={vial.type}
+                                                type={type}
+                                                numberOfVials={numVials} />}
+                                    </div>
                                 </div>
                             </div>
                         </div>

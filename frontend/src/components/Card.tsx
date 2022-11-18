@@ -1,7 +1,7 @@
 // import { MarketItem } from '../../typings';
 // import { parseNftPrice } from '../utils/helpers';
 import Image from 'next/image';
-import { RemixPreviewImageURL } from '@utils/images';
+import { RemixPreviewImageURL, ConceptPreviewImageURL } from '@utils/images';
 
 type Props = {
     nft: {
@@ -47,7 +47,6 @@ function Card({ nft, multiple, isVial }: Props) {
                     <Image src={nft?.preview as string} alt="preview" placeholder='blur' blurDataURL={RemixPreviewImageURL} fill objectFit='contain' />
                 </div>}
         </div>
-
     )
 
     const nftLayout = (
@@ -65,7 +64,7 @@ function Card({ nft, multiple, isVial }: Props) {
     return (
         <>
             {isVial ? null : showNftModal}
-            <div className='border-2 hover:border-4 hover:border-acid p-4'>
+            <div className='border-2 hover:border-4  hover:border-acid hover:-m-1 p-4'>
                 {isVial ? vialLayout : nftLayout}
             </div>
         </>

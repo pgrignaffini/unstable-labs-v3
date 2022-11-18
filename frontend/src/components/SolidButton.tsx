@@ -1,3 +1,5 @@
+import { SendTransactionResult } from '@wagmi/core'
+import { useWaitForTransaction } from 'wagmi'
 import { useState } from 'react'
 
 interface Props {
@@ -7,9 +9,10 @@ interface Props {
   rounded?: boolean
   label?: string
   type?: 'button' | 'submit' | 'reset'
+  loading?: boolean
 }
 
-function SolidButton({ className, onClick, text, rounded, label, type }: Props) {
+function SolidButton({ className, onClick, text, rounded, label, type, loading }: Props) {
 
   const [clicked, setClicked] = useState(false)
 
@@ -21,8 +24,9 @@ function SolidButton({ className, onClick, text, rounded, label, type }: Props) 
       }}>
         <div className={`absolute inset-x-0 h-full -bottom-2 bg-dark-acid ${rounded ? "rounded-full" : null}`} />
         <label htmlFor={label} className="cursor-pointer">
-          <div className={`${rounded ? "rounded-full" : "px-4"} relative bg-acid py-4 transition transform duration-500 ${clicked ? 'hover:translate-y-2' : 'hover:translate-y-1'}`}>
+          <div className={`${rounded ? "rounded-full" : "px-4"} flex items-end space-x-2 relative bg-acid py-4 transition transform duration-500 ${clicked ? 'hover:translate-y-2' : 'hover:translate-y-1'}`}>
             <p>{text}</p>
+            {loading && <img src='/flask.png' className="animate-tremble h-7 w-5" />}
           </div>
         </label>
       </button>

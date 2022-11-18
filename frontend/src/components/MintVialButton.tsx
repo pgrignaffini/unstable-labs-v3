@@ -1,10 +1,12 @@
-import React from 'react'
+import { useState } from 'react'
 import vialContractInfo from "@abi/vial.json"
 import TxHash from '@components/TxHash'
-import { useContractWrite, useWaitForTransaction, usePrepareContractWrite, useContractRead, useFeeData } from 'wagmi'
+import { useContractWrite, useWaitForTransaction, usePrepareContractWrite, useContractRead, useFeeData, useBalance, useAccount } from 'wagmi'
 import { CollectionMetadataURL, ConceptMetadataURL, RemixMetadataURL } from "@utils/metadata"
 import { BigNumber } from 'ethers'
 import { useVials } from '@hooks/useVials'
+import SolidButton from '@components/SolidButton'
+import Link from 'next/link'
 
 type Props = {
     index: number;
@@ -14,10 +16,17 @@ type Props = {
 
 function MintVialButton({ index, numberOfVials, type }: Props) {
 
-    const [vialPrice, setVialPrice] = React.useState<BigNumber>()
-    const [isMinting, setIsMinting] = React.useState<boolean>(false)
+    const [vialPrice, setVialPrice] = useState<BigNumber>()
+    const [isMinting, setIsMinting] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [notEnoughBalance, setNotEnoughBalance] = useState(false)
+    const { address } = useAccount()
     const { data: feeData } = useFeeData()
+    const { data: balance } = useBalance({ address })
     const { refetchVials } = useVials()
+    const txValue = vialPrice?.mul(BigNumber.from(numberOfVials))
+
+    console.log(balance?.value, balance?.symbol)
 
     const tokenURI = type === "remix" ? RemixMetadataURL : type === "concept" ? `${ConceptMetadataURL}/${index}.json` : type === "collection" ? `${CollectionMetadataURL}/${index}.json` : ''
 
@@ -35,35 +44,59 @@ function MintVialButton({ index, numberOfVials, type }: Props) {
         address: vialContractInfo.address,
         abi: vialContractInfo.abi,
         functionName: 'mintVials',
-        args: [tokenURI, numberOfVials, { value: (vialPrice?.mul(BigNumber.from(numberOfVials))), gasPrice: feeData?.gasPrice }],
-        onSuccess: () => {
-            setIsMinting(false)
-        },
-        onError: () => {
-            setIsMinting(false)
-        }
+        args: [tokenURI, numberOfVials, { value: txValue, gasPrice: feeData?.gasPrice }],
     })
 
-    const { write: mintVials, data: vialData } = useContractWrite(config)
-
-    useWaitForTransaction({
-        hash: vialData?.hash,
-        onError(error) {
-            console.log("Error: ", error)
-        },
-        onSuccess() {
+    const { write: mintVials, data: vialData } = useContractWrite({
+        ...config,
+        onError: (error) => {
+            console.log(error)
             setIsMinting(false)
+            setIsLoading(false)
+        },
+        onSuccess: () => {
+            setIsMinting(true)
             refetchVials()
         }
     })
 
+    useWaitForTransaction({
+        hash: vialData?.hash,
+        onError(error) {
+            console.log(error)
+            setIsMinting(false)
+            setIsLoading(false)
+        },
+        onSuccess() {
+            console.log("Transaction successful")
+            setIsMinting(false)
+            setIsLoading(false)
+        }
+    })
+
+
 
     return (
-        <div className='flex flex-col space-y-2 items-center justify-center'>
-            <button className='p-4 bg-acid text-white hover:bg-dark-acid' type='button' onClick={() => mintVials?.()}>
-                Mint
-            </button>
-            {vialData && <TxHash className='text-black' hash={vialData?.hash} />}
+        <div className='py-4'>
+            {
+                notEnoughBalance &&
+                <p className='text-[0.6rem] text-gray-700 text-center'>
+                    You don&apos;t have enough balance to mint this vial, get ETH
+                    <Link href="https://aurora.dev/faucet" target="_blank" className="underline text-acid"> here</Link>
+                </p>
+            }
+            <div className='flex flex-col space-y-4 items-center justify-evenly pt-3'>
+                <SolidButton type='button' onClick={() => {
+                    if (balance?.value && txValue && balance?.value.lt(txValue)) {
+                        setNotEnoughBalance(true)
+                        return
+                    }
+                    setIsLoading(true)
+                    mintVials?.()
+                }} className=" bg-acid text-white" text='Mint' loading={isLoading} />
+            </div>
+            {isMinting &&
+                <div><TxHash className='text-black ' hash={`${vialData?.hash}`} /></div>}
         </div>
     )
 }
