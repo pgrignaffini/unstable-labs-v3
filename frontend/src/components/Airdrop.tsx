@@ -45,7 +45,7 @@ function Airdrop() {
 
     useEffect(() => {
         console.log('counter', counter)
-        if (counter === freeVials) {
+        if (counter >= freeVials) {
             setMinting(false)
             setIsDone(true)
             updateClaimMutation.mutate({ id: user?.id as string })
@@ -85,6 +85,7 @@ function Airdrop() {
                     console.log("Error minting vials: ", error.message)
                     setMinting(false)
                     setIsError(true)
+                    return
                 })
             // wait 10 seconds before minting next vial
             await new Promise((resolve) => setTimeout(resolve, 10000))
