@@ -96,7 +96,7 @@ function MintVialButton({ index, numberOfVials, type }: Props) {
                 }} className=" bg-acid text-white" text='Mint' loading={isLoading} />
             </div>
             {isMinting &&
-                <div><TxHash className='text-black ' hash={`${vialData?.hash}`} /></div>}
+                <div className='mt-4'><TxHash className='text-black ' hash={`${vialData?.hash}`} /></div>}
         </div>
     )
 }
