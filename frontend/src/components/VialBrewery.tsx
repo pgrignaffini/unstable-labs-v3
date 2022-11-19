@@ -1,7 +1,7 @@
 import React from 'react'
 import Card from '@components/Card'
 import type { Vial, Style, Base } from "../types/types"
-import { ConceptVialImageURL, CollectionVialImageURL, CollectionPreviewImageURL, ConceptPreviewImageURL, RemixPreviewImageURL, RemixVialImageURL } from "@utils/images"
+import { ConceptVialImageURL, CollectionVialImageURL, CollectionPreviewImageURL, ConceptPreviewImageURL, RemixPreviewImageURL, RemixVialImageURL, FreestylePreviewImageURL, FreestyleVialImageURL } from "@utils/images"
 import MintVialButton from '@components/MintVialButton'
 import { base } from "@data/base"
 import { concepts } from "@data/concepts";
@@ -28,13 +28,21 @@ function VialBrewery() {
     const [showConcepts, setShowConcepts] = React.useState<boolean>(false)
     const [showCollections, setShowCollections] = React.useState<boolean>(false)
     const [baseToShow, setBaseToShow] = React.useState<Base>()
-    const [type, setType] = React.useState<"collection" | "concept" | "remix" | undefined>(undefined)
+    const [type, setType] = React.useState<"collection" | "concept" | "remix" | "freestyle" | undefined>(undefined)
 
     const RemixVial: Vial = {
         name: "Remix",
         image: RemixVialImageURL,
         preview: RemixPreviewImageURL,
         type: 0,
+        style: ""
+    }
+
+    const FreestyleVial: Vial = {
+        name: "Freestyle",
+        image: FreestyleVialImageURL,
+        preview: FreestylePreviewImageURL,
+        type: 6,
         style: ""
     }
 
@@ -110,7 +118,11 @@ function VialBrewery() {
                 !showConcepts && !showCollections &&
                 (
                     <>
-                        <label htmlFor="info-vial-modal" className='cursor-pointer' onClick={() => setBaseToShow(base[0])} >
+                        <label htmlFor='buy-vial-modal' className='cursor-pointer'
+                            onClick={() => {
+                                setVial(FreestyleVial)
+                                setType('freestyle')
+                            }}>
                             <Card nft={base[0] as BaseVial} isVial />
                         </label>
                         <div className='cursor-pointer' onClick={() => setShowCollections(true)}>

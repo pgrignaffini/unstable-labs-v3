@@ -14,7 +14,7 @@ export const useVials = () => {
         functionName: 'getVialsOwnedByMe',
         args: [{ from: address }],
         onSuccess(data) {
-            console.log('Vial ids: ', data)
+            // console.log('Vial ids: ', data)
         }
     })
 
@@ -25,7 +25,7 @@ export const useVials = () => {
         args: [ownedTokenIds],
         enabled: !!ownedTokenIds,
         onSuccess(data) {
-            console.log('Vial uris: ', data)
+            // console.log('Vial uris: ', data)
         }
     })
 
@@ -37,7 +37,7 @@ export const useVials = () => {
                 return { tokenId, ...nft }
             })
         )
-        console.log("Owned vials: ", ownedNfts)
+        // console.log("Owned vials: ", ownedNfts)
         return ownedNfts
     }
 

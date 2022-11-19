@@ -97,6 +97,14 @@ const Home: NextPage = () => {
     burnVial?.()
   }
 
+  const handleFreeStyle = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!prompt) return
+    const req: Request = await text2Image(prompt, "")
+    setRequest(req)
+  }
+
+
   useWaitForTransaction({
     hash: burnData?.hash,
     enabled: !!burnData?.hash,
@@ -120,6 +128,8 @@ const Home: NextPage = () => {
     setSelectedImages(selectedImages.filter((_, i) => i !== index))
   }
 
+  console.log("promptState", promptState)
+
   const selectVialModal = (
     <>
       <input type="checkbox" id="select-vial-modal" className="modal-toggle" />
@@ -132,7 +142,15 @@ const Home: NextPage = () => {
               {Object.keys(groupedVials).map((key, index) => {
                 const vials = groupedVials[key]
                 return (
-                  <div key={index} onClick={() => setVialToBurn?.(vials[0] as Vial)}>
+                  <div key={index} onClick={() => {
+                    setVialToBurn?.(vials[0] as Vial)
+                    if (key === "freestyle") {
+                      setPromptState("freestyle")
+                    }
+                    else {
+                      setPromptState("std")
+                    }
+                  }}>
                     <VialSelectionContainer selected={vialToBurn === (vials[0] as Vial)} vial={vials[0]} multiple={vials.length} />
                   </div>
                 )
@@ -174,7 +192,7 @@ const Home: NextPage = () => {
         </div>
         <div className="flex items-center justify-between w-full">
           <img src="/pc-animated-left.gif" alt="pc-animated-left" className="w-48 h-48" />
-          <div className={`${promptState === "remix" ? "bg-blue-400" : "bg-gray-400"} p-6 mx-auto row-start-3 col-start-3`}>
+          <div className={`${promptState === "remix" ? "bg-blue-400" : promptState === "freestyle" ? "bg-red-300" : "bg-gray-400"} p-6 mx-auto row-start-3 col-start-3`}>
             <div className="flex items-center space-x-3 justify-between">
               <label htmlFor="select-vial-modal" className="cursor-pointer" >
                 {vialToBurn ? <img src={vialToBurn.image} alt="vial" className="h-12 w-12 object-contain border-2 border-black" /> :
@@ -182,7 +200,7 @@ const Home: NextPage = () => {
                 }
               </label>
               {vialToBurn && <p className="text-[0.7rem] w-24 whitespace-pre-line text-black">{vialToBurn.name}</p>}
-              {vialToBurn && vialToBurn.name !== "Remix Vial" ?
+              {vialToBurn && vialToBurn.name !== "Remix Vial" && vialToBurn.name !== "Freestyle Vial" ?
                 <form className='flex space-x-5 items-center' onSubmit={(e) => {
                   setPromptState("std")
                   handleSubmit(e)
@@ -196,6 +214,13 @@ const Home: NextPage = () => {
                     handleSubmit(e)
                   }}>
                     <button type="submit" className="p-4 bg-blue-600 text-white">Remix</button>
+                  </form>
+                ) : vialToBurn && vialToBurn.name === "Freestyle Vial" ? (
+                  <form className='flex space-x-5 items-center' onSubmit={(e) => {
+                    handleFreeStyle(e)
+                  }}>
+                    <input onChange={(e) => setPrompt(e.target.value)} className='w-full p-4 bg-white text-black outline-none font-pixel' required placeholder="prompt..." />
+                    <button type="submit" className="p-4 bg-red-500 text-white">Freestyle</button>
                   </form>
                 ) :
                   <div>

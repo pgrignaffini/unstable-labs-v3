@@ -2,7 +2,7 @@ import { useState } from 'react'
 import vialContractInfo from "@abi/vial.json"
 import TxHash from '@components/TxHash'
 import { useContractWrite, useWaitForTransaction, usePrepareContractWrite, useContractRead, useFeeData, useBalance, useAccount } from 'wagmi'
-import { CollectionMetadataURL, ConceptMetadataURL, RemixMetadataURL } from "@utils/metadata"
+import { CollectionMetadataURL, ConceptMetadataURL, RemixMetadataURL, FreestyleMetadataURL } from "@utils/metadata"
 import { BigNumber } from 'ethers'
 import { useVials } from '@hooks/useVials'
 import SolidButton from '@components/SolidButton'
@@ -11,7 +11,7 @@ import Link from 'next/link'
 type Props = {
     index: number;
     numberOfVials: number;
-    type: "concept" | "collection" | "remix" | undefined;
+    type: "concept" | "collection" | "remix" | "freestyle" | undefined;
 }
 
 function MintVialButton({ index, numberOfVials, type }: Props) {
@@ -28,7 +28,11 @@ function MintVialButton({ index, numberOfVials, type }: Props) {
 
     console.log(balance?.value, balance?.symbol)
 
-    const tokenURI = type === "remix" ? RemixMetadataURL : type === "concept" ? `${ConceptMetadataURL}/${index}.json` : type === "collection" ? `${CollectionMetadataURL}/${index}.json` : ''
+    const tokenURI =
+        type === "remix" ? RemixMetadataURL :
+            type === "concept" ? `${ConceptMetadataURL}/${index}.json` :
+                type === "collection" ? `${CollectionMetadataURL}/${index}.json` :
+                    type === "freestyle" ? FreestyleMetadataURL : ""
 
     useContractRead({
         address: vialContractInfo.address,
