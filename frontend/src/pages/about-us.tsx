@@ -8,7 +8,9 @@ function AboutUsPage() {
                 <div className="flex items-center space-x-10">
                     <img src="/Ian.png" alt="avatar" className="w-32 h-32" />
                     <p className="text-md flex-1 text-justify">
-                        Hello
+                        Hi, I am Ian McCann and I have been a Data Scientist for 7 years. <br />
+                        I have been working in web3 for the past year and was very excited to get the chance to blend together my data science and web3 skills for this hackathon. <br />
+                        Feel free to reach out to me on Discord at Pokey#7986 if you&apos;d like to chat.<br />
                     </p>
                 </div>
                 <div className="flex items-center space-x-10">
