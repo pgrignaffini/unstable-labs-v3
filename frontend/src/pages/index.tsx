@@ -231,10 +231,11 @@ const Home: NextPage = () => {
           </div>
           <img src="/pc-animated-right.gif" alt="pc-animated-left" className="w-48 h-48" />
         </div>
-        {vialToBurn && <div className="container mx-auto flex flex-col space-y-4">
-          <p className="text-center">Like this pic?</p>
-          <img src={vialToBurn?.preview} alt="preview" className="mx-auto w-1/6" />
-        </div>}
+        {vialToBurn && !progressData?.eta_relative &&
+          <div className="container mx-auto flex flex-col space-y-4">
+            <p className="text-center">Like this pic?</p>
+            <img src={vialToBurn?.preview} alt="preview" className="mx-auto w-1/6" />
+          </div>}
         <div className="container mx-auto">
           {selectedImages.length > 0 ?
             <div className='bg-gray-400 p-4 overflow-x-auto flex space-x-4'>

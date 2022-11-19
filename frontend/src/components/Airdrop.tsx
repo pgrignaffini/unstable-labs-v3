@@ -102,7 +102,7 @@ function Airdrop() {
                     {isError && <p className=" text-center text-sm text-red-500  bg-black p-2">Well, something went wrong...try again later</p>}
                     {minting && <p className='text-center text-sm text-acid  bg-black p-2'>We&apos;re brewing your vials, just a minute...</p>}
                     {isDone && <p className='text-center text-sm text-acid  bg-black p-2'>You have claimed your free vials!</p>}
-                    <SolidButton text='Claim Airdrop' onClick={handleClick} className="bg-acid text-white" loading={minting} />
+                    <SolidButton color='green' text='Claim Airdrop' onClick={handleClick} className="bg-acid text-white" loading={minting} />
                 </div>
             }
         </>
