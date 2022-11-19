@@ -60,7 +60,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <WagmiConfig client={client}>
         <QueryClientProvider client={queryClient}>
-          <div className="bg-black min-h-screen">
+          <div className="bg-black min-h-screen min-w-fit">
             <Header />
             <Component {...pageProps} />
             <Footer />
