@@ -1,5 +1,3 @@
-import { SendTransactionResult } from '@wagmi/core'
-import { useWaitForTransaction } from 'wagmi'
 import { useState } from 'react'
 
 interface Props {
@@ -18,7 +16,7 @@ function SolidButton({ className, onClick, text, rounded, label, type, loading }
 
   return (
     <>
-      <button type={type} disabled={loading} className={`relative ${className}`} onPointerOver={() => setClicked(false)} onClick={(e) => {
+      <button type={type} disabled={loading} className={`relative ${className}`} onPointerOver={() => setClicked(false)} onClick={() => {
         setClicked(true)
         onClick?.()
       }}>

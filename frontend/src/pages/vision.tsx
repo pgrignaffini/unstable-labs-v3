@@ -13,7 +13,7 @@ function VisionPage() {
                 To get started head over to the <Link href="/collections" className="text-acid underline">brewery</Link> and pick up some vials. Then, make your way to the  <Link href="/" className="text-acid underline">lab</Link> and start brewing something beautiful.<br />
                 We offer a one-time airdrop on our home page for users who sign in with their Discord.<br />
                 If you need some testnet eth, please go to the <Link href="https://aurora.dev/faucet" target="_blank" className="text-acid underline">faucet</Link>.<br />
-                We are looking forward to engaging the community with a variety of specialty Vials already created and ready to release. Our goal is to build a strong community that can view, interact, and trade each other’s artwork. We look forward to releasing on mainnet soon after the hackathon ends. We will also be applying for grants to hopefully get some funding to continue our building (and paying for the server).
+                We are looking forward to engaging the community with a variety of specialty Vials already created and ready to release. Our goal is to build a strong community that can view, interact, and trade each other&apos;s artwork. We look forward to releasing on mainnet soon after the hackathon ends. We will also be applying for grants to hopefully get some funding to continue our building (and paying for the server).
             </p>
         </main>
     )
