@@ -11,7 +11,8 @@ function Header() {
 
     return (
         <div className='flex justify-between items-end py-4 px-8'>
-            <div className="flex items-end cursor-pointer group">
+            <div className="flex items-end cursor-pointer group relative">
+                <p className='absolute top-4 right-7 bg-red-500 border text-white text-[0.5rem] px-1'>beta</p>
                 <Link className='font-bold text-3xl text-acid' href="/">
                     Unstable<span className="text-white">Labs</span>
                 </Link>
