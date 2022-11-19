@@ -196,7 +196,7 @@ const Home: NextPage = () => {
             <div className="flex items-center space-x-3 justify-between">
               <label htmlFor="select-vial-modal" className="cursor-pointer" >
                 {vialToBurn ? <img src={vialToBurn.image} alt="vial" className="h-12 w-12 object-contain border-2 border-black" /> :
-                  <SolidButton text="Press Me!" className='w-16 text-white text-[0.6rem]' rounded label="select-vial-modal" onClick={() => refetchVials()} />
+                  <SolidButton color="green" text="Press Me!" className='w-16 text-white text-[0.6rem]' rounded label="select-vial-modal" onClick={() => refetchVials()} />
                 }
               </label>
               {vialToBurn && <p className="text-[0.7rem] w-24 whitespace-pre-line text-black">{vialToBurn.name}</p>}
@@ -206,21 +206,21 @@ const Home: NextPage = () => {
                   handleSubmit(e)
                 }}>
                   <input onChange={(e) => setPrompt(e.target.value)} className='w-full p-4 bg-white text-black outline-none font-pixel' required placeholder="prompt..." />
-                  <SolidButton text="Brew" type="submit" className='text-white' />
+                  <SolidButton color="green" text="Brew" type="submit" className='text-white' />
                   {/* <button type="submit" className="p-4 bg-acid text-white">Brew</button> */}
                 </form> : vialToBurn && vialToBurn.name === "Remix Vial" && selectedImage.length ? (
                   <form className='flex space-x-5 items-center' onSubmit={(e) => {
                     setPromptState("remix")
                     handleSubmit(e)
                   }}>
-                    <button type="submit" className="p-4 bg-blue-600 text-white">Remix</button>
+                    <SolidButton color="blue" text="Remix" type="submit" className='text-white' />
                   </form>
                 ) : vialToBurn && vialToBurn.name === "Freestyle Vial" ? (
                   <form className='flex space-x-5 items-center' onSubmit={(e) => {
                     handleFreeStyle(e)
                   }}>
                     <input onChange={(e) => setPrompt(e.target.value)} className='w-full p-4 bg-white text-black outline-none font-pixel' required placeholder="prompt..." />
-                    <button type="submit" className="p-4 bg-red-500 text-white">Freestyle</button>
+                    <SolidButton color="red" text="Freestyle" type="submit" className='text-white' />
                   </form>
                 ) :
                   <div>

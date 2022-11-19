@@ -90,7 +90,7 @@ function MintVialButton({ index, numberOfVials, type }: Props) {
                 </p>
             }
             <div className='flex flex-col space-y-4 items-center justify-evenly pt-3'>
-                <SolidButton type='button' onClick={() => {
+                <SolidButton type='button' color="green" onClick={() => {
                     if (balance?.value && txValue && balance?.value.lt(txValue)) {
                         setNotEnoughBalance(true)
                         return
