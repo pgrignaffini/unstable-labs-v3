@@ -138,7 +138,7 @@ const Home: NextPage = () => {
       <div className="modal">
         <div className={`w-1/3 h-2/3 ${vials?.length ? "overflow-y-scroll" : null} `}>
           <label htmlFor="select-vial-modal" className="font-pixel text-2xl text-white cursor-pointer"
-            onClick={() => setVialToBurn(undefined)}>X</label>
+            onClick={() => { setVialToBurn(undefined); setPromptState("std") }}>X</label>
           <div className="bg-gray-400 bg-opacity-50 backdrop-blur-xl p-8 relative">
             {vials?.length ? <div className="flex flex-col space-y-4 ">
               {Object.keys(groupedVials).map((key, index) => {
