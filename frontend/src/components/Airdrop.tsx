@@ -2,13 +2,12 @@ import { useState, useEffect } from 'react'
 import { useWaitForTransaction, useAccount, useProvider } from 'wagmi'
 import vialContractInfo from "@abi/vial.json"
 import SolidButton from '@components/SolidButton'
-// import { Vials } from "../utils/vials"
 import { ethers } from 'ethers'
 import { trpc } from '@utils/trpc'
 import { collections } from "@data/collections"
 import { concepts } from "@data/concepts"
-import { useSession } from 'next-auth/react'
 import { CollectionMetadataURL, ConceptMetadataURL, FreestyleMetadataURL, RemixMetadataURL } from "@utils/metadata"
+import { useLoggedUser } from '@hooks/useLoggedUser'
 
 function getRandomInt(min: number, max: number) {
     min = Math.ceil(min);
@@ -32,14 +31,7 @@ function Airdrop() {
     const [minting, setMinting] = useState<boolean>(false)
     const [tx, setTx] = useState<ethers.providers.TransactionResponse | undefined>(undefined)
 
-    const { data: session } = useSession()
-
-    const { data: user } = trpc.user.getUser.useQuery({
-        id: session?.user?.id || '1'
-    }, {
-        enabled: !!session?.user?.id,
-        refetchInterval: 5000,
-    })
+    const { user } = useLoggedUser()
 
     const updateClaimMutation = trpc.user.updateClaim.useMutation()
 

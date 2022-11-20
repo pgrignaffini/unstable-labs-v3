@@ -164,17 +164,17 @@ const Home: NextPage = () => {
             </div> : <div className="flex flex-col space-y-4 justify-center items-center">
               <p className="text-white text-lg">It seems there aren&apos;t any vials here...go grab some in the{' '}
                 <Link href="/collections" className="underline text-acid">Brewery!</Link></p>
-              {/* {user && !user.hasClaimedVials && */}
-              <>
-                <p className="text-md text-white">Did you know that by logging in with Discord you can claim a <span className="text-acid font-xl">FREE</span> vial airdrop?</p>
-                <p className="text-md text-white">The airdrop consists of: <br />
-                  <ul>
-                    <li>2x Remix Vials</li>
-                    <li>1x Freestyle Vial</li>
-                    <li>3x Random Vials</li>
-                  </ul></p>
-                <p className="text-md text-white">After a successful login go to the bottom of the page to claim it!</p>
-              </>
+              {user && !user.hasClaimedVials &&
+                <>
+                  <p className="text-md text-white">Did you know that by logging in with Discord you can claim a <span className="text-acid font-xl">FREE</span> vial airdrop?</p>
+                  <p className="text-md text-white">The airdrop consists of: <br />
+                    <ul>
+                      <li>2x Remix Vials</li>
+                      <li>1x Freestyle Vial</li>
+                      <li>3x Random Vials</li>
+                    </ul></p>
+                  <p className="text-md text-white">After a successful login go to the bottom of the page to claim it!</p>
+                </>}
             </div>}
           </div>
         </div>

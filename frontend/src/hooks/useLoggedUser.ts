@@ -12,5 +12,7 @@ export const useLoggedUser = () => {
         refetchInterval: 5000,
     })
 
-    return { user }
+    const hasClaimedVials = user?.hasClaimedVials
+
+    return { user, hasClaimedVials }
 }
