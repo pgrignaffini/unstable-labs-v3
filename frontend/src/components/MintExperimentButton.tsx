@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import experimentContractInfo from "@abi/experiment.json"
-import { useContractWrite, useFeeData, useWaitForTransaction } from "wagmi"
+import { useContractWrite, useFeeData, useWaitForTransaction, useContractEvent } from "wagmi"
 import { Metadata, uploadMetadataToIPFS } from '@utils/pinata'
 import TxHash from './TxHash'
 import { trpc } from '@utils/trpc'
+import { BigNumber } from 'ethers'
 
 type Props = {
     image: string
@@ -17,13 +18,30 @@ const MintExperimentButton = ({ image, id, className }: Props) => {
     const [description, setDescription] = useState<string>("")
     const { data: feeData } = useFeeData()
 
-    const createEperimentMutation = trpc.experiment.createExperiment.useMutation()
+    const createExperimentMutation = trpc.experiment.createExperiment.useMutation()
 
     const { write: createToken, data: tokenData, error: errorMintToken } = useContractWrite({
         mode: 'recklesslyUnprepared',
         address: experimentContractInfo.address,
         abi: experimentContractInfo.abi,
         functionName: 'mintToken',
+        onSuccess(data, variables, context) {
+            console.log('data', data)
+            console.log('variables', variables)
+            console.log('context', context)
+        },
+    })
+
+
+    useContractEvent({
+        address: experimentContractInfo.address,
+        abi: experimentContractInfo.abi,
+        eventName: 'TokenMinted',
+        listener(tokenId: BigNumber) {
+            createExperimentMutation.mutateAsync({
+                tokenId: tokenId.toNumber(),
+            })
+        },
     })
 
     useWaitForTransaction({
@@ -32,9 +50,8 @@ const MintExperimentButton = ({ image, id, className }: Props) => {
             console.log(error)
 
         },
-        onSuccess() {
+        onSuccess(data) {
             console.log("Transaction successful")
-
         }
     })
 
@@ -71,6 +88,7 @@ const MintExperimentButton = ({ image, id, className }: Props) => {
                                             createToken?.({
                                                 recklesslySetUnpreparedArgs: [tokenUri, { gasPrice: feeData?.gasPrice }]
                                             })
+
                                         }}>Mint</button>
                                     {tokenData && <TxHash className='text-black' hash={tokenData?.hash} />}
                                 </div>

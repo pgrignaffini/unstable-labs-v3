@@ -20,16 +20,16 @@ function Header() {
                     <img src="/flask.png" alt="flask" className="w-10" />
                 </div>
             </div>
-            <Link className='font-xl text-sm lg:text-md xl:text-lg 2xl:text-xl text-white cursor-pointer border-acid hover:border-b-2' href="/collections">
+            <Link className='font-lg text-sm lg:text-md xl:text-lg 2xl:text-xl text-white cursor-pointer border-acid hover:border-b-2' href="/collections">
                 Lab Collections
             </Link>
             {isConnected && address && !session &&
-                <p className="font-xl text-white cursor-pointer text-sm lg:text-md xl:text-lg 2xl:text-xl" onClick={() => signIn("discord")}>
+                <p className="font-xl text-white cursor-pointer text-sm lg:text-md xl:text-lg 2xl:text-xl  border-acid hover:border-b-2" onClick={() => signIn("discord")}>
                     Log in
                 </p>}
             {session &&
                 (<div className="flex space-x-8 items-end">
-                    <button className="font-xl text-white cursor-pointer text-sm lg:text-md xl:text-lg 2xl:text-xl" onClick={() => signOut()}>
+                    <button className="font-lg text-white cursor-pointer text-sm lg:text-md xl:text-lg 2xl:text-xl  border-acid hover:border-b-2" onClick={() => signOut()}>
                         <p>Log out</p>
                     </button>
                     <img src={session?.user?.image as string} className="w-8 h-8" />

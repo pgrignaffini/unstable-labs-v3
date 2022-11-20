@@ -6,7 +6,7 @@ import { router, publicProcedure } from "../trpc";
 export const experimentRouter = router({
     createExperiment: publicProcedure
         .input(z.object({
-            tokenId: z.string().min(1),
+            tokenId: z.number().min(1),
         }))
         .mutation(({ ctx, input }) => {
             if (!ctx.session?.user) {
@@ -17,7 +17,7 @@ export const experimentRouter = router({
             }
             return ctx.prisma.experiment.create({
                 data: {
-                    id: input.tokenId,
+                    tokenId: input.tokenId,
                     creator: {
                         connect: {
                             id: ctx?.session?.user?.id,
@@ -28,12 +28,12 @@ export const experimentRouter = router({
         }),
     getExperimentLikes: publicProcedure
         .input(z.object({
-            tokenId: z.string().min(1),
+            tokenId: z.number().min(1),
         }))
         .query(({ ctx, input }) => {
             return ctx.prisma.experiment.findUnique({
                 where: {
-                    id: input.tokenId,
+                    tokenId: input.tokenId,
                 },
                 include: {
                     likes: true,

@@ -48,7 +48,7 @@ function MintVialButton({ index, numberOfVials, type }: Props) {
         address: vialContractInfo.address,
         abi: vialContractInfo.abi,
         functionName: 'mintVials',
-        args: [tokenURI, numberOfVials, { value: txValue, gasPrice: feeData?.gasPrice }],
+        args: [tokenURI, numberOfVials, { value: vialPrice?.mul(BigNumber.from(numberOfVials)), gasPrice: feeData?.gasPrice }],
     })
 
     const { write: mintVials, data: vialData } = useContractWrite({
