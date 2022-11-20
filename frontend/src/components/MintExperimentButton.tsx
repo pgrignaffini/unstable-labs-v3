@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import experimentContractInfo from "@abi/experiment.json"
-import { useContractWrite, useFeeData } from "wagmi"
+import { useContractWrite, useFeeData, useWaitForTransaction } from "wagmi"
 import { Metadata, uploadMetadataToIPFS } from '@utils/pinata'
 import TxHash from './TxHash'
+import { trpc } from '@utils/trpc'
 
 type Props = {
     image: string
@@ -16,11 +17,25 @@ const MintExperimentButton = ({ image, id, className }: Props) => {
     const [description, setDescription] = useState<string>("")
     const { data: feeData } = useFeeData()
 
+    const createEperimentMutation = trpc.experiment.createExperiment.useMutation()
+
     const { write: createToken, data: tokenData, error: errorMintToken } = useContractWrite({
         mode: 'recklesslyUnprepared',
         address: experimentContractInfo.address,
         abi: experimentContractInfo.abi,
         functionName: 'mintToken',
+    })
+
+    useWaitForTransaction({
+        hash: tokenData?.hash,
+        onError(error) {
+            console.log(error)
+
+        },
+        onSuccess() {
+            console.log("Transaction successful")
+
+        }
     })
 
     const mintModal = (

@@ -24,8 +24,8 @@ function MintVialButton({ index, numberOfVials, type }: Props) {
     const { data: feeData } = useFeeData()
     const { data: balance } = useBalance({ address })
     const { refetchVials } = useVials()
-    const txValue = vialPrice?.mul(BigNumber.from(numberOfVials))
-
+    const txValue = (vialPrice?.mul(BigNumber.from(numberOfVials)))?.add(BigNumber.from(500000000000000))
+    console.log('txValue', txValue?.toNumber())
     console.log(balance?.value, balance?.symbol)
 
     const tokenURI =
@@ -82,14 +82,14 @@ function MintVialButton({ index, numberOfVials, type }: Props) {
 
     return (
         <div className='py-4'>
-            {
-                notEnoughBalance &&
-                <p className='text-[0.6rem] text-gray-700 text-center'>
-                    You don&apos;t have enough balance to mint this vial, get ETH
-                    <Link href="https://aurora.dev/faucet" target="_blank" className="underline text-acid"> here</Link>
-                </p>
-            }
             <div className='flex flex-col space-y-4 items-center justify-evenly pt-3'>
+                {
+                    notEnoughBalance &&
+                    <p className='text-[0.6rem] text-gray-700 text-center'>
+                        You don&apos;t have enough balance to mint this vial and pay for tx fees, get ETH
+                        <Link href="https://aurora.dev/faucet" target="_blank" className="underline text-acid"> here</Link>
+                    </p>
+                }
                 <SolidButton type='button' color="green" onClick={() => {
                     if (balance?.value && txValue && balance?.value.lt(txValue)) {
                         setNotEnoughBalance(true)
@@ -97,7 +97,7 @@ function MintVialButton({ index, numberOfVials, type }: Props) {
                     }
                     setIsLoading(true)
                     mintVials?.()
-                }} className=" bg-acid text-white" text='Mint' loading={isLoading} />
+                }} className="bg-acid text-white" text='Mint' loading={isLoading} />
             </div>
             {isMinting &&
                 <div className='mt-4'><TxHash className='text-black ' hash={`${vialData?.hash}`} /></div>}

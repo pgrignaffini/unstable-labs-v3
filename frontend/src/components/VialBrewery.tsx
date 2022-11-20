@@ -7,6 +7,8 @@ import { base } from "@data/base"
 import { concepts } from "@data/concepts";
 import { collections } from "@data/collections";
 import Image from 'next/image'
+import { useVials } from '@hooks/useVials'
+import { groupBy } from '@utils/helpers'
 
 type Props = {
     concepts: Style[],
@@ -25,10 +27,16 @@ function VialBrewery() {
     const [numVials, setNumVials] = React.useState<number>(1)
     const [vial, setVial] = React.useState<Vial>()
     const price = (0.0001 * numVials)
+    const { vials } = useVials()
+    const groupedVials = vials ? groupBy(vials, 'style') : []
+    const hasFreestyle = groupedVials["freestyle"]?.length > 0
     const [showConcepts, setShowConcepts] = React.useState<boolean>(false)
     const [showCollections, setShowCollections] = React.useState<boolean>(false)
     const [baseToShow, setBaseToShow] = React.useState<Base>()
     const [type, setType] = React.useState<"collection" | "concept" | "remix" | "freestyle" | undefined>(undefined)
+
+    console.log(groupedVials)
+    console.log("has freestyle", hasFreestyle)
 
     const RemixVial: Vial = {
         name: "Remix",
@@ -83,7 +91,7 @@ function VialBrewery() {
                                 <div className='relative w-48 h-32 lg:w-64 lg:h-48 2xl:w-96 2xl:h-80'>
                                     <Image src={vial.preview} alt="preview" layout="fill" />
                                 </div>
-                                <div className='flex flex-col space-y-4 items-center justify-evenly'>
+                                {(type !== "freestyle" || !hasFreestyle) && <div className='flex flex-col space-y-4 items-center justify-evenly'>
                                     <div className="flex items-center justify-evenly">
                                         <p className='text-sm lg:text-md 2xl:text-lg text-black'>Quantity:</p>
                                         <input type="number" placeholder="Price" step={1}
@@ -100,7 +108,7 @@ function VialBrewery() {
                                                 type={type}
                                                 numberOfVials={numVials} />}
                                     </div>
-                                </div>
+                                </div>}
                             </div>
                         </div>
                     </div>

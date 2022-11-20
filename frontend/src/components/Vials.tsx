@@ -9,7 +9,7 @@ import Image from 'next/image';
 function Vials() {
 
     const [selectedVial, setSelectedVial] = React.useState<Vial | undefined>(undefined)
-    const { vials } = useVials()
+    const { vials, isLoadingVials } = useVials()
 
     const vialInfoModal = (vial: Vial) => {
         return (
@@ -49,6 +49,10 @@ function Vials() {
                     </label>
                 )
             })}
+            {isLoadingVials &&
+                <div className='flex justify-center items-center'>
+                    <img src='/flask-animated.gif' className='w-12 ' />
+                </div>}
         </>
     )
 }

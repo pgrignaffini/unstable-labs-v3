@@ -17,9 +17,11 @@ import MintExperimentButton from "@components/MintExperimentButton";
 import SolidButton from "@components/SolidButton";
 import Link from "next/link";
 import Airdrop from "@components/Airdrop";
+import { useLoggedUser } from "@hooks/useLoggedUser";
 
 const Home: NextPage = () => {
 
+  const { user } = useLoggedUser()
   const { vials, refetchVials } = useVials()
   const groupedVials = vials ? groupBy(vials, 'style') : []
   const [vialToBurn, setVialToBurn] = useState<Vial | undefined>(undefined);
@@ -134,7 +136,7 @@ const Home: NextPage = () => {
     <>
       <input type="checkbox" id="select-vial-modal" className="modal-toggle" />
       <div className="modal">
-        <div className="w-1/3 h-2/3 overflow-y-scroll">
+        <div className={`w-1/3 h-2/3 ${vials?.length ? "overflow-y-scroll" : null} `}>
           <label htmlFor="select-vial-modal" className="font-pixel text-2xl text-white cursor-pointer"
             onClick={() => setVialToBurn(undefined)}>X</label>
           <div className="bg-gray-400 bg-opacity-50 backdrop-blur-xl p-8 relative">
@@ -159,9 +161,20 @@ const Home: NextPage = () => {
                 <label htmlFor="select-vial-modal"
                   className="p-2 border-acid bg-gray-700 border-2 w-fit font-pixel text-lg sticky text-white cursor-pointer hover:bg-slate-400">Select</label>
               </div>
-            </div> : <div className="flex flex-col justify-center items-center">
-              <p className="text-white font-pixel text-lg">It seems there aren&apos;t any vials here...go grab some in the
-                <Link href="/collections" className="underline text-acid"> Brewery!</Link></p>
+            </div> : <div className="flex flex-col space-y-4 justify-center items-center">
+              <p className="text-white text-lg">It seems there aren&apos;t any vials here...go grab some in the{' '}
+                <Link href="/collections" className="underline text-acid">Brewery!</Link></p>
+              {/* {user && !user.hasClaimedVials && */}
+              <>
+                <p className="text-md text-white">Did you know that by logging in with Discord you can claim a <span className="text-acid font-xl">FREE</span> vial airdrop?</p>
+                <p className="text-md text-white">The airdrop consists of: <br />
+                  <ul>
+                    <li>2x Remix Vials</li>
+                    <li>1x Freestyle Vial</li>
+                    <li>3x Random Vials</li>
+                  </ul></p>
+                <p className="text-md text-white">After a successful login go to the bottom of the page to claim it!</p>
+              </>
             </div>}
           </div>
         </div>

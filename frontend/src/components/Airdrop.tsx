@@ -8,7 +8,7 @@ import { trpc } from '@utils/trpc'
 import { collections } from "@data/collections"
 import { concepts } from "@data/concepts"
 import { useSession } from 'next-auth/react'
-import { CollectionMetadataURL, ConceptMetadataURL } from "@utils/metadata"
+import { CollectionMetadataURL, ConceptMetadataURL, FreestyleMetadataURL, RemixMetadataURL } from "@utils/metadata"
 
 function getRandomInt(min: number, max: number) {
     min = Math.ceil(min);
@@ -73,20 +73,36 @@ function Airdrop() {
         return tokenURI
     }
 
+    const airdrop = async (tokenURI: string, num: number, address: string) => {
+        const tx: ethers.providers.TransactionResponse = await vialNFTContract?.airdropVials?.(tokenURI, num, address)
+            .catch((error: Error) => {
+                console.log("Error minting vials: ", error.message)
+                setMinting(false)
+                setIsError(true)
+                return
+            })
+        return tx
+    }
+
+
     const handleClick = async () => {
-        const types = ["collection", "concept"]
         setMinting(true)
+        // airdrop freestyle vial
+        const tx = await airdrop(FreestyleMetadataURL, 1, address as string)
+        setTx(tx)
+        await new Promise((resolve) => setTimeout(resolve, 10000))
+
+        // airdrop remix vial
+        const tx2 = await airdrop(RemixMetadataURL, 2, address as string)
+        setTx(tx2)
+        await new Promise((resolve) => setTimeout(resolve, 10000))
+
+        const types = ["collection", "concept"]
         for (let i = 0; i < freeVials; i++) {
             const type = types[getRandomInt(0, types.length)]
             console.log("type: ", type)
             const tokenURI = getRandomURI(type as string)
-            const tx: ethers.providers.TransactionResponse = await vialNFTContract?.airdropVials?.(tokenURI, 1, address)
-                .catch((error: Error) => {
-                    console.log("Error minting vials: ", error.message)
-                    setMinting(false)
-                    setIsError(true)
-                    return
-                })
+            const tx = await airdrop(tokenURI, 1, address as string)
             // wait 10 seconds before minting next vial
             await new Promise((resolve) => setTimeout(resolve, 10000))
             console.log("tx hash: ", tx?.hash)

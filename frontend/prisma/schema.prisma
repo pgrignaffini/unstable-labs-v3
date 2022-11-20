@@ -48,14 +48,16 @@ model Session {
 }
 
 model User {
-  id              String    @id @default(cuid())
+  id              String       @id @default(cuid())
   name            String?
-  email           String?   @unique
+  email           String?      @unique
   emailVerified   DateTime?
   image           String?
   accounts        Account[]
   sessions        Session[]
-  hasClaimedVials Boolean?  @default(false)
+  hasClaimedVials Boolean?     @default(false)
+  experiments     Experiment[]
+  likes           Like[]
 }
 
 model VerificationToken {
@@ -64,4 +66,21 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Experiment {
+  id        String   @id @default(uuid())
+  userId    String
+  creator   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  likes     Like[]
+}
+
+model Like {
+  id         String     @id @default(uuid())
+  userId     String
+  tokenId    String
+  user       User       @relation(fields: [userId], references: [id])
+  experiment Experiment @relation(fields: [tokenId], references: [id])
+  createdAt  DateTime   @default(now())
 }
