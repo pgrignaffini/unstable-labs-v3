@@ -9,7 +9,7 @@ export const useExperiments = () => {
 
     const { address } = useAccount()
 
-    const { data: tokenIds } = useContractRead({
+    const { data: tokenIds, refetch: refetchAllExperiments } = useContractRead({
         address: experimentContractInfo.address,
         abi: experimentContractInfo.abi,
         functionName: 'getTokenIds',
@@ -40,7 +40,7 @@ export const useExperiments = () => {
         return allExperiments
     }
 
-    const { data: ownedTokenIds } = useContractRead({
+    const { data: ownedTokenIds, refetch: refetchExperiments } = useContractRead({
         address: experimentContractInfo.address,
         abi: experimentContractInfo.abi,
         functionName: 'getTokensOwnedByMe',
@@ -72,13 +72,13 @@ export const useExperiments = () => {
         return ownedExperiments
     }
 
-    const { data: allExperiments, isLoading: isLoadingAllExperiments, refetch: refetchAllExperiments } = useQuery('all-experiments', getAllExperiments, {
+    const { data: allExperiments, isLoading: isLoadingAllExperiments } = useQuery('all-experiments', getAllExperiments, {
         enabled: !!tokenURIs,
         refetchOnWindowFocus: true,
         refetchInterval: 10000,
     })
 
-    const { data: experiments, isLoading: isLoadingExperiments, refetch: refetchExperiments } = useQuery(['your-experiments', address], getOwnedExperiments, {
+    const { data: experiments, isLoading: isLoadingExperiments } = useQuery(['your-experiments', address], getOwnedExperiments, {
         enabled: !!ownedTokenURIs,
         refetchOnWindowFocus: true,
         refetchInterval: 10000,
