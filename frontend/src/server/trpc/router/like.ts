@@ -3,10 +3,10 @@ import { z } from "zod";
 
 import { router, publicProcedure } from "../trpc";
 
-export const experimentRouter = router({
+export const likeRouter = router({
     addLike: publicProcedure
         .input(z.object({
-            tokenId: z.string().min(1),
+            tokenId: z.number().min(1),
             userId: z.string().min(1),
         }))
         .mutation(({ ctx, input }) => {
@@ -25,7 +25,7 @@ export const experimentRouter = router({
                     },
                     experiment: {
                         connect: {
-                            id: input.tokenId,
+                            tokenId: input.tokenId,
                         }
                     }
                 }

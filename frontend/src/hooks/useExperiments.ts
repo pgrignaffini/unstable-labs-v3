@@ -33,7 +33,7 @@ export const useExperiments = () => {
         const allExperiments = await Promise.all(
             (tokenURIs as NftURI[])?.map(async (nftURI): Promise<Experiment> => {
                 const { data: nft } = await axios.get(nftURI.tokenURI)
-                const tokenId = nftURI.tokenId.toString()
+                const tokenId = nftURI.tokenId.toNumber()
                 return { tokenId, ...nft }
             })
         )
@@ -65,7 +65,7 @@ export const useExperiments = () => {
         const ownedExperiments = await Promise.all(
             (ownedTokenURIs as NftURI[])?.map(async (nftURI): Promise<Experiment> => {
                 const { data: nft } = await axios.get(nftURI.tokenURI)
-                const tokenId = nftURI.tokenId.toString()
+                const tokenId = nftURI.tokenId.toNumber()
                 return { tokenId, ...nft }
             })
         )

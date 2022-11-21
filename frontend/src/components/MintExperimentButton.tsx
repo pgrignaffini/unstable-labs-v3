@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import experimentContractInfo from "@abi/experiment.json"
 import { useContractWrite, useFeeData, useWaitForTransaction, useContractEvent } from "wagmi"
 import { Metadata, uploadMetadataToIPFS } from '@utils/pinata'
-import TxHash from './TxHash'
+import TxHash from '@components/TxHash'
 import { trpc } from '@utils/trpc'
 import { BigNumber } from 'ethers'
+import { useExperiments } from '@hooks/useExperiments'
+import SolidButton from '@components/SolidButton'
 
 type Props = {
     image: string
@@ -14,22 +16,39 @@ type Props = {
 
 const MintExperimentButton = ({ image, id, className }: Props) => {
 
+    const { refetchAllExperiments, refetchExperiments } = useExperiments()
     const [name, setName] = useState<string>("")
     const [description, setDescription] = useState<string>("")
     const { data: feeData } = useFeeData()
+    const [tokenId, setTokenId] = useState(0)
+    const [isMinting, setIsMinting] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const createExperimentMutation = trpc.experiment.createExperiment.useMutation()
+
+    useEffect(() => {
+        createExperimentMutation.mutate({
+            tokenId
+        }, {
+            onError: (error) => {
+                console.log(error)
+            }
+        })
+    }, [tokenId])
 
     const { write: createToken, data: tokenData, error: errorMintToken } = useContractWrite({
         mode: 'recklesslyUnprepared',
         address: experimentContractInfo.address,
         abi: experimentContractInfo.abi,
         functionName: 'mintToken',
-        onSuccess(data, variables, context) {
-            console.log('data', data)
-            console.log('variables', variables)
-            console.log('context', context)
+        onError: (error) => {
+            console.log(error)
+            setIsMinting(false)
+            setIsLoading(false)
         },
+        onSuccess: () => {
+            setIsMinting(true)
+        }
     })
 
 
@@ -37,21 +56,22 @@ const MintExperimentButton = ({ image, id, className }: Props) => {
         address: experimentContractInfo.address,
         abi: experimentContractInfo.abi,
         eventName: 'TokenMinted',
-        listener(tokenId: BigNumber) {
-            createExperimentMutation.mutateAsync({
-                tokenId: tokenId.toNumber(),
-            })
-        },
+        once: true,
+        listener: (id: BigNumber) => (setTokenId(id.toNumber()))
     })
 
     useWaitForTransaction({
         hash: tokenData?.hash,
         onError(error) {
             console.log(error)
-
+            setIsMinting(false)
+            setIsLoading(false)
         },
-        onSuccess(data) {
-            console.log("Transaction successful")
+        onSuccess() {
+            setIsMinting(false)
+            setIsLoading(false)
+            refetchAllExperiments()
+            refetchExperiments()
         }
     })
 
@@ -81,17 +101,16 @@ const MintExperimentButton = ({ image, id, className }: Props) => {
                               outline-none text-black text-sm placeholder:text-sm"
                                     placeholder="Enter description..." onChange={(e) => setDescription(e.target.value)} />
                                 <div className="mx-auto flex flex-col space-y-4">
-                                    <button className='p-4 text-white bg-acid hover:bg-dark-acid' type='button'
-                                        onClick={async () => {
-                                            const metadata: Metadata = { image, name, description }
-                                            const tokenUri = await uploadMetadataToIPFS(metadata)
-                                            createToken?.({
-                                                recklesslySetUnpreparedArgs: [tokenUri, { gasPrice: feeData?.gasPrice }]
-                                            })
-
-                                        }}>Mint</button>
-                                    {tokenData && <TxHash className='text-black' hash={tokenData?.hash} />}
-                                </div>
+                                    <SolidButton type='button' color="green" onClick={async () => {
+                                        setIsLoading(true)
+                                        const metadata: Metadata = { image, name, description }
+                                        const tokenUri = await uploadMetadataToIPFS(metadata)
+                                        createToken?.({
+                                            recklesslySetUnpreparedArgs: [tokenUri, { gasPrice: feeData?.gasPrice }]
+                                        })
+                                    }} className="bg-acid text-white" text='Mint' loading={isLoading} />
+                                    {isMinting &&
+                                        <TxHash className='text-black ' hash={`${tokenData?.hash}`} />}                                </div>
                             </form>
                         </div>
                     </div>

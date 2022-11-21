@@ -60,7 +60,6 @@ function MintVialButton({ index, numberOfVials, type }: Props) {
         },
         onSuccess: () => {
             setIsMinting(true)
-            refetchVials()
         }
     })
 
@@ -72,9 +71,9 @@ function MintVialButton({ index, numberOfVials, type }: Props) {
             setIsLoading(false)
         },
         onSuccess() {
-            console.log("Transaction successful")
             setIsMinting(false)
             setIsLoading(false)
+            refetchVials()
         }
     })
 

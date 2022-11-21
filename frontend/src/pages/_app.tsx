@@ -10,9 +10,13 @@ import { publicProvider } from 'wagmi/providers/public'
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
 
-import Footer from "@components/Footer";
 const Header = dynamic(
   () => import('@components/Header'),
+  { ssr: false }
+)
+
+const Footer = dynamic(
+  () => import('@components/Footer'),
   { ssr: false }
 )
 

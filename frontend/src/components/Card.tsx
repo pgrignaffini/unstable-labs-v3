@@ -2,9 +2,12 @@
 // import { parseNftPrice } from '../utils/helpers';
 import Image from 'next/image';
 import { RemixPreviewImageURL, ConceptPreviewImageURL } from '@utils/images';
+import LikeButton from './LikeButton';
+import { BigNumber } from 'ethers';
 
 type Props = {
     nft: {
+        tokenId?: number
         image: string
         name: string
         description?: string
@@ -57,7 +60,10 @@ function Card({ nft, multiple, isVial }: Props) {
                 <div className='w-auto h-32 md:h-48 2xl:h-60 relative'>
                     <Image src={src} alt={nft?.name} fill objectFit='cover' />
                 </div>
-                <div className="text-white text-center text-sm lg:text-lg 2xl:text-xl font-bold">{nft?.name}</div>
+                <div className='flex items-center justify-between'>
+                    <div className="text-white text-center text-sm lg:text-lg 2xl:text-xl font-bold">{nft?.name}</div>
+                    {nft?.tokenId && <LikeButton tokenId={nft.tokenId} />}
+                </div>
             </label>
         </div>
     )

@@ -43,7 +43,7 @@ function Vials() {
             {Object.keys(groupedVials).map((key, index) => {
                 const vials: Vial[] = groupedVials[key]
                 return (
-                    vials.length > 0 ?
+                    vials?.length ?
                         <label key={index} htmlFor="info-vial-modal" className='cursor-pointer' onClick={() => setSelectedVial(vials[0])}>
                             <Card nft={vials[0] as Vial} multiple={vials.length} isVial={true} />
                         </label> : <p>No vials found</p>

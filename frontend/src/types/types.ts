@@ -1,7 +1,7 @@
 import type { BigNumber } from 'ethers';
 
 export type Vial = {
-    tokenId?: BigNumber;
+    tokenId?: number;
     name: string;
     image: string;
     type: number;
@@ -11,7 +11,7 @@ export type Vial = {
 }
 
 export type Experiment = {
-    tokenId?: BigNumber;
+    tokenId?: number;
     name: string;
     image: string;
     type: number;
