@@ -43,7 +43,7 @@ export const useVials = () => {
 
     const { data: vials, refetch: refetchVials, isLoading: isLoadingVials, isFetching: isFetchingVials } = useQuery(['your-vials', address], getOwnedVials, {
         enabled: !!ownedTokenURIs,
-        staleTime: 1000 * 60, // 1 minute
+        staleTime: 10000
     })
 
     return { vials, refetchVials, isLoadingVials, isFetchingVials }
