@@ -7,6 +7,8 @@ import { BigNumber } from 'ethers'
 import { useVials } from '@hooks/useVials'
 import SolidButton from '@components/SolidButton'
 import Link from 'next/link'
+import { toast } from 'react-hot-toast'
+import Toast from '@components/Toast'
 
 type Props = {
     index: number;
@@ -19,14 +21,11 @@ function MintVialButton({ index, numberOfVials, type }: Props) {
     const [vialPrice, setVialPrice] = useState<BigNumber>()
     const [isMinting, setIsMinting] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const [notEnoughBalance, setNotEnoughBalance] = useState(false)
     const { address } = useAccount()
     const { data: feeData } = useFeeData()
     const { data: balance } = useBalance({ address })
     const { refetchVials } = useVials()
     const txValue = (vialPrice?.mul(BigNumber.from(numberOfVials)))?.add(BigNumber.from(500000000000000))
-    console.log('txValue', txValue?.toNumber())
-    console.log(balance?.value, balance?.symbol)
 
     const tokenURI =
         type === "remix" ? RemixMetadataURL :
@@ -77,21 +76,14 @@ function MintVialButton({ index, numberOfVials, type }: Props) {
         }
     })
 
-
+    const notEnoughBalanceMessage = `You don't have enough balance to mint this vial and pay for tx fees`
 
     return (
         <div className='py-4'>
             <div className='flex flex-col space-y-4 items-center justify-evenly pt-3'>
-                {
-                    notEnoughBalance &&
-                    <p className='text-[0.6rem] text-gray-700 text-center'>
-                        You don&apos;t have enough balance to mint this vial and pay for tx fees, get ETH
-                        <Link href="https://aurora.dev/faucet" target="_blank" className="underline text-acid"> here</Link>
-                    </p>
-                }
                 <SolidButton type='button' color="green" onClick={() => {
                     if (balance?.value && txValue && balance?.value.lt(txValue)) {
-                        setNotEnoughBalance(true)
+                        toast.custom((t) => <Toast toastInfo={t} message={notEnoughBalanceMessage} />)
                         return
                     }
                     setIsLoading(true)
@@ -99,7 +91,7 @@ function MintVialButton({ index, numberOfVials, type }: Props) {
                 }} className="bg-acid text-white" text='Mint' loading={isLoading} />
             </div>
             {isMinting &&
-                <div className='mt-4'><TxHash className='text-black ' hash={`${vialData?.hash}`} /></div>}
+                <div className='mt-4'><TxHash className='text-black' hash={`${vialData?.hash}`} /></div>}
         </div>
     )
 }

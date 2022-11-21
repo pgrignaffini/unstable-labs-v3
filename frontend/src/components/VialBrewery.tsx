@@ -35,9 +35,6 @@ function VialBrewery() {
     const [baseToShow, setBaseToShow] = React.useState<Base>()
     const [type, setType] = React.useState<"collection" | "concept" | "remix" | "freestyle" | undefined>(undefined)
 
-    console.log(groupedVials)
-    console.log("has freestyle", hasFreestyle)
-
     const RemixVial: Vial = {
         name: "Remix",
         image: RemixVialImageURL,

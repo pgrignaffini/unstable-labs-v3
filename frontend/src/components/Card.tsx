@@ -59,7 +59,7 @@ function Card({ nft, multiple, isVial }: Props) {
                     <Image src={src} alt={nft?.name} fill objectFit='cover' />
                 </div>
                 <div className='flex items-center justify-between'>
-                    <div className="text-white text-center text-sm lg:text-lg 2xl:text-xl font-bold">{nft?.name}</div>
+                    <div className="text-white text-sm lg:text-lg 2xl:text-xl font-bold">{nft?.name}</div>
                     {nft?.tokenId && <LikeButton tokenId={nft.tokenId} />}
                 </div>
             </label>

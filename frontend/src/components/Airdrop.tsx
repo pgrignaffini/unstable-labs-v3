@@ -19,7 +19,6 @@ function getRandomInt(min: number, max: number) {
 
 function Airdrop() {
 
-
     const freeVials = 3
     const [counter, setCounter] = useState(0)
     const [isDone, setIsDone] = useState(false)
@@ -37,7 +36,7 @@ function Airdrop() {
 
     useEffect(() => {
         console.log('counter', counter)
-        if (counter >= freeVials) {
+        if (counter >= freeVials + 2) {
             setMinting(false)
             setIsDone(true)
             updateClaimMutation.mutate({ id: user?.id as string })
@@ -108,7 +107,11 @@ function Airdrop() {
                 <div className='flex flex-col space-y-4 justify-center items-center'>
                     {!isError && !minting && !isDone && <p className='text-center text-sm text-acid bg-black p-2'>Hey! You&apos;re eligible for some free vials!</p>}
                     {isError && <p className=" text-center text-sm text-red-500  bg-black p-2">Well, something went wrong...try again later</p>}
-                    {minting && <p className='text-center text-sm text-acid  bg-black p-2'>We&apos;re brewing your vials, just a minute...</p>}
+                    {minting && <p className='text-center text-sm text-acid  bg-black p-2'>
+                        We&apos;re brewing your vials, just a minute...<br />
+                        Finished brewing {counter + 1} of {freeVials + 3} vials
+                    </p>
+                    }
                     {isDone && <p className='text-center text-sm text-acid  bg-black p-2'>You have claimed your free vials!</p>}
                     <SolidButton color='green' text='Claim Airdrop' onClick={handleClick} className="bg-acid text-white" loading={minting} />
                 </div>

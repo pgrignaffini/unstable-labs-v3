@@ -130,7 +130,6 @@ const Home: NextPage = () => {
     setSelectedImages(selectedImages.filter((_, i) => i !== index))
   }
 
-  console.log("promptState", promptState)
 
   const selectVialModal = (
     <>

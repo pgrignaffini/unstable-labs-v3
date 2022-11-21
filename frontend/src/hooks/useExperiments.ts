@@ -14,7 +14,7 @@ export const useExperiments = () => {
         abi: experimentContractInfo.abi,
         functionName: 'getTokenIds',
         onSuccess(data) {
-            console.log('Token ids: ', data)
+            // console.log('Token ids: ', data)
         }
     })
 
@@ -25,7 +25,7 @@ export const useExperiments = () => {
         args: [tokenIds],
         enabled: !!tokenIds,
         onSuccess(data) {
-            console.log('Token uris: ', data)
+            // console.log('Token uris: ', data)
         }
     })
 
@@ -46,7 +46,7 @@ export const useExperiments = () => {
         functionName: 'getTokensOwnedByMe',
         args: [{ from: address }],
         onSuccess(data) {
-            console.log('Token ids: ', data)
+            // console.log('Token ids: ', data)
         }
     })
 
@@ -57,7 +57,7 @@ export const useExperiments = () => {
         args: [ownedTokenIds],
         enabled: !!ownedTokenIds,
         onSuccess(data) {
-            console.log('Token uris: ', data)
+            // console.log('Token uris: ', data)
         }
     })
 
