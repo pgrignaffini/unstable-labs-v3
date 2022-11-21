@@ -8,13 +8,13 @@ export const useVials = () => {
 
     const { address } = useAccount()
 
-    const { data: ownedTokenIds } = useContractRead({
+    const { data: ownedTokenIds, refetch: refetchVials } = useContractRead({
         address: vialContractInfo.address,
         abi: vialContractInfo.abi,
         functionName: 'getVialsOwnedByMe',
         args: [{ from: address }],
         onSuccess(data) {
-            // console.log('Vial ids: ', data)
+            console.log('Vial ids: ', data)
         }
     })
 
@@ -25,7 +25,7 @@ export const useVials = () => {
         args: [ownedTokenIds],
         enabled: !!ownedTokenIds,
         onSuccess(data) {
-            // console.log('Vial uris: ', data)
+            console.log('Vial uris: ', data)
         }
     })
 
@@ -41,7 +41,7 @@ export const useVials = () => {
         return ownedNfts
     }
 
-    const { data: vials, refetch: refetchVials, isLoading: isLoadingVials, isFetching: isFetchingVials } = useQuery(['your-vials', address], getOwnedVials, {
+    const { data: vials, isLoading: isLoadingVials, isFetching: isFetchingVials } = useQuery(['your-vials', address], getOwnedVials, {
         enabled: !!ownedTokenURIs,
         staleTime: 10000
     })

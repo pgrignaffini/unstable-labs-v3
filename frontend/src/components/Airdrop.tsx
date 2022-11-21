@@ -8,6 +8,7 @@ import { collections } from "@data/collections"
 import { concepts } from "@data/concepts"
 import { CollectionMetadataURL, ConceptMetadataURL, FreestyleMetadataURL, RemixMetadataURL } from "@utils/metadata"
 import { useLoggedUser } from '@hooks/useLoggedUser'
+import { useVials } from '@hooks/useVials'
 
 function getRandomInt(min: number, max: number) {
     min = Math.ceil(min);
@@ -19,6 +20,7 @@ function getRandomInt(min: number, max: number) {
 
 function Airdrop() {
 
+    const { refetchVials } = useVials()
     const freeVials = 3
     const [counter, setCounter] = useState(0)
     const [isDone, setIsDone] = useState(false)
@@ -39,6 +41,7 @@ function Airdrop() {
         if (counter >= freeVials + 2) {
             setMinting(false)
             setIsDone(true)
+            refetchVials()
             updateClaimMutation.mutate({ id: user?.id as string })
         }
     }, [counter])
