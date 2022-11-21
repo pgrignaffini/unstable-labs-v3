@@ -1,9 +1,7 @@
 // import { MarketItem } from '../../typings';
 // import { parseNftPrice } from '../utils/helpers';
 import Image from 'next/image';
-import { RemixPreviewImageURL, ConceptPreviewImageURL } from '@utils/images';
 import LikeButton from './LikeButton';
-import { BigNumber } from 'ethers';
 
 type Props = {
     nft: {
@@ -41,7 +39,7 @@ function Card({ nft, multiple, isVial }: Props) {
     const vialLayout = (
         <div className='flex flex-col justify-between items-center'>
             <div className='flex items-center justify-between'>
-                <p className='text-sm'>{nft?.name} {multiple && `${multiple}x`}</p>
+                <p className='text-sm text-std'>{nft?.name} {multiple && `${multiple}x`}</p>
                 <img className='w-12 h-12 object-contain' src={src} alt="image" />
                 {/* onSale && <p className='font-pixel text-sm'>{parseNftPrice(nft as Nft & MarketItem)}</p> */}
             </div>

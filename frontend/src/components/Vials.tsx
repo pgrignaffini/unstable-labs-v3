@@ -39,20 +39,21 @@ function Vials() {
 
     return (
         <>
-            {vialInfoModal(selectedVial as Vial)}
-            {Object.keys(groupedVials).map((key, index) => {
-                const vials: Vial[] = groupedVials[key]
-                return (
-                    vials?.length ?
+            {selectedVial && vialInfoModal(selectedVial as Vial)}
+            {isLoadingVials ?
+                <div className='flex justify-center items-center'>
+                    <img src='/flask-animated.gif' className='w-12' />
+                </div> :
+                Object.keys(groupedVials).map((key, index) => {
+                    const vials: Vial[] = groupedVials[key]
+                    return (
+                        vials?.length > 0 &&
                         <label key={index} htmlFor="info-vial-modal" className='cursor-pointer' onClick={() => setSelectedVial(vials[0])}>
                             <Card nft={vials[0] as Vial} multiple={vials.length} isVial={true} />
-                        </label> : <p>No vials found</p>
-                )
-            })}
-            {isLoadingVials &&
-                <div className='flex justify-center items-center'>
-                    <img src='/flask-animated.gif' className='w-12 ' />
-                </div>}
+                        </label>
+                    )
+                })}
+            {!isLoadingVials && vials?.length === 0 && <p className='text-sm'>No vials found</p>}
         </>
     )
 }

@@ -1,8 +1,3 @@
-import React from 'react'
-// import Star from './icons/Star'
-// import Rocket from './icons/Rocket'
-// import Nfts from './icons/Nfts'
-
 type Props = {
     title: string
     onClick?: () => void

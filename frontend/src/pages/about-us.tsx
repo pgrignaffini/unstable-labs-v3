@@ -15,7 +15,7 @@ function AboutUsPage() {
                 </div>
                 <div className="flex items-center space-x-10">
                     <img src="/Paolo.jpeg" alt="avatar" className="w-32 h-32" />
-                    <p className="text-md flex-1">
+                    <p className="text-md flex-1 text-justify">
                         Hi! My name is Paolo, I am a freelance full-stack Web3 dev.<br />
                         I&apos;ve been working on the frontend and smart contracts for <span className="text-acid">Unstable</span>Labs, it was a lot of fun!<br />
                         I am an outgoing guy who loves <span className="text-acid">BUIDLING</span> and Web3.<br />

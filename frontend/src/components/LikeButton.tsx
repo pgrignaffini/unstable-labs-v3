@@ -1,7 +1,6 @@
 import React from 'react'
 import { trpc } from '@utils/trpc'
 import { useLoggedUser } from '@hooks/useLoggedUser';
-import { BigNumber } from 'ethers';
 
 type Props = {
     tokenId: number;

@@ -29,11 +29,9 @@ module.exports = {
       },
       colors: {
         'acid': '#b4e61d',
-        'dark-acid': '#354407'
+        'dark-acid': '#354407',
+        'std': '#9ca3af'
       },
-      backgroundImage: {
-        'station': "url('/station.gif')",
-      }
     }
   },
   plugins: [

@@ -1,5 +1,5 @@
 import Card from '@components/Card'
-import type { Experiment, NftURI } from "../types/types"
+import type { Experiment } from "../types/types"
 import { useExperiments } from '@hooks/useExperiments'
 
 function Experiments() {

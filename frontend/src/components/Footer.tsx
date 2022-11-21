@@ -2,7 +2,7 @@ import Link from "next/link"
 
 function Footer() {
     return (
-        <footer className="footer mt-24 p-10 bg-neutral text-neutral-content">
+        <footer className="footer mt-24 p-10 bg-neutral text-std">
             <div className="flex items-center space-x-4">
                 <img src="/flask.png" alt="logo" className="w-16 h-20" />
                 <p>UnstableLabs<br />Providing awesome NFTs since 2022</p>

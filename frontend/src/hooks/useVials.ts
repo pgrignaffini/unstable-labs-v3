@@ -41,9 +41,10 @@ export const useVials = () => {
         return ownedNfts
     }
 
-    const { data: vials, refetch: refetchVials, isLoading: isLoadingVials } = useQuery(['your-vials', address], getOwnedVials, {
-        enabled: !!ownedTokenURIs
+    const { data: vials, refetch: refetchVials, isLoading: isLoadingVials, isFetching: isFetchingVials } = useQuery(['your-vials', address], getOwnedVials, {
+        enabled: !!ownedTokenURIs,
+        staleTime: 1000 * 60, // 1 minute
     })
 
-    return { vials, refetchVials, isLoadingVials }
+    return { vials, refetchVials, isLoadingVials, isFetchingVials }
 }

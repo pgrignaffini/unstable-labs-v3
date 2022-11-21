@@ -22,7 +22,7 @@ import { useLoggedUser } from "@hooks/useLoggedUser";
 const Home: NextPage = () => {
 
   const { user } = useLoggedUser()
-  const { vials, refetchVials } = useVials()
+  const { vials, refetchVials, isFetchingVials, isLoadingVials } = useVials()
   const groupedVials = vials ? groupBy(vials, 'style') : []
   const [vialToBurn, setVialToBurn] = useState<Vial | undefined>(undefined);
   const [request, setRequest] = useState<Request | undefined>(undefined)
@@ -157,6 +157,10 @@ const Home: NextPage = () => {
                   </div>
                 )
               })}
+              {(isLoadingVials || isFetchingVials) &&
+                <div className="w-full flex justify-center">
+                  <img src="/flask.png" className="animate-tremble w-8" />
+                </div>}
               <div className="flex justify-end sticky bottom-4 ">
                 <label htmlFor="select-vial-modal"
                   className="p-2 border-acid bg-gray-700 border-2 w-fit font-pixel text-lg sticky text-white cursor-pointer hover:bg-slate-400">Select</label>
@@ -176,6 +180,7 @@ const Home: NextPage = () => {
                   <p className="text-md text-white">After a successful login go to the bottom of the page to claim it!</p>
                 </>}
             </div>}
+
           </div>
         </div>
       </div>
@@ -196,12 +201,12 @@ const Home: NextPage = () => {
           <img src="/lab-top.png" alt="lab-top" className="w-full" />
           <div className="w-full absolute bg-black bottom-1/2 ">
             <p className="font-bold text-3xl text-white text-center">Welcome to <span className="text-acid">Unstable</span>Labs!</p>
-            <p className="font-bold text-lg text-gray-400 text-center">a lab to brew AI-generated NFTs</p>
+            <p className="font-bold text-lg text-std text-center">a lab to brew AI-generated NFTs</p>
           </div>
         </div>
         <div className="flex flex-col justify-center items-center ">
           <p className="font-bold text-3xl text-white">Step into the Lab!</p>
-          <p className="text-[0.6rem]">Don&apos;t know where to find some Aurora ETH? Check out <Link href="https://aurora.dev/faucet" target="_blank" className="underline text-acid">here</Link></p>
+          <p className="text-std text-[0.6rem] ">Don&apos;t know where to find some Aurora ETH? Check out <Link href="https://aurora.dev/faucet" target="_blank" className="underline text-acid">here</Link></p>
         </div>
         <div className="flex items-center justify-between w-full">
           <img src="/pc-animated-left.gif" alt="pc-animated-left" className="w-48 h-48" />

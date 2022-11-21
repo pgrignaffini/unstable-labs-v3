@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import ConnectWallet from '@components/ConnectWallet'
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useAccount, useNetwork } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 function Header() {
 

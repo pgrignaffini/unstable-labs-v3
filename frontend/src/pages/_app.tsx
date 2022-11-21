@@ -9,6 +9,7 @@ import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
+import { Toaster } from "react-hot-toast";
 
 const Header = dynamic(
   () => import('@components/Header'),
@@ -64,6 +65,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <WagmiConfig client={client}>
         <QueryClientProvider client={queryClient}>
+          <Toaster />
           <div className="bg-black min-h-screen min-w-fit">
             <Header />
             <Component {...pageProps} />
