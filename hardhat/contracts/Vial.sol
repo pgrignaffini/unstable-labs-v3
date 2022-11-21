@@ -31,7 +31,7 @@ contract Vial is ERC721URIStorage, Ownable {
     }
 
     function mintVials(string memory tokenURI, uint256 number) public payable {
-        // require(msg.value >= vialPrice * number, "Not enough ETH");
+        require(msg.value >= vialPrice * number, "Not enough ETH");
         for (uint256 i = 0; i < number; i++) {
             mintVial(tokenURI);
         }
