@@ -20,21 +20,10 @@ const MintExperimentButton = ({ image, id, className }: Props) => {
     const [name, setName] = useState<string>("")
     const [description, setDescription] = useState<string>("")
     const { data: feeData } = useFeeData()
-    const [tokenId, setTokenId] = useState(0)
     const [isMinting, setIsMinting] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
     const createExperimentMutation = trpc.experiment.createExperiment.useMutation()
-
-    useEffect(() => {
-        createExperimentMutation.mutate({
-            tokenId
-        }, {
-            onError: (error) => {
-                console.log(error)
-            }
-        })
-    }, [tokenId])
 
     const { write: createToken, data: tokenData, error: errorMintToken } = useContractWrite({
         mode: 'recklesslyUnprepared',
@@ -57,7 +46,10 @@ const MintExperimentButton = ({ image, id, className }: Props) => {
         abi: experimentContractInfo.abi,
         eventName: 'TokenMinted',
         once: true,
-        listener: (id: BigNumber) => (setTokenId(id.toNumber()))
+        listener: (id: BigNumber) => {
+            const tokenId = id.toNumber()
+            createExperimentMutation.mutate({ tokenId })
+        }
     })
 
     useWaitForTransaction({

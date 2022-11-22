@@ -23,6 +23,9 @@
       "@data/*": [
         "data/*"
       ],
+      "@context/*": [
+        "context/*"
+      ],
     },
     "target": "es2017",
     "lib": [

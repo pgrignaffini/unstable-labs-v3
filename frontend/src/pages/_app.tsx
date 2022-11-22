@@ -1,3 +1,4 @@
+import React from "react";
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
@@ -10,6 +11,9 @@ import { publicProvider } from 'wagmi/providers/public'
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { Toaster } from "react-hot-toast";
+import { useState } from "react";
+import type { Request } from "../types/types";
+import AppContext from "@context/AppContext"
 
 const Header = dynamic(
   () => import('@components/Header'),
@@ -57,10 +61,16 @@ const queryClient = new QueryClient({
   },
 })
 
+
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+
+  const [request, setRequest] = useState<Request | undefined>(undefined)
+  const [selectedImages, setSelectedImages] = useState<string[]>([])
+  const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined)
+
   return (
     <SessionProvider session={session}>
       <WagmiConfig client={client}>
@@ -68,7 +78,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
           <Toaster />
           <div className="bg-black min-h-screen min-w-fit">
             <Header />
-            <Component {...pageProps} />
+            <AppContext.Provider
+              value={{ request, setRequest, selectedImages, setSelectedImages, selectedImage, setSelectedImage }}>
+              <Component {...pageProps} />
+            </AppContext.Provider>
             <Footer />
           </div>
           <ReactQueryDevtools initialIsOpen={false} />

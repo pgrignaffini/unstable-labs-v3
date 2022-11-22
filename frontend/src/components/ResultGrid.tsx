@@ -1,12 +1,15 @@
 import MintExperimentButton from "@components/MintExperimentButton"
+import { useContext } from "react";
+import AppContext from "@context/AppContext";
+
 
 type Props = {
-    images: string[]
-    setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>
-    selectedImages: string[]
+    images: string[] | undefined
 }
 
-function ResultGrid({ images, setSelectedImages, selectedImages }: Props) {
+function ResultGrid({ images }: Props) {
+
+    const { selectedImages, setSelectedImages } = useContext(AppContext)
 
     return (
         <div>
@@ -15,7 +18,7 @@ function ResultGrid({ images, setSelectedImages, selectedImages }: Props) {
                     <div className="flex flex-col space-y-4 items-center" key={index}>
                         <img className={`cursor-pointer hover:border-4 hover:border-acid`}
                             onClick={() => {
-                                if (selectedImages.includes(image)) return
+                                if (selectedImages?.includes(image)) return
                                 else setSelectedImages((prev: string[]) => [...prev, image])
                             }}
                             src={"data:image/.webp;base64," + image} />

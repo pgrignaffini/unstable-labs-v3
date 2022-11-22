@@ -8,7 +8,7 @@ export const useVials = () => {
 
     const { address } = useAccount()
 
-    const { data: ownedTokenIds, refetch: refetchVials } = useContractRead({
+    const { data: ownedTokenIds, refetch: refetchVials, isLoading, isFetching } = useContractRead({
         address: vialContractInfo.address,
         abi: vialContractInfo.abi,
         functionName: 'getVialsOwnedByMe',
@@ -18,7 +18,7 @@ export const useVials = () => {
         }
     })
 
-    const { data: ownedTokenURIs } = useContractRead({
+    const { data: ownedTokenURIs, isLoading: isLoadingURIs, isFetching: isFetchingURIs } = useContractRead({
         address: vialContractInfo.address,
         abi: vialContractInfo.abi,
         functionName: 'getTokenURIs',
@@ -46,5 +46,8 @@ export const useVials = () => {
         staleTime: 10000
     })
 
-    return { vials, refetchVials, isLoadingVials, isFetchingVials }
+    const isLoadingVialsData = isLoading || isLoadingURIs || isLoadingVials
+    const isFetchingVialsData = isFetching || isFetchingURIs || isFetchingVials
+
+    return { vials, refetchVials, isLoadingVialsData, isFetchingVialsData }
 }
