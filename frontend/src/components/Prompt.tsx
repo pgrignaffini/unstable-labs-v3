@@ -93,14 +93,15 @@ function Prompt() {
                                         if (key === "freestyle") { setPromptState("freestyle") }
                                         else { setPromptState("std") }
                                     }}>
-                                        <VialSelectionContainer selected={vialToBurn === (vials[0] as Vial)} vial={vials[0]} multiple={vials.length} />
+                                        {key !== "remix" && <VialSelectionContainer selected={vialToBurn === (vials[0] as Vial)} vial={vials[0]} multiple={vials.length} />}
                                     </div>
                                 )
                             })}
-                            {(isFetchingVialsData || isLoadingVialsData) &&
-                                <div className="w-full flex justify-center">
+                            <div className="w-full flex justify-center">
+                                {(isFetchingVialsData || isLoadingVialsData) ?
                                     <img src="/flask.png" className="animate-tremble w-8" />
-                                </div>}
+                                    : null}
+                            </div>
                             <div className="flex justify-end sticky bottom-4 ">
                                 <label htmlFor="select-vial-modal"
                                     className="p-2 border-acid bg-gray-500 border-2 w-fit text-md sticky text-white cursor-pointer hover:bg-slate-400">Select</label>
@@ -186,8 +187,7 @@ function Prompt() {
                         {progressData?.eta_relative ?
                             <p className="text-sm text-center">Wait time: {progressData.eta_relative.toFixed(0)}s</p>
                             :
-                            <p className="text-sm text-center">We are fetching your images, hang in there!</p>
-                        }
+                            <p className="text-sm text-center">We are fetching your images, hang in there!</p>}
                     </div>}
             </div>
         </>

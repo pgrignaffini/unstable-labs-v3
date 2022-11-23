@@ -1,15 +1,14 @@
-import Card from '@components/Card'
 import type { Experiment } from "../types/types"
 import { useExperiments } from '@hooks/useExperiments'
 import ExperimentCard from './ExperimentCard'
 
 function Experiments() {
 
-    const { experiments, isLoadingExperiments } = useExperiments()
+    const { experiments, isLoading } = useExperiments()
 
     return (
         <>
-            {isLoadingExperiments ?
+            {isLoading ?
                 <div className='flex justify-center items-center'>
                     <img src='/blob-animated.gif' className='w-12 ' />
                 </div> :

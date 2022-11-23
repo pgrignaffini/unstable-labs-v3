@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import React from 'react'
 import ConnectWallet from '@components/ConnectWallet'
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useAccount } from 'wagmi'
@@ -20,16 +19,16 @@ function Header() {
                     <img src="/flask.png" alt="flask" className="w-10" />
                 </div>
             </div>
-            <Link className='font-lg text-sm lg:text-md xl:text-lg 2xl:text-xl text-white cursor-pointer border-acid hover:border-b-2' href="/collections">
+            <Link className='font-md text-sm xl:text-md 2xl:text-lg text-white cursor-pointer border-acid hover:border-b-2' href="/collections">
                 Lab Collections
             </Link>
             {isConnected && address && !session &&
-                <p className="font-xl text-white cursor-pointer text-sm lg:text-md xl:text-lg 2xl:text-xl  border-acid hover:border-b-2" onClick={() => signIn("discord")}>
+                <p className="font-md text-white cursor-pointer text-sm xl:text-md 2xl:text-lg border-acid hover:border-b-2" onClick={() => signIn("discord")}>
                     Log in
                 </p>}
             {session &&
                 (<div className="flex space-x-8 items-end">
-                    <button className="font-lg text-white cursor-pointer text-sm lg:text-md xl:text-lg 2xl:text-xl  border-acid hover:border-b-2" onClick={() => signOut()}>
+                    <button className="font-md text-white cursor-pointer text-sm xl:text-md 2xl:text-lg border-acid hover:border-b-2" onClick={() => signOut()}>
                         <p>Log out</p>
                     </button>
                     <img src={session?.user?.image as string} className="w-8 h-8" />

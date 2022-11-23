@@ -1,16 +1,20 @@
-import Card from '@components/Card'
 import type { Experiment } from "../types/types"
 import { useExperiments } from '@hooks/useExperiments'
+import ExperimentCard from './ExperimentCard'
 
 function Experiments() {
 
-    const { allExperiments } = useExperiments()
+    const { allExperiments, isLoadingAll } = useExperiments()
 
     return (
         <>
-            {allExperiments?.map((experiment: Experiment, index: number) => (
-                <Card key={index} nft={experiment} />
-            ))}
+            {isLoadingAll ?
+                <div className='flex justify-center items-center'>
+                    <img src='/blob-animated.gif' className='w-12 ' />
+                </div> :
+                allExperiments?.map((experiment: Experiment, index: number) => (
+                    <ExperimentCard key={index} experiment={experiment} />
+                ))}
         </>
     )
 }

@@ -1,6 +1,6 @@
-import React from 'react'
-import { trpc } from '@utils/trpc'
+import { useState } from 'react'
 import { useLoggedUser } from '@hooks/useLoggedUser';
+import { useLikes } from '@hooks/useLikes';
 
 type Props = {
     tokenId: number;
@@ -8,26 +8,10 @@ type Props = {
 
 function LikeButton({ tokenId }: Props) {
 
-    const ctx = trpc.useContext();
     const { user } = useLoggedUser()
-    const [disabled, setDisabled] = React.useState(false)
+    const [disabled, setDisabled] = useState(false)
 
-    const { data: like } = trpc.experiment.getExperimentLikes.useQuery({ tokenId }, {
-        select: (data) => !!data?.likes.find(like => like.userId === user?.id),
-    })
-
-    const { data: likes } = trpc.experiment.getExperimentLikes.useQuery({ tokenId }, {
-        select: (data) => data?.likes.length
-    })
-
-    const addLikeMutation = trpc.like.addLike.useMutation({
-        onMutate: () => {
-            ctx.experiment.getExperimentLikes.invalidate({ tokenId })
-        },
-        onSettled: () => {
-            ctx.experiment.getExperimentLikes.refetch({ tokenId })
-        }
-    })
+    const { like, likes, addLikeMutation } = useLikes(tokenId)
 
     const addLike = async () => {
         if (like) return
@@ -35,7 +19,6 @@ function LikeButton({ tokenId }: Props) {
             addLikeMutation.mutate({ tokenId, userId: user?.id as string })
         }
     }
-
 
     return (
         <>
