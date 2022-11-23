@@ -12,13 +12,12 @@ import { useLoadingImages } from '@hooks/useLoadingImages';
 import { useLoggedUser } from '@hooks/useLoggedUser';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import VialSelectionContainer from './VialSelectionContainer';
 import AppContext from "@context/AppContext";
 
 function Prompt() {
 
     const { data: session } = useSession()
-    const { selectedImage, setRequest } = useContext(AppContext)
+    const { selectedImage, setRequest, selectedImages } = useContext(AppContext)
     const { vials, refetchVials, isFetchingVialsData, isLoadingVialsData } = useVials()
     const groupedVials = vials ? groupBy(vials, 'style') : []
     const [vialToBurn, setVialToBurn] = useState<Vial | undefined>(undefined);
@@ -37,13 +36,23 @@ function Prompt() {
         if (selectedImage) {
             const remixVials = groupedVials["remix"]
             if (!remixVials.length) setPromptError("No remix vials available")
-            if (remixVials?.length) setVialToBurn(remixVials[0])
+            if (remixVials?.length) {
+                setVialToBurn(remixVials[0])
+                setPromptState("remix")
+            }
         }
         else if (!selectedImage &&
             vialToBurn?.name === "Remix Vial") {
             setVialToBurn(undefined)
+            setPromptState("std")
         }
     }, [selectedImage])
+
+    useEffect(() => {
+        if (!selectedImages?.length) {
+            setPromptState("std")
+        }
+    }, [selectedImages])
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -81,7 +90,7 @@ function Prompt() {
             <input type="checkbox" id="select-vial-modal" className="modal-toggle" />
             <div className="modal">
                 <div className="w-1/3 h-2/3">
-                    <label htmlFor="select-vial-modal" className="font-pixel text-2xl text-white cursor-pointer"
+                    <label htmlFor="select-vial-modal" className="text-2xl text-white cursor-pointer"
                         onClick={() => { setVialToBurn(undefined); setPromptState("std") }}>X</label>
                     <div className={`bg-gray-400 bg-opacity-50 backdrop-blur-xl p-8 relative ${vials?.length ? "overflow-y-scroll" : null}`}>
                         {vials?.length ? <div className="flex flex-col space-y-4 ">
@@ -93,7 +102,15 @@ function Prompt() {
                                         if (key === "freestyle") { setPromptState("freestyle") }
                                         else { setPromptState("std") }
                                     }}>
-                                        {key !== "remix" && <VialSelectionContainer selected={vialToBurn === (vials[0] as Vial)} vial={vials[0]} multiple={vials.length} />}
+                                        {key !== "remix" &&
+                                            <div className={`${vialToBurn === (vials[0] as Vial) ? "border-4 border-acid" : "border-2"} cursor-pointer hover:bg-gray-400`}>
+                                                <div className="p-2 flex items-center justify-between">
+                                                    <img className='w-12 h-16 object-contain' src={vials[0].image} alt="image" />
+                                                    <p className='text-black text-[0.7rem] whitespace-normal'>{vials[0].name}</p>
+                                                    {vials.length && <p className=' text-black text-[0.7rem]'>{vials.length}x</p>}
+                                                </div>
+                                            </div>
+                                        }
                                     </div>
                                 )
                             })}

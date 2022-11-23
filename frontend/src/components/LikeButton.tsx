@@ -22,8 +22,7 @@ function LikeButton({ tokenId }: Props) {
 
     return (
         <>
-            {
-                user &&
+            {user &&
                 <button className="flex hover:border  space-x-1 items-center p-3 cursor-pointer"
                     disabled={disabled} onClick={() => {
                         setDisabled(true)
