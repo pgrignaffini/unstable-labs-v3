@@ -1,6 +1,7 @@
 import Card from '@components/Card'
 import type { Experiment } from "../types/types"
 import { useExperiments } from '@hooks/useExperiments'
+import ExperimentCard from './ExperimentCard'
 
 function Experiments() {
 
@@ -14,9 +15,8 @@ function Experiments() {
                 </div> :
                 !experiments?.length ? <p>No experiments found</p> :
                     experiments?.map((experiment: Experiment, index: number) => (
-                        <Card key={index} nft={experiment} />
-                    ))
-            }
+                        <ExperimentCard key={index} experiment={experiment} />
+                    ))}
         </>
     )
 }

@@ -4,7 +4,7 @@ export type Vial = {
     tokenId?: number;
     name: string;
     image: string;
-    type: number;
+    type?: number;
     description?: string;
     preview: string;
     style: string;

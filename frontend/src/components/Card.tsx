@@ -1,7 +1,7 @@
 // import { MarketItem } from '../../typings';
 // import { parseNftPrice } from '../utils/helpers';
 import Image from 'next/image';
-import LikeButton from './LikeButton';
+import LikeButton from '@components/LikeButton';
 
 type Props = {
     nft: {

@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
-import type { Vial } from "../types/types"
+import { useState, useEffect, useContext } from 'react'
+import type { Vial, Request } from "../types/types"
 import SolidButton from '@components/SolidButton';
-import { FormEvent } from "react";
+import type { FormEvent } from "react";
 import { useVials } from '@hooks/useVials';
 import { groupBy } from '@utils/helpers';
 import { useBurnVial } from '@hooks/useBurnVial';
@@ -9,15 +9,15 @@ import TxHash from '@components/TxHash';
 import { useWaitForTransaction } from 'wagmi';
 import { image2Image, text2Image } from '@utils/stableDiffusion'
 import { useLoadingImages } from '@hooks/useLoadingImages';
-import type { Request, Progress } from "../types/types"
 import { useLoggedUser } from '@hooks/useLoggedUser';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import VialSelectionContainer from './VialSelectionContainer';
-import { useContext } from "react";
 import AppContext from "@context/AppContext";
 
 function Prompt() {
 
+    const { data: session } = useSession()
     const { selectedImage, setRequest } = useContext(AppContext)
     const { vials, refetchVials, isFetchingVialsData, isLoadingVialsData } = useVials()
     const groupedVials = vials ? groupBy(vials, 'style') : []
@@ -28,7 +28,7 @@ function Prompt() {
     const [originalStyleToRemix, setOriginalStyleToRemix] = useState<string | undefined>(undefined)
     const [originalPrompt, setOriginalPrompt] = useState<string | undefined>(undefined)
 
-    const { user } = useLoggedUser()
+    const { hasClaimedVials, user } = useLoggedUser()
 
     const { burnData, burnVial, setBurnData } = useBurnVial({ vialToBurn })
     const { progressData, isLoading: isLoadingImages } = useLoadingImages()
@@ -80,22 +80,18 @@ function Prompt() {
         <>
             <input type="checkbox" id="select-vial-modal" className="modal-toggle" />
             <div className="modal">
-                <div className={`w-1/3 h-2/3 ${vials?.length ? "overflow-y-scroll" : null} `}>
+                <div className="w-1/3 h-2/3">
                     <label htmlFor="select-vial-modal" className="font-pixel text-2xl text-white cursor-pointer"
                         onClick={() => { setVialToBurn(undefined); setPromptState("std") }}>X</label>
-                    <div className="bg-gray-400 bg-opacity-50 backdrop-blur-xl p-8 relative">
+                    <div className={`bg-gray-400 bg-opacity-50 backdrop-blur-xl p-8 relative ${vials?.length ? "overflow-y-scroll" : null}`}>
                         {vials?.length ? <div className="flex flex-col space-y-4 ">
                             {Object.keys(groupedVials).map((key, index) => {
                                 const vials = groupedVials[key]
                                 return (
                                     <div key={index} onClick={() => {
                                         setVialToBurn?.(vials[0] as Vial)
-                                        if (key === "freestyle") {
-                                            setPromptState("freestyle")
-                                        }
-                                        else {
-                                            setPromptState("std")
-                                        }
+                                        if (key === "freestyle") { setPromptState("freestyle") }
+                                        else { setPromptState("std") }
                                     }}>
                                         <VialSelectionContainer selected={vialToBurn === (vials[0] as Vial)} vial={vials[0]} multiple={vials.length} />
                                     </div>
@@ -107,24 +103,23 @@ function Prompt() {
                                 </div>}
                             <div className="flex justify-end sticky bottom-4 ">
                                 <label htmlFor="select-vial-modal"
-                                    className="p-2 border-acid bg-gray-700 border-2 w-fit font-pixel text-lg sticky text-white cursor-pointer hover:bg-slate-400">Select</label>
+                                    className="p-2 border-acid bg-gray-500 border-2 w-fit text-md sticky text-white cursor-pointer hover:bg-slate-400">Select</label>
                             </div>
                         </div> : <div className="flex flex-col space-y-4 justify-center items-center">
                             <p className="text-white text-lg">It seems there aren&apos;t any vials here...go grab some in the{' '}
                                 <Link href="/collections" className="underline text-acid">Brewery!</Link></p>
-                            {user && !user.hasClaimedVials &&
-                                <>
-                                    <p className="text-md text-white">Did you know that by logging in with Discord you can claim a <span className="text-acid font-xl">FREE</span> vial airdrop?</p>
-                                    <p className="text-md text-white">The airdrop consists of: <br />
-                                        <ul>
-                                            <li>2x Remix Vials</li>
-                                            <li>1x Freestyle Vial</li>
-                                            <li>3x Random Vials</li>
-                                        </ul></p>
-                                    <p className="text-md text-white">After a successful login go to the bottom of the page to claim it!</p>
-                                </>}
                         </div>}
-
+                        {/* {!session &&
+                            <>
+                                <p className="text-md text-white">Did you know that by logging in with Discord you can claim a <span className="text-acid font-xl">FREE</span> vial airdrop?</p>
+                                <p className="text-md text-white">The airdrop consists of: <br />
+                                    <ul>
+                                        <li>2x Remix Vials</li>
+                                        <li>1x Freestyle Vial</li>
+                                        <li>3x Random Vials</li>
+                                    </ul></p>
+                                <p className="text-md text-white">After a successful login go to the bottom of the page to claim it!</p>
+                            </>} */}
                     </div>
                 </div>
             </div>
@@ -136,7 +131,8 @@ function Prompt() {
             {selectVialModal}
             <div className="flex items-center justify-between w-full">
                 <img src="/pc-animated-left.gif" alt="pc-animated-left" className="w-48 h-48" />
-                <div className={`${promptState === "remix" ? "bg-blue-400" : promptState === "freestyle" ? "bg-red-300" : "bg-gray-400"} p-6 mx-auto row-start-3 col-start-3`}>
+                <div className={`${promptState === "remix" ? "bg-blue-400" : promptState === "freestyle" ? "bg-red-300" : "bg-gray-400"} p-6 mx-auto row-start-3 col-start-3 relative`}>
+                    <img src="/cat-animated.gif" alt="cat-animated" className="w-20 absolute -top-16 right-2 " />
                     <div className="flex items-center space-x-3 justify-between">
                         <label htmlFor="select-vial-modal" className="cursor-pointer" >
                             {vialToBurn ? <img src={vialToBurn.image} alt="vial" className="h-12 w-12 object-contain border-2 border-black" /> :
@@ -157,14 +153,14 @@ function Prompt() {
                                     setPromptState("remix")
                                     handleSubmit(e)
                                 }}>
-                                    <SolidButton color="blue" text="Remix" type="submit" className='text-white' />
+                                    <SolidButton color="blue" text="Brew" type="submit" className='text-white' />
                                 </form>
                             ) : vialToBurn && vialToBurn.name === "Freestyle Vial" ? (
                                 <form className='flex space-x-5 items-center' onSubmit={(e) => {
                                     handleFreestyle(e)
                                 }}>
                                     <input onChange={(e) => setPrompt(e.target.value)} className='w-full p-4 bg-white text-black outline-none font-pixel' required placeholder="prompt..." />
-                                    <SolidButton color="red" text="Freestyle" type="submit" className='text-white' />
+                                    <SolidButton color="red" text="Brew" type="submit" className='text-white' />
                                 </form>
                             ) :
                                 <div>
@@ -173,11 +169,11 @@ function Prompt() {
                                 </div>}
                     </div>
                 </div>
-                <img src="/pc-animated-right.gif" alt="pc-animated-left" className="w-48 h-48" />
+                <img src="/pc-animated-left.gif" alt="pc-animated-left" className="w-48 h-48 -scale-x-95" />
             </div>
             <div className="container mx-auto">
                 {vialToBurn && !progressData?.eta_relative &&
-                    <div className="container mx-auto flex flex-col space-y-4">
+                    <div className="flex flex-col space-y-4">
                         <p className="text-center">Like this pic?</p>
                         <img src={vialToBurn?.preview} alt="preview" className="mx-auto w-1/6" />
                     </div>}

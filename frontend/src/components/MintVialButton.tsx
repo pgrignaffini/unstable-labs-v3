@@ -13,10 +13,10 @@ import Toast from '@components/Toast'
 type Props = {
     index: number;
     numberOfVials: number;
-    type: "concept" | "collection" | "remix" | "freestyle" | undefined;
+    style: "concept" | "collection" | "remix" | "freestyle" | undefined;
 }
 
-function MintVialButton({ index, numberOfVials, type }: Props) {
+function MintVialButton({ index, numberOfVials, style }: Props) {
 
     const [vialPrice, setVialPrice] = useState<BigNumber>()
     const [isMinting, setIsMinting] = useState(false)
@@ -28,10 +28,10 @@ function MintVialButton({ index, numberOfVials, type }: Props) {
     const txValue = (vialPrice?.mul(BigNumber.from(numberOfVials)))?.add(BigNumber.from(500000000000000))
 
     const tokenURI =
-        type === "remix" ? RemixMetadataURL :
-            type === "concept" ? `${ConceptMetadataURL}/${index}.json` :
-                type === "collection" ? `${CollectionMetadataURL}/${index}.json` :
-                    type === "freestyle" ? FreestyleMetadataURL : ""
+        style === "remix" ? RemixMetadataURL :
+            style === "concept" ? `${ConceptMetadataURL}/${index}.json` :
+                style === "collection" ? `${CollectionMetadataURL}/${index}.json` :
+                    style === "freestyle" ? FreestyleMetadataURL : ""
 
     useContractRead({
         address: vialContractInfo.address,
