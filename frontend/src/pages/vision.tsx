@@ -12,7 +12,7 @@ function VisionPage() {
             </Head>
             <main className="container mx-auto flex min-h-screen flex-col items-center space-y-10 mt-10 p-4">
                 <h1 className="text-4xl font-bold text-acid">Our Vision</h1>
-                <p className="text-justify">
+                <p className="lg:text-justify">
                     Welcome to <span className="text-acid">Unstable</span> Labs! The first and only AI text-to-image NFT generator on the blockchain.<br />
                     Here at <span className="text-acid">Unstable</span> Labs, we want to provide you with a toolset to produce one-of-a-kind art and maintain ownership of it using NFT technology.<br />
                     We are utilizing the new state-of-the-art deep learning model, known as <Link href="https://huggingface.co/spaces/stabilityai/stable-diffusion" target="_blank" className="text-acid underline"> stable diffusion</Link>, to allow you to create your own works of art and mint them to the blockchain.<br />
