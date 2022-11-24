@@ -71,7 +71,7 @@ const MintExperimentButton = ({ image, id, className }: Props) => {
         <>
             <input type="checkbox" id={id} className="modal-toggle" />
             <div className="modal">
-                <div className="w-full lg:w-1/2">
+                <div className="w-full h-full lg:w-1/2 lg:h-1/2">
                     <label htmlFor={id} className="text-2xl text-white cursor-pointer" onClick={() => {
                         setName("")
                         setDescription("")

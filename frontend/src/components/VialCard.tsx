@@ -26,7 +26,7 @@ function VialCard({ vial, name, multiple, buy, info }: Props) {
         <>
             <input type="checkbox" id={`info-${name}`} className="modal-toggle" />
             <div className="modal">
-                <div className='flex flex-col w-full lg:w-1/3 h-2/3 px-10'>
+                <div className='flex flex-col w-full h-full lg:w-1/3 lg:h-2/3 px-10'>
                     <label htmlFor={`info-${name}`} className="text-2xl text-white cursor-pointer">X</label>
                     <div className='bg-white bg-opacity-50 backdrop-blur-xl w-full h-full p-4 space-y-4'>
                         <div className="flex items-center justify-center space-x-4">
@@ -48,7 +48,7 @@ function VialCard({ vial, name, multiple, buy, info }: Props) {
         <>
             <input type="checkbox" id={`buy-${name}`} className="modal-toggle" />
             <div className="modal">
-                <div className='flex flex-col w-full lg:w-2/3 h-2/3'>
+                <div className='flex flex-col w-full h-full lg:w-2/3 lg:h-2/3'>
                     <label htmlFor={`buy-${name}`} className="text-2xl text-start text-white cursor-pointer">X</label>
                     <div className=' bg-white bg-opacity-50 backdrop-blur-xl px-10 p-4'>
                         <div className="flex items-center justify-center space-x-4">
