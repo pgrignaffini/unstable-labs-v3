@@ -14,6 +14,7 @@ import { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import type { Request } from "../types/types";
 import AppContext from "@context/AppContext"
+import PlayBackgroundMusic from "@components/PlayBackgroundMusic";
 
 const Header = dynamic(
   () => import('@components/Header'),
@@ -76,6 +77,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       <WagmiConfig client={client}>
         <QueryClientProvider client={queryClient}>
           <Toaster />
+          <PlayBackgroundMusic />
           <div className="bg-black min-h-screen min-w-fit">
             <Header />
             <AppContext.Provider

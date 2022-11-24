@@ -5,6 +5,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    minWidth: { "1/5": "20%" },
     extend: {
       animation: {
         'tremble': 'shake 0.5s infinite',

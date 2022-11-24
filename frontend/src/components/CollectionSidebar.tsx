@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { Dispatch, SetStateAction } from 'react'
 import dynamic from 'next/dynamic'
@@ -15,7 +15,7 @@ type Props = {
 function CollectionSidebar({ setSelectedTab }: Props) {
 
     const { isConnected } = useAccount()
-    const [tab, setTab] = React.useState('brewery')
+    const [tab, setTab] = useState('brewery')
 
     return (
         <div className='flex flex-col col-span-2 items-center space-y-8 w-fit md:items-start border-r-2 border-b-2 border-acid'>

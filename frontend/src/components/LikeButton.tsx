@@ -13,17 +13,16 @@ function LikeButton({ tokenId }: Props) {
 
     const { like, likes, addLikeMutation } = useLikes(tokenId)
 
-    const addLike = async () => {
+    const addLike = () => {
         if (like) return
-        else {
-            addLikeMutation.mutate({ tokenId, userId: user?.id as string })
-        }
+        else { addLikeMutation.mutate({ tokenId, userId: user?.id as string }) }
     }
+
 
     return (
         <>
             {user &&
-                <button className="flex hover:border  space-x-1 items-center p-3 cursor-pointer"
+                <button className="flex hover:border space-x-1 items-center p-3 cursor-pointer"
                     disabled={disabled} onClick={() => {
                         setDisabled(true)
                         addLike()

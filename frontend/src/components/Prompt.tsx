@@ -35,18 +35,35 @@ function Prompt() {
     useEffect(() => {
         if (selectedImage) {
             const remixVials = groupedVials["remix"]
-            if (!remixVials.length) setPromptError("No remix vials available")
+            if (!remixVials?.length) setPromptError("No remix vials available")
             if (remixVials?.length) {
                 setVialToBurn(remixVials[0])
-                setPromptState("remix")
             }
         }
         else if (!selectedImage &&
-            vialToBurn?.name === "Remix Vial") {
+            vialToBurn?.style === "remix") {
             setVialToBurn(undefined)
             setPromptState("std")
         }
+        else {
+            setPromptState("std")
+            setPromptError(undefined)
+        }
     }, [selectedImage])
+
+    useEffect(() => {
+        if (vialToBurn?.style === "freestyle") {
+            setPromptState("freestyle")
+            setPromptError(undefined)
+        }
+        else if (vialToBurn?.style === "remix") {
+            setPromptState("remix")
+        }
+        else {
+            setPromptState("std")
+            setPromptError(undefined)
+        }
+    }, [vialToBurn])
 
     useEffect(() => {
         if (!selectedImages?.length) {
@@ -71,7 +88,7 @@ function Prompt() {
         hash: burnData?.hash,
         enabled: !!burnData?.hash,
         onSuccess: async () => {
-            if (vialToBurn?.name !== "Remix Vial") {
+            if (vialToBurn?.style !== "remix") {
                 setOriginalStyleToRemix(vialToBurn?.style as string)
                 setOriginalPrompt(prompt)
             }
@@ -99,8 +116,6 @@ function Prompt() {
                                 return (
                                     <div key={index} onClick={() => {
                                         setVialToBurn?.(vials[0] as Vial)
-                                        if (key === "freestyle") { setPromptState("freestyle") }
-                                        else { setPromptState("std") }
                                     }}>
                                         {key !== "remix" &&
                                             <div className={`${vialToBurn === (vials[0] as Vial) ? "border-4 border-acid" : "border-2"} cursor-pointer hover:bg-gray-400`}>
@@ -149,7 +164,7 @@ function Prompt() {
             {selectVialModal}
             <div className="flex items-center justify-between w-full">
                 <img src="/pc-animated-left.gif" alt="pc-animated-left" className="w-48 h-48" />
-                <div className={`${promptState === "remix" ? "bg-blue-400" : promptState === "freestyle" ? "bg-red-300" : "bg-gray-400"} p-6 mx-auto row-start-3 col-start-3 relative`}>
+                <div className={`${promptState === "remix" ? "bg-blue-400" : promptState === "freestyle" ? "bg-red-300" : "bg-gray-400"} p-6 mx-auto relative`}>
                     <img src="/cat-animated.gif" alt="cat-animated" className="w-20 absolute -top-16 right-2 " />
                     <div className="flex items-center space-x-3 justify-between">
                         <label htmlFor="select-vial-modal" className="cursor-pointer" >
@@ -158,31 +173,30 @@ function Prompt() {
                             }
                         </label>
                         {vialToBurn && <p className="text-[0.7rem] w-24 whitespace-pre-line text-black">{vialToBurn.name}</p>}
-                        {vialToBurn && vialToBurn.name !== "Remix Vial" && vialToBurn.name !== "Freestyle Vial" ?
+                        {vialToBurn && promptState !== "remix" && promptState !== "freestyle" ?
                             <form className='flex space-x-5 items-center' onSubmit={(e) => {
-                                setPromptState("std")
                                 handleSubmit(e)
                             }}>
                                 <input onChange={(e) => setPrompt(e.target.value)} className='w-full p-4 bg-white text-black outline-none font-pixel' required placeholder="prompt..." />
                                 <SolidButton color="green" text="Brew" type="submit" className='text-white' />
-                                {/* <button type="submit" className="p-4 bg-acid text-white">Brew</button> */}
-                            </form> : vialToBurn && vialToBurn.name === "Remix Vial" && selectedImage?.length ? (
+                            </form> :
+                            vialToBurn && promptState === "remix" && selectedImage?.length ? (
                                 <form className='flex space-x-5 items-center' onSubmit={(e) => {
-                                    setPromptState("remix")
                                     handleSubmit(e)
                                 }}>
+                                    <input className='w-full p-4 bg-blue-300 placeholder:text-white outline-none' disabled placeholder="remixing current img" />
                                     <SolidButton color="blue" text="Brew" type="submit" className='text-white' />
                                 </form>
-                            ) : vialToBurn && vialToBurn.name === "Freestyle Vial" ? (
+                            ) : vialToBurn && promptState === "freestyle" ? (
                                 <form className='flex space-x-5 items-center' onSubmit={(e) => {
                                     handleFreestyle(e)
                                 }}>
-                                    <input onChange={(e) => setPrompt(e.target.value)} className='w-full p-4 bg-white text-black outline-none font-pixel' required placeholder="prompt..." />
+                                    <input onChange={(e) => setPrompt(e.target.value)} className='w-full p-4 bg-white text-black outline-none' required placeholder="prompt..." />
                                     <SolidButton color="red" text="Brew" type="submit" className='text-white' />
                                 </form>
                             ) :
-                                <div>
-                                    <p className="text-sm lg:text-md 2xl:text-lg text-center text-white bg-gray-600 px-4 py-6 shadow-md">Select a vial to start</p>
+                                <div className='w-full'>
+                                    <p className='p-4 bg-gray-600 text-white outline-none' >Select a vial to start...</p>
                                     {promptError && <p className="text-red-700 text-[0.6rem] text-center">{promptError}</p>}
                                 </div>}
                     </div>

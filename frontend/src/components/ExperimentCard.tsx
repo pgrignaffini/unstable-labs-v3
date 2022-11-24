@@ -32,7 +32,7 @@ function ExperimentCard({ experiment }: Props) {
             <div className='border-2 hover:border-4  hover:border-acid hover:-m-1 p-4'>
                 <div className="flex flex-col">
                     <label htmlFor={experiment.name} className='cursor-pointer space-y-2'>
-                        <div className='w-auto h-32 md:h-48 2xl:h-60 relative'>
+                        <div className='w-auto h-32 md:h-48 2xl:h-60 relative min-w-1/5'>
                             <Image src={src} alt={experiment?.name} fill objectFit='cover' />
                         </div>
                         <div className='flex items-center justify-between'>

@@ -1,23 +1,14 @@
-import type { NextPage } from "next";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import VialBrewery from "@components/VialBrewery";
 import Vials from "@components/Vials";
-import axios from "axios";
-import { Style } from "../types/types";
 import Experiments from "@components/Experiments";
 import Discover from "@components/Discover";
-
 
 const CollectionSidebar = dynamic(
     () => import('@components/CollectionSidebar'),
     { ssr: false }
 )
-
-// type Props = {
-//     concepts: Style[]
-//     collections: Style[]
-// }
 
 const Collections = () => {
 
