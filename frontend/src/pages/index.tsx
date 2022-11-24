@@ -25,6 +25,7 @@ const Home: NextPage = () => {
             <p className="font-bold text-3xl text-white text-center">Welcome to <span className="text-acid">Unstable</span>Labs!</p>
             <p className="font-bold text-lg text-std text-center">a lab to brew AI-generated NFTs</p>
           </div>
+          <p className="absolute bottom-2 right-2 text-white text-[0.5rem]">artwork by <Link className="text-acid underline" href="https://www.pixilart.com/w0ah" target="_blank">w0ah</Link></p>
         </div>
         <div className="flex flex-col justify-center items-center ">
           <p className="font-bold text-3xl text-white">Step into the Lab!</p>

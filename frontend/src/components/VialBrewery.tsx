@@ -30,33 +30,35 @@ function VialBrewery() {
                     <VialCard vial={PersonalizeVial} name={PersonalizeVial.name} info />
                     <VialCard vial={StylizeVial} name={StylizeVial.name} info /></>}
             {showConcepts &&
-                <div className='border-2 hover:text-acid cursor-pointer hover:border-4 my-auto h-1/2 flex justify-center items-center hover:border-acid'
-                    onClick={() => setShowConcepts(false)}>
-                    <p className='text-2xl '>Back</p>
-                </div>}
-            {showConcepts &&
-                concepts.map((concept, index) => {
-                    const base = concept.name
-                    const image = ConceptVialImageURL + `/${index}.png`
-                    const preview = ConceptPreviewImageURL + `/${base}.png`
-                    const name = base.replaceAll("-", " ")
-                    const vial = { image, name, preview, type: index, style: concept.name }
-                    return (<VialCard key={index} name={vial.name} vial={vial} buy />)
-                })}
+                <>
+                    <div className='border-2 hover:text-acid cursor-pointer hover:border-4 my-auto h-24 flex justify-center items-center hover:border-acid'
+                        onClick={() => setShowConcepts(false)}>
+                        <p className='text-2xl '>Back</p>
+                    </div>
+                    {concepts.map((concept, index) => {
+                        const base = concept.name
+                        const image = ConceptVialImageURL + `/${index}.png`
+                        const preview = ConceptPreviewImageURL + `/${base}.png`
+                        const name = base.replaceAll("-", " ")
+                        const vial = { image, name, preview, type: index, style: concept.name }
+                        return (<VialCard key={index} name={vial.name} vial={vial} buy />)
+                    })}
+                </>}
             {showCollections &&
-                <div className='border-2  hover:text-acid cursor-pointer hover:border-4 my-auto h-1/2 flex justify-center items-center hover:border-acid'
-                    onClick={() => setShowCollections(false)}>
-                    <p className='text-2xl'>Back</p>
-                </div>}
-            {showCollections &&
-                collections.map((collection, index) => {
-                    const base = collection.name
-                    const image = CollectionVialImageURL + `/${index}.png`
-                    const preview = CollectionPreviewImageURL + `/${base}.png`
-                    const name = base.replaceAll("-", " ")
-                    const vial = { image, name, preview, type: index, style: collection.name }
-                    return (<VialCard key={index} name={vial.name} vial={vial} buy />)
-                })}
+                <>
+                    <div className='border-2 hover:text-acid cursor-pointer hover:border-4 my-auto h-24 flex justify-center items-center hover:border-acid'
+                        onClick={() => setShowCollections(false)}>
+                        <p className='text-2xl'>Back</p>
+                    </div>
+                    {collections.map((collection, index) => {
+                        const base = collection.name
+                        const image = CollectionVialImageURL + `/${index}.png`
+                        const preview = CollectionPreviewImageURL + `/${base}.png`
+                        const name = base.replaceAll("-", " ")
+                        const vial = { image, name, preview, type: index, style: collection.name }
+                        return (<VialCard key={index} name={vial.name} vial={vial} buy />)
+                    })}
+                </>}
         </>
     )
 }

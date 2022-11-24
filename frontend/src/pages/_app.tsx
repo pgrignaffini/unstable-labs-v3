@@ -78,7 +78,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <QueryClientProvider client={queryClient}>
           <Toaster />
           <PlayBackgroundMusic />
-          <div className="bg-black min-h-screen min-w-fit">
+          <div className="bg-black min-h-screen w-screen">
             <Header />
             <AppContext.Provider
               value={{ request, setRequest, selectedImages, setSelectedImages, selectedImage, setSelectedImage }}>

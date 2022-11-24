@@ -19,7 +19,7 @@ const Collections = () => {
             <div className="col-span-1">
                 <CollectionSidebar setSelectedTab={setSelectedTab} />
             </div>
-            <div className="col-span-2 lg:col-span-3 2xl:col-span-5 grid grid-rows-4 gap-8 grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
+            <div className="col-span-2 lg:col-span-3 2xl:col-span-5 grid auto-rows-auto gap-8 grid-cols-1 lg:grid-cols-3 2xl:grid-cols-5">
                 {/* {selectedTab === 'trending' && <Trending />} */}
                 {selectedTab === 'experiments' && <Experiments />}
                 {selectedTab === 'vials' && <Vials />}

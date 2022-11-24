@@ -26,14 +26,16 @@ function VialCard({ vial, name, multiple, buy, info }: Props) {
         <>
             <input type="checkbox" id={`info-${name}`} className="modal-toggle" />
             <div className="modal">
-                <div className="w-1/2 m-auto">
+                <div className='flex flex-col w-1/3 h-2/3 px-10'>
                     <label htmlFor={`info-${name}`} className="text-2xl text-white cursor-pointer">X</label>
-                    <div className="bg-white bg-opacity-50 backdrop-blur-xl p-8">
-                        <div className="flex items-center space-x-10">
-                            <img className='w-1/4' src={vial?.image} alt="banner" />
-                            <div className='flex flex-col space-y-10 items-center'>
-                                <p className='text-sm lg:text-lg 2xl:text-2xl text-black'>{vial?.name}</p>
-                                <img className='w-full' src={vial?.preview} alt="preview" />
+                    <div className='bg-white bg-opacity-50 backdrop-blur-xl w-full h-full p-4 space-y-4'>
+                        <div className="flex items-center justify-center space-x-4">
+                            <img src={vial.image} alt="vial" className='h-16 lg:h-24 2xl:h-32' />
+                            <p className='text-black text-sm lg:text-lg 2xl:text-2xl'>{vial.name}</p>
+                        </div>
+                        <div className='w-full h-3/4'>
+                            <div className='relative w-full h-full'>
+                                <Image src={vial.preview} alt="preview" fill sizes='100vw' style={{ objectFit: 'contain' }} />
                             </div>
                         </div>
                     </div>
@@ -45,33 +47,31 @@ function VialCard({ vial, name, multiple, buy, info }: Props) {
     const buyVialModal = (
         <>
             <input type="checkbox" id={`buy-${name}`} className="modal-toggle" />
-            <div className="modal w-full h-full ">
-                <div className='flex flex-col w-1/2 h-auto'>
+            <div className="modal">
+                <div className='flex flex-col w-2/3 h-2/3 px-10'>
                     <label htmlFor={`buy-${name}`} className="text-2xl text-white cursor-pointer">X</label>
                     <div className='bg-white bg-opacity-50 backdrop-blur-xl w-full h-full p-4'>
-                        <div className='w-3/4 mx-auto flex flex-col space-y-8'>
-                            <div className="flex items-center">
-                                <img src={vial.image} alt="banner" className='h-16 lg:h-24 2xl:h-32' />
-                                <p className='text-black flex-1 text-center text-sm lg:text-lg 2xl:text-2xl'>{vial.name}</p>
+                        <div className="flex items-center justify-center space-x-4">
+                            <img src={vial.image} alt="vial" className='h-16 lg:h-24 2xl:h-32' />
+                            <p className='text-black text-sm lg:text-lg 2xl:text-2xl'>{vial.name}</p>
+                        </div>
+                        <div className='flex flex-col space-y-4 xl:flex-row items-center w-full h-3/4'>
+                            <div className='relative h-72 w-72 xl:flex-1 xl:h-full '>
+                                <Image src={vial.preview} alt="preview" fill sizes='100vw' style={{ objectFit: 'contain' }} />
                             </div>
-                            <div className='flex justify-between'>
-                                <div className='relative w-48 h-32 lg:w-64 lg:h-48 2xl:w-96 2xl:h-80'>
-                                    <Image src={vial.preview} alt="preview" layout="fill" />
-                                </div>
-                                <div className='flex flex-col space-y-4 items-center justify-evenly'>
-                                    <div className="flex items-center justify-evenly">
-                                        <p className='text-sm lg:text-md 2xl:text-lg text-black'>Quantity:</p>
-                                        <input type="number" placeholder="Price" step={1}
-                                            value={numVials}
-                                            className="bg-white w-1/3 bg-opacity-50 backdrop-blur-xl p-2
+                            <div className='flex flex-col space-y-4'>
+                                <div className="flex items-center justify-evenly">
+                                    <p className='text-sm lg:text-md 2xl:text-lg text-black'>Quantity:</p>
+                                    <input type="number" placeholder="Price" step={1}
+                                        value={numVials}
+                                        className="bg-white w-1/3 bg-opacity-50 backdrop-blur-xl p-2
                                     outline-none text-black placeholder:font-pixel text-sm lg:text-md 2xl:text-lg"
-                                            onChange={(e) => setNumVials(parseInt(e.target.value))} />
-                                    </div>
-                                    <div className="flex flex-col items-center space-x-8">
-                                        <p className='text-sm lg:text-md 2xl:text-lg text-black'>Price: {price.toFixed(4)}</p>
-                                        {price > 0 &&
-                                            <MintVialButton index={vial.type as number} style={style} numberOfVials={numVials} />}
-                                    </div>
+                                        onChange={(e) => setNumVials(parseInt(e.target.value))} />
+                                </div>
+                                <div className="flex flex-col items-center space-x-8">
+                                    <p className='text-sm lg:text-md 2xl:text-lg text-black'>Price: {price.toFixed(4)}</p>
+                                    {price > 0 &&
+                                        <MintVialButton index={vial.type as number} style={style} numberOfVials={numVials} />}
                                 </div>
                             </div>
                         </div>
@@ -86,19 +86,15 @@ function VialCard({ vial, name, multiple, buy, info }: Props) {
             {info && infoVialModal}
             {buy && buyVialModal}
             <label htmlFor={htmlFor} className='cursor-pointer'>
-                <div className='border-2 hover:border-4  hover:border-acid hover:-m-1 p-4'>
-                    <div className='flex flex-col justify-between items-center'>
-                        <div className='flex items-center justify-between'>
-                            <p className='text-sm text-std'>{vial?.name} {multiple && `${multiple}x`}</p>
-                            <img className='w-12 h-12 object-contain' src={vial.image} alt="image" />
-                            {/* onSale && <p className='font-pixel text-sm'>{parseNftPrice(nft as Nft & MarketItem)}</p> */}
-                        </div>
-                        {vial.name === "Freestyle" ? <img src="/freestyle-collage.jpg" className='w-16 h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-48 xl:h-48 2xl:h-64 2xl:w-64 mt-4' /> :
-                            <div className='w-64 h-64 relative mt-4'>
-                                <Image src={vial?.preview as string} alt="preview" placeholder='blur'
-                                    blurDataURL='/blur.jpeg'
-                                    fill objectFit='contain' />
-                            </div>}
+                <div className='h-72 lg:h-64 xl:h-72 2xl:h-96 w-auto flex flex-col justify-between items-center border-2 hover:border-4 hover:border-acid hover:-m-1 p-4'>
+                    <div className='flex w-full items-center justify-between'>
+                        <p className='text-sm text-std'>{vial?.name} {multiple && `${multiple}x`}</p>
+                        <img className='w-12 h-12 object-contain' src={vial.image} alt="image" />
+                        {/* onSale && <p className='font-pixel text-sm'>{parseNftPrice(nft as Nft & MarketItem)}</p> */}
+                    </div>
+                    <div className="relative w-full h-full">
+                        <Image src={vial?.preview} alt="preview" placeholder='blur' blurDataURL='/blur.jpeg'
+                            fill sizes='100vw' style={{ objectFit: 'contain' }} />
                     </div>
                 </div>
             </label>
