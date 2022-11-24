@@ -2,18 +2,18 @@ import Link from "next/link"
 
 function Footer() {
     return (
-        <footer className="footer mt-24 p-10 bg-neutral text-std">
-            <div className="flex items-center space-x-4">
+        <footer className="footer flex justify-evenly items-center lg:mt-24 p-10 bg-neutral text-std">
+            <div className="hidden lg:flex lg:items-center lg:space-x-4">
                 <img src="/flask.png" alt="logo" className="w-16 h-20" />
-                <p>UnstableLabs<br />Providing awesome NFTs since 2022</p>
+                <p className="text-sm lg:text-md">UnstableLabs<br />Providing awesome NFTs since 2022</p>
             </div>
             <div className="flex flex-col items-center">
-                <Link href="about-us" className="font-xl cursor-pointer hover:underline">About Us</Link>
-                <img src="/us.png" alt="us" className="w-24 h-18" />
+                <Link href="about-us" className="hover:underline">About Us</Link>
+                <img src="/us.png" alt="us" className="hidden lg:inline lg:w-24 lg:h-18" />
             </div>
             <div className="flex flex-col items-center">
-                <Link href="/vision" className="font-xl cursor-pointer hover:underline">Our Vision</Link>
-                <img src="/glasses.png" alt="vision" className="w-48 h-18" />
+                <Link href="/vision" className="hover:underline">Our Vision</Link>
+                <img src="/glasses.png" alt="vision" className="hidden lg:inline lg:w-48 lg:h-18" />
             </div>
             {/* <div>
                 <span className="footer-title">Social</span>

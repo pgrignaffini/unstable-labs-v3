@@ -71,14 +71,14 @@ const MintExperimentButton = ({ image, id, className }: Props) => {
         <>
             <input type="checkbox" id={id} className="modal-toggle" />
             <div className="modal">
-                <div className="w-1/2">
+                <div className="w-full lg:w-1/2">
                     <label htmlFor={id} className="text-2xl text-white cursor-pointer" onClick={() => {
                         setName("")
                         setDescription("")
                     }}>X</label>
-                    <div className="bg-white bg-opacity-50 backdrop-blur-xl p-8">
-                        <div className="flex items-start space-x-10">
-                            <img className='w-1/3' src={"data:image/.webp;base64," + image} alt="image" />
+                    <div className="bg-white bg-opacity-50 backdrop-blur-xl w-full p-8">
+                        <div className="flex flex-col lg:flex-row items-start space-x-10 space-y-4">
+                            <img className='w-1/2 lg:w-1/3 mx-auto' src={"data:image/.webp;base64," + image} alt="image" />
                             <form className="flex flex-1 flex-col space-y-6 ">
                                 <input
                                     type="text"

@@ -106,7 +106,7 @@ function Prompt() {
         <>
             <input type="checkbox" id="select-vial-modal" className="modal-toggle" />
             <div className="modal">
-                <div className="w-1/3 h-2/3">
+                <div className="w-full lg:w-1/3 h-2/3">
                     <label htmlFor="select-vial-modal" className="text-2xl text-white cursor-pointer"
                         onClick={() => { setVialToBurn(undefined); setPromptState("std") }}>X</label>
                     <div className={`bg-gray-400 bg-opacity-50 backdrop-blur-xl p-8 relative ${vials?.length ? "overflow-y-scroll" : null}`}>
@@ -163,7 +163,7 @@ function Prompt() {
         <>
             {selectVialModal}
             <div className="flex items-center justify-between w-full">
-                <img src="/pc-animated-left.gif" alt="pc-animated-left" className="w-48 h-48" />
+                <img src="/pc-animated-left.gif" alt="pc-animated-left" className="hidden lg:inline lg:w-48 lg:h-48" />
                 <div className={`${promptState === "remix" ? "bg-blue-400" : promptState === "freestyle" ? "bg-red-300" : "bg-gray-400"} p-6 mx-auto relative`}>
                     <img src="/cat-animated.gif" alt="cat-animated" className="w-20 absolute -top-16 right-2 " />
                     <div className="flex items-center space-x-3 justify-between">
@@ -172,7 +172,7 @@ function Prompt() {
                                 <SolidButton color="green" text="Press Me!" className='w-16 text-white text-[0.6rem]' rounded label="select-vial-modal" onClick={() => refetchVials()} />
                             }
                         </label>
-                        {vialToBurn && <p className="text-[0.7rem] w-24 whitespace-pre-line text-black">{vialToBurn.name}</p>}
+                        {vialToBurn && <p className="hidden lg:inline text-[0.7rem] w-24 whitespace-pre-line text-black">{vialToBurn.name}</p>}
                         {vialToBurn && promptState !== "remix" && promptState !== "freestyle" ?
                             <form className='flex space-x-5 items-center' onSubmit={(e) => {
                                 handleSubmit(e)
@@ -196,18 +196,18 @@ function Prompt() {
                                 </form>
                             ) :
                                 <div className='w-full'>
-                                    <p className='p-4 bg-gray-600 text-white outline-none' >Select a vial to start...</p>
+                                    <p className='p-4 bg-gray-600 text-white outline-none text-sm lg:text-md'>Select a vial to start...</p>
                                     {promptError && <p className="text-red-700 text-[0.6rem] text-center">{promptError}</p>}
                                 </div>}
                     </div>
                 </div>
-                <img src="/pc-animated-left.gif" alt="pc-animated-left" className="w-48 h-48 -scale-x-95" />
+                <img src="/pc-animated-left.gif" alt="pc-animated-right" className="hidden lg:inline lg:w-48 lg:h-48 lg:-scale-x-95" />
             </div>
-            <div className="container mx-auto">
+            <div className="container mx-auto mt-4">
                 {vialToBurn && !progressData?.eta_relative &&
                     <div className="flex flex-col space-y-4">
-                        <p className="text-center">Like this pic?</p>
-                        <img src={vialToBurn?.preview} alt="preview" className="mx-auto w-1/6" />
+                        <p className="text-center text-sm lg:text-md">Like this pic?</p>
+                        <img src={vialToBurn?.preview} alt="preview" className="mx-auto w-1/2 lg:w-1/4" />
                     </div>}
             </div>
             <div className="container mx-auto">

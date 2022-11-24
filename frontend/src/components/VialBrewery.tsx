@@ -31,9 +31,9 @@ function VialBrewery() {
                     <VialCard vial={StylizeVial} name={StylizeVial.name} info /></>}
             {showConcepts &&
                 <>
-                    <div className='border-2 hover:text-acid cursor-pointer hover:border-4 my-auto h-24 flex justify-center items-center hover:border-acid'
+                    <div className='border-2 hover:text-acid cursor-pointer hover:border-4 my-auto h-14 lg:h-24 flex justify-center items-center hover:border-acid'
                         onClick={() => setShowConcepts(false)}>
-                        <p className='text-2xl '>Back</p>
+                        <p className='text-sm md:text-lg xl:text-2xl'>Back</p>
                     </div>
                     {concepts.map((concept, index) => {
                         const base = concept.name
@@ -46,9 +46,9 @@ function VialBrewery() {
                 </>}
             {showCollections &&
                 <>
-                    <div className='border-2 hover:text-acid cursor-pointer hover:border-4 my-auto h-24 flex justify-center items-center hover:border-acid'
+                    <div className='border-2 hover:text-acid cursor-pointer hover:border-4 my-auto h-14 lg:h-24 flex justify-center items-center hover:border-acid'
                         onClick={() => setShowCollections(false)}>
-                        <p className='text-2xl'>Back</p>
+                        <p className='text-sm md:text-lg xl:text-2xl'>Back</p>
                     </div>
                     {collections.map((collection, index) => {
                         const base = collection.name

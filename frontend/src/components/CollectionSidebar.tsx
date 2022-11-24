@@ -18,7 +18,7 @@ function CollectionSidebar({ setSelectedTab }: Props) {
     const [tab, setTab] = useState('brewery')
 
     return (
-        <div className='flex flex-col col-span-2 items-center space-y-8 w-fit md:items-start border-r-2 border-b-2 border-acid'>
+        <div className='flex flex-col col-span-1 lg:col-span-2 items-center space-y-8 w-fit md:items-start border-r-2 border-b-2 border-acid'>
             {/* <CollectionSideBarRow title="Trending" type='rocket' onClick={() => setSelectedTab('trending')} />
             <CollectionSideBarRow title="Favorites" type='star' onClick={() => setSelectedTab('favorites')} /> */}
             {isConnected && (

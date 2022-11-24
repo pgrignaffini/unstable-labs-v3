@@ -13,7 +13,7 @@ function ResultGrid({ images }: Props) {
 
     return (
         <div>
-            <div className='grid grid-cols-4 gap-4'>
+            <div className='grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-2 lg:gap-3 xl:gap-4'>
                 {images?.map((image: string, index: number) => (
                     <div className="flex flex-col space-y-4 items-center" key={index}>
                         <img className={`cursor-pointer hover:border-4 hover:border-acid`}

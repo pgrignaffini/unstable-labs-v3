@@ -15,11 +15,11 @@ const Collections = () => {
     const [selectedTab, setSelectedTab] = useState('vial-brewery')
 
     return (
-        <div className="grid grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-8 p-10 w-full mx-auto min-h-screen">
+        <div className="grid grid-cols-4 lg:grid-cols-5 2xl:grid-cols-6 gap-2 lg:gap-8 p-4 lg:p-10 w-full mx-auto min-h-screen">
             <div className="col-span-1">
                 <CollectionSidebar setSelectedTab={setSelectedTab} />
             </div>
-            <div className="col-span-2 lg:col-span-3 2xl:col-span-5 grid auto-rows-auto gap-8 grid-cols-1 lg:grid-cols-3 2xl:grid-cols-5">
+            <div className="col-span-3 lg:col-span-4 2xl:col-span-5 grid auto-rows-auto gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5">
                 {/* {selectedTab === 'trending' && <Trending />} */}
                 {selectedTab === 'experiments' && <Experiments />}
                 {selectedTab === 'vials' && <Vials />}

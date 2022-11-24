@@ -26,7 +26,7 @@ function VialCard({ vial, name, multiple, buy, info }: Props) {
         <>
             <input type="checkbox" id={`info-${name}`} className="modal-toggle" />
             <div className="modal">
-                <div className='flex flex-col w-1/3 h-2/3 px-10'>
+                <div className='flex flex-col w-full lg:w-1/3 h-2/3 px-10'>
                     <label htmlFor={`info-${name}`} className="text-2xl text-white cursor-pointer">X</label>
                     <div className='bg-white bg-opacity-50 backdrop-blur-xl w-full h-full p-4 space-y-4'>
                         <div className="flex items-center justify-center space-x-4">
@@ -48,14 +48,14 @@ function VialCard({ vial, name, multiple, buy, info }: Props) {
         <>
             <input type="checkbox" id={`buy-${name}`} className="modal-toggle" />
             <div className="modal">
-                <div className='flex flex-col w-2/3 h-2/3 px-10'>
+                <div className='flex flex-col w-full lg:w-2/3 h-2/3 px-10'>
                     <label htmlFor={`buy-${name}`} className="text-2xl text-white cursor-pointer">X</label>
                     <div className='bg-white bg-opacity-50 backdrop-blur-xl w-full h-full p-4'>
                         <div className="flex items-center justify-center space-x-4">
                             <img src={vial.image} alt="vial" className='h-16 lg:h-24 2xl:h-32' />
                             <p className='text-black text-sm lg:text-lg 2xl:text-2xl'>{vial.name}</p>
                         </div>
-                        <div className='flex flex-col space-y-4 xl:flex-row items-center w-full h-3/4'>
+                        <div className='flex flex-col space-y-4 xl:flex-row items-center w-full h-full lg:h-3/4'>
                             <div className='relative h-72 w-72 xl:flex-1 xl:h-full '>
                                 <Image src={vial.preview} alt="preview" fill sizes='100vw' style={{ objectFit: 'contain' }} />
                             </div>

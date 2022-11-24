@@ -18,18 +18,18 @@ const Home: NextPage = () => {
         <meta name="description" content="" />
         <link rel="icon" href="/flask.png" />
       </Head>
-      <main className="container mx-auto flex min-h-screen flex-col items-center space-y-10 justify-center p-4">
+      <main className="container mx-auto flex min-h-screen flex-col items-center space-y-10 justify-evenly lg:justify-center p-4">
         <div className="relative w-full">
           <img src="/lab-top.png" alt="lab-top" className="w-full" />
-          <div className="w-full absolute bg-black bottom-1/2 ">
-            <p className="font-bold text-3xl text-white text-center">Welcome to <span className="text-acid">Unstable</span>Labs!</p>
-            <p className="font-bold text-lg text-std text-center">a lab to brew AI-generated NFTs</p>
+          <div className="w-full lg:absolute bg-black lg:bottom-1/2 ">
+            <p className="text-lg lg:text-3xl text-white text-center">Welcome to <span className="text-acid">Unstable</span>Labs!</p>
+            <p className="text-sm lg:text-lg text-std text-center">a lab to brew AI-generated NFTs</p>
           </div>
-          <p className="absolute bottom-2 right-2 text-white text-[0.5rem]">artwork by <Link className="text-acid underline" href="https://www.pixilart.com/w0ah" target="_blank">w0ah</Link></p>
+          <p className="absolute bottom-1/2 lg:bottom-2 right-2 text-white text-[0.5rem]">artwork by <Link className="text-acid underline" href="https://www.pixilart.com/w0ah" target="_blank">w0ah</Link></p>
         </div>
         <div className="flex flex-col justify-center items-center ">
-          <p className="font-bold text-3xl text-white">Step into the Lab!</p>
-          <p className="text-std text-[0.6rem] ">Don&apos;t know where to find some Aurora ETH? Check out <Link href="https://aurora.dev/faucet" target="_blank" className="underline text-acid">here</Link></p>
+          <p className="font-bold text-lg lg:text-3xl text-white">Step into the Lab!</p>
+          <p className="text-std text-[0.4rem] lg:text-[0.6rem] ">Don&apos;t know where to find some Aurora ETH? Check out <Link href="https://aurora.dev/faucet" target="_blank" className="underline text-acid">here</Link></p>
         </div>
         <div className="container mx-auto">
           <Prompt />
