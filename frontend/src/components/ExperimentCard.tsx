@@ -13,16 +13,17 @@ function ExperimentCard({ experiment }: Props) {
     const showExperimentModal = (
         <>
             <input type="checkbox" id={experiment.name} className="modal-toggle" />
-            <div className="modal h-full w-full">
-                <div className="flex flex-col space-y-3  text-white">
-                    <label htmlFor={experiment.name} className="text-2xl cursor-pointer">X</label>
-                    <img src={src} alt={experiment?.name} className="w-full" />
-                    <div className="flex flex-col items-center justify-center bg-black" >
-                        <h1 className="text-sm lg:text-lg 2xl:text-2xl font-bold">{experiment?.name}</h1>
+            <label htmlFor={experiment.name} className="modal cursor-pointer">
+                <div className="h-2/3 w-full lg:w-2/3 lg:h-3/4 flex flex-col items-center justify-center text-white">
+                    <div className='relative h-full w-full'>
+                        <Image src={src} alt={experiment?.name} placeholder='blur' blurDataURL='/blur.jpeg' fill sizes='100vw' style={{ objectFit: 'contain' }} />
+                    </div>
+                    <div className='flex flex-col space-y-3 items-center p-2 w-full lg:w-fit bg-gray-900'>
+                        <h1 className="text-sm lg:text-lg 2xl:text-2xl">{experiment?.name}</h1>
                         {experiment?.description && <p className="text-[0.6rem] lg:text-md 2xl:text-lg italic">&quot;{experiment.description}&quot;</p>}
                     </div>
                 </div>
-            </div>
+            </label>
         </>
     )
 
