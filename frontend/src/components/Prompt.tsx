@@ -106,10 +106,10 @@ function Prompt() {
         <>
             <input type="checkbox" id="select-vial-modal" className="modal-toggle" />
             <div className="modal">
-                <div className="w-full lg:w-1/3 h-2/3">
+                <div className="w-full lg:w-1/3 h-full">
                     <label htmlFor="select-vial-modal" className="text-2xl text-white cursor-pointer"
                         onClick={() => { setVialToBurn(undefined); setPromptState("std") }}>X</label>
-                    <div className={`bg-gray-400 bg-opacity-50 backdrop-blur-xl p-8 relative ${vials?.length ? "overflow-y-scroll" : null}`}>
+                    <div className={`bg-gray-400 bg-opacity-50 h-4/5 backdrop-blur-xl p-8 relative ${vials?.length ? "overflow-y-scroll" : null}`} >
                         {vials?.length ? <div className="flex flex-col space-y-4 ">
                             {Object.keys(groupedVials).map((key, index) => {
                                 const vials = groupedVials[key]
@@ -204,7 +204,7 @@ function Prompt() {
                 <img src="/pc-animated-left.gif" alt="pc-animated-right" className="hidden lg:inline lg:w-48 lg:h-48 lg:-scale-x-95" />
             </div>
             <div className="container mx-auto mt-4">
-                {vialToBurn && !progressData?.eta_relative &&
+                {vialToBurn && vialToBurn.style !== "remix" && vialToBurn.style !== "freestyle" && !progressData?.eta_relative &&
                     <div className="flex flex-col space-y-4">
                         <p className="text-center text-sm lg:text-md">Like this pic?</p>
                         <img src={vialToBurn?.preview} alt="preview" className="mx-auto w-1/2 lg:w-1/4" />
@@ -214,7 +214,7 @@ function Prompt() {
                 {burnData?.hash && <TxHash className="text-center text-md text-white" hash={burnData?.hash} />}
                 {isLoadingImages &&
                     <div className="flex flex-col space-y-4 items-center justify-center">
-                        <img src="/flask-combining.gif" alt="loading" className="w-64" />
+                        <img src="/flask-combining.gif" alt="loading" className="w-32 lg:w-64" />
                         {progressData?.eta_relative ?
                             <p className="text-sm text-center">Wait time: {progressData.eta_relative.toFixed(0)}s</p>
                             :

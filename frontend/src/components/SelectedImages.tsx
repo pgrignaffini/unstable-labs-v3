@@ -17,8 +17,8 @@ function SelectedImages() {
             {selectedImages?.length > 0 ?
                 <div className='bg-gray-400 p-4 overflow-x-auto flex space-x-4'>
                     {selectedImages?.map((image, index) => (
-                        <div className='flex-none'>
-                            <div key={index} className="flex flex-col ">
+                        <div key={index} className='flex-none'>
+                            <div className="flex flex-col ">
                                 <div className="relative " >
                                     <p className='absolute -top-4 left-0 text-2xl text-red-500 cursor-pointer' onClick={() => removeImage(index)}>X</p>
                                     <img onClick={() => {

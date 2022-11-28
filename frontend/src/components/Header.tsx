@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 function Header() {
 
     const { data: session } = useSession();
-    const { isConnected, address } = useAccount();
+    const { isConnected } = useAccount();
     const { asPath } = useRouter()
 
     console.log("asPath", asPath)
@@ -21,12 +21,13 @@ function Header() {
                     <img src="/flask.png" alt="flask" className="w-10" />
                 </div>
             </div>
-            {asPath === "/collections" ? <Link className='text-[0.5rem] sm:text-sm xl:text-md 2xl:text-lg text-white cursor-pointer border-acid hover:border-b-2 ' href="/">
-                Home
-            </Link> : <Link className='text-[0.5rem] sm:text-sm xl:text-md 2xl:text-lg text-white cursor-pointer border-acid hover:border-b-2 ' href="/collections">
-                Lab Collections
-            </Link>}
-            {isConnected && address && !session &&
+            {asPath === "/collections" ?
+                <Link className='text-[0.5rem] flex space-x-1 items-center sm:text-sm xl:text-md 2xl:text-lg text-white cursor-pointer border-acid hover:border-b-2 ' href="/">
+                    <p>Home</p>
+                </Link> : <Link className='text-[0.5rem] sm:text-sm xl:text-md 2xl:text-lg text-white cursor-pointer border-acid hover:border-b-2 ' href="/collections">
+                    Lab Collections
+                </Link>}
+            {isConnected && !session &&
                 <p className="text-white cursor-pointer text-[0.5rem] sm:text-sm xl:text-md 2xl:text-lg border-acid hover:border-b-2" onClick={() => signIn("discord")}>
                     Log in
                 </p>}

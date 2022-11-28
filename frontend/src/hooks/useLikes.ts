@@ -1,5 +1,5 @@
 import { trpc } from '@utils/trpc'
-import { useLoggedUser } from './useLoggedUser'
+import { useLoggedUser } from '@hooks/useLoggedUser'
 
 export const useLikes = (tokenId: number) => {
 

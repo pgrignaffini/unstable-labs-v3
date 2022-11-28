@@ -48,7 +48,7 @@ function VialCard({ vial, name, multiple, buy, info }: Props) {
             <input type="checkbox" id={`buy-${name}`} className="modal-toggle" />
             <label htmlFor={`buy-${name}`} className="modal cursor-pointer ">
                 <div className='w-full h-full my-auto lg:w-2/3 lg:h-2/3'>
-                    <div className='flex flex-col bg-white bg-opacity-50 backdrop-blur-xl px-10 p-4'>
+                    <div className='flex flex-col space-y-4 bg-white bg-opacity-50 backdrop-blur-xl px-10 p-4'>
                         <div className="flex items-center justify-center space-x-4">
                             <img src={vial.image} alt="vial" className='h-16 lg:h-24 2xl:h-32' />
                             <p className='text-black text-sm lg:text-lg 2xl:text-2xl'>{vial.name}</p>

@@ -35,7 +35,7 @@ function ExperimentCard({ experiment }: Props) {
                     <div className='relative w-full h-full'>
                         <Image src={src} alt={experiment?.name} placeholder='blur' blurDataURL='/blur.jpeg' fill sizes='100vw' style={{ objectFit: 'contain' }} />
                     </div>
-                    <div className='flex items-center'>
+                    <div className='flex w-full items-center justify-between px-2'>
                         <div className="text-white text-[0.6rem] lg:text-sm 2xl:text-md font-bold">{experiment?.name}</div>
                         {experiment?.tokenId && <LikeButton tokenId={experiment.tokenId} />}
                     </div>

@@ -24,7 +24,7 @@ function Vials() {
                             vial={vials[0] as Vial} multiple={vials.length} info />
                     )
                 })}
-            {!isLoading && vials?.length === 0 && <p className='text-sm'>No vials found</p>}
+            {!isLoading && vials?.length === 0 && <p>No vials found</p>}
         </>
     )
 }
