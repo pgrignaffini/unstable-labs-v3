@@ -1,0 +1,57 @@
+import { useState } from "react";
+import dynamic from "next/dynamic";
+import VialShop from "@components/VialShop";
+import Vials from "@components/Vials";
+import Experiments from "@components/Experiments";
+import Discover from "@components/Discover";
+import { useAccount } from "wagmi";
+
+const CollectionSideBarRow = dynamic(
+    () => import('@components/CollectionSideBarRow'),
+    { ssr: false }
+)
+
+const Brewery = () => {
+
+    const { isConnected } = useAccount()
+    const [selectedTab, setSelectedTab] = useState('shop')
+
+    return (
+        <div className="grid grid-cols-4 lg:grid-cols-5 2xl:grid-cols-6 gap-2 lg:gap-8 p-4 lg:p-10 w-full mx-auto min-h-screen">
+            <div className="col-span-1">
+                {/* sidebar */}
+                <div className='flex flex-col col-span-1 lg:col-span-2 items-center space-y-8 w-fit md:items-start border-r-2 border-b-2 border-acid'>
+                    {isConnected && (
+                        <>
+                            <CollectionSideBarRow title="Experiments" type='blob' selected={selectedTab === "experiments"} onClick={() => { setSelectedTab('experiments') }} />
+                            <CollectionSideBarRow title="Vials" type='vial' selected={selectedTab === "vials"} onClick={() => { setSelectedTab('vials') }} />
+                        </>
+                    )}
+                    <CollectionSideBarRow title="Vial Shop" type='brewery' selected={selectedTab === "shop"} onClick={() => { setSelectedTab('shop') }} />
+                    <CollectionSideBarRow title="Discover" type='microscope' selected={selectedTab === "discover"} onClick={() => { setSelectedTab('discover') }} />
+                </div>
+            </div>
+            <div className="col-span-3 lg:col-span-4 2xl:col-span-5 grid auto-rows-auto gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5">
+                {selectedTab === 'experiments' && <Experiments />}
+                {selectedTab === 'vials' && <Vials />}
+                {selectedTab === 'shop' && <VialShop />}
+                {selectedTab === 'discover' && <Discover />}
+            </div>
+        </div>
+    );
+}
+
+export default Brewery
+
+// get styles from server side and pass to client
+// export async function getServerSideProps() {
+//     const styles = await axios.get(`${process.env.API_BASE_URL}/sdapi/v1/prompt-styles`)
+//         .catch((err) => {
+//             console.log(err)
+//         })
+//     return {
+//         props: {
+//             styles: styles?.data,
+//         }
+//     }
+// }

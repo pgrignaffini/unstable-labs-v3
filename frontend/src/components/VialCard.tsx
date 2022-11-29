@@ -8,10 +8,9 @@ type Props = {
     name: string
     multiple?: number
     buy?: boolean
-    info?: boolean
 }
 
-function VialCard({ vial, name, multiple, buy, info }: Props) {
+function VialCard({ vial, name, multiple, buy }: Props) {
 
     const [numVials, setNumVials] = useState<number>(1)
     const price = (0.0001 * numVials)
@@ -20,7 +19,7 @@ function VialCard({ vial, name, multiple, buy, info }: Props) {
             vial.style.includes("collection") ? "collection" :
                 vial.style.includes("remix") ? "remix" :
                     vial.style.includes("freestyle") ? "freestyle" : undefined
-    const htmlFor = buy ? `buy-${name}` : info ? `info-${name}` : ""
+    const htmlFor = buy ? `buy-${name}` : `info-${name}`
 
     const infoVialModal = (
         <>
@@ -30,7 +29,7 @@ function VialCard({ vial, name, multiple, buy, info }: Props) {
                     <div className='flex flex-col bg-white bg-opacity-50 backdrop-blur-xl w-full h-full p-4 space-y-4'>
                         <div className="flex items-center justify-center space-x-4">
                             <img src={vial.image} alt="vial" className='h-16 lg:h-24 2xl:h-32' />
-                            <p className='text-black text-sm lg:text-lg 2xl:text-2xl'>{vial.name}</p>
+                            <p className='text-black text-sm lg:text-lg 2xl:text-2xl'>{vial.name} {multiple && `${multiple}x`}</p>
                         </div>
                         <div className='w-full h-3/4'>
                             <div className='relative w-full h-full'>
@@ -51,7 +50,7 @@ function VialCard({ vial, name, multiple, buy, info }: Props) {
                     <div className='flex flex-col space-y-4 bg-white bg-opacity-50 backdrop-blur-xl px-10 p-4'>
                         <div className="flex items-center justify-center space-x-4">
                             <img src={vial.image} alt="vial" className='h-16 lg:h-24 2xl:h-32' />
-                            <p className='text-black text-sm lg:text-lg 2xl:text-2xl'>{vial.name}</p>
+                            <p className='text-black text-sm lg:text-lg 2xl:text-2xl'>{vial.name} {multiple && `${multiple}x`}</p>
                         </div>
                         <div className='flex flex-col space-y-4 xl:flex-row items-center w-full h-full lg:h-3/4'>
                             <div className='relative h-72 w-72 xl:flex-1 xl:h-96'>
@@ -81,8 +80,7 @@ function VialCard({ vial, name, multiple, buy, info }: Props) {
 
     return (
         <>
-            {info && infoVialModal}
-            {buy && buyVialModal}
+            {buy ? buyVialModal : infoVialModal}
             <label htmlFor={htmlFor} className='cursor-pointer'>
                 <div className='h-72 lg:h-64 xl:h-72 2xl:h-96 w-auto flex flex-col justify-between items-center border-2 hover:border-4 hover:border-acid hover:-m-1 p-4'>
                     <div className='flex w-full items-center justify-between'>

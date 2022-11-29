@@ -8,7 +8,7 @@ export const useVials = () => {
 
     const { address } = useAccount()
 
-    const { data: ownedTokenIds, refetch: refetchVials, isLoading, isFetching } = useContractRead({
+    const { data: ownedTokenIds, refetch: refetchVials, isLoading: isLoadingIds } = useContractRead({
         address: vialContractInfo.address,
         abi: vialContractInfo.abi,
         functionName: 'getVialsOwnedByMe',
@@ -18,7 +18,7 @@ export const useVials = () => {
         }
     })
 
-    const { data: ownedTokenURIs, isLoading: isLoadingURIs, isFetching: isFetchingURIs } = useContractRead({
+    const { data: ownedTokenURIs, isLoading: isLoadingURIs } = useContractRead({
         address: vialContractInfo.address,
         abi: vialContractInfo.abi,
         functionName: 'getTokenURIs',
@@ -41,12 +41,12 @@ export const useVials = () => {
         return ownedNfts
     }
 
-    const { data: vials, isLoading: isLoadingVials, isFetching: isFetchingVials } = useQuery(['your-vials', address], getOwnedVials, {
+    const { data: vials, isLoading: isLoadingVials } = useQuery(['your-vials', address], getOwnedVials, {
         enabled: !!ownedTokenURIs,
+        staleTime: 1000 * 60,
     })
 
-    const isLoadingVialsData = isLoading || isLoadingURIs || isLoadingVials
-    const isFetchingVialsData = isFetching || isFetchingURIs || isFetchingVials
+    const isLoading = isLoadingIds || isLoadingURIs || isLoadingVials
 
-    return { vials, refetchVials, isLoadingVialsData, isFetchingVialsData }
+    return { vials, refetchVials, isLoading }
 }

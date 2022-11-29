@@ -140,7 +140,7 @@ function Prompt() {
                             </div>
                         </div> : <div className="flex flex-col space-y-4 justify-center items-center">
                             <p className="text-white text-lg">It seems there aren&apos;t any vials here...go grab some in the{' '}
-                                <Link href="/collections" className="underline text-acid">Brewery!</Link></p>
+                                <Link href="/brewery" className="underline text-acid">Brewery!</Link></p>
                         </div>}
                         {/* {!session &&
                             <>

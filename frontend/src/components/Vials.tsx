@@ -6,9 +6,10 @@ import VialCard from '@components/VialCard'
 
 function Vials() {
 
-    const { vials, isFetchingVialsData, isLoadingVialsData } = useVials()
+    const { vials, isLoading } = useVials()
     const groupedVials = vials ? groupBy(vials, 'style') : []
-    const isLoading = isFetchingVialsData || isLoadingVialsData
+
+    const hasFreestyle = groupedVials["freestyle"]?.length > 0
 
     return (
         <>
@@ -18,10 +19,11 @@ function Vials() {
                 </div> :
                 Object.keys(groupedVials).map((key, index) => {
                     const vials: Vial[] = groupedVials[key]
+                    const canBuy = key === "freestyle" ? !hasFreestyle : true
                     return (
                         vials?.length > 0 &&
                         <VialCard key={index} name={vials[0]?.name as string}
-                            vial={vials[0] as Vial} multiple={vials.length} info />
+                            vial={vials[0] as Vial} multiple={vials.length} buy={canBuy} />
                     )
                 })}
             {!isLoading && vials?.length === 0 && <p>No vials found</p>}

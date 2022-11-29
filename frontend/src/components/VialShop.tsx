@@ -7,7 +7,7 @@ import { useVials } from '@hooks/useVials'
 import { groupBy } from '@utils/helpers'
 import VialCard from '@components/VialCard'
 
-function VialBrewery() {
+function VialShop() {
 
     const { vials } = useVials()
     const groupedVials = vials ? groupBy(vials, 'style') : []
@@ -18,7 +18,7 @@ function VialBrewery() {
     return (
         <>
             {!showConcepts && !showCollections &&
-                <><VialCard vial={FreestyleVial} name={FreestyleVial.name} info={hasFreestyle} buy={!hasFreestyle} />
+                <><VialCard vial={FreestyleVial} name={FreestyleVial.name} buy={!hasFreestyle} />
                     <div onClick={() => setShowCollections(true)}>
                         <VialCard vial={CollectionVial} name={CollectionVial.name} />
                     </div>
@@ -26,9 +26,9 @@ function VialBrewery() {
                         <VialCard vial={ConceptVial} name={ConceptVial.name} />
                     </div>
                     <VialCard vial={RemixVial} name={RemixVial.name} buy />
-                    <VialCard vial={AlterationVial} name={AlterationVial.name} info />
-                    <VialCard vial={PersonalizeVial} name={PersonalizeVial.name} info />
-                    <VialCard vial={StylizeVial} name={StylizeVial.name} info /></>}
+                    <VialCard vial={AlterationVial} name={AlterationVial.name} />
+                    <VialCard vial={PersonalizeVial} name={PersonalizeVial.name} />
+                    <VialCard vial={StylizeVial} name={StylizeVial.name} /></>}
             {showConcepts &&
                 <>
                     <div className='border-2 hover:text-acid cursor-pointer hover:border-4 my-auto h-14 lg:h-24 flex justify-center items-center hover:border-acid'
@@ -63,4 +63,4 @@ function VialBrewery() {
     )
 }
 
-export default VialBrewery
+export default VialShop
