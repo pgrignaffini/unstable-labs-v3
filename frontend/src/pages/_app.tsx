@@ -15,6 +15,7 @@ import { useState } from "react";
 import type { Request } from "../types/types";
 import AppContext from "@context/AppContext"
 import PlayBackgroundMusic from "@components/PlayBackgroundMusic";
+import { ConnectKitProvider, getDefaultClient, } from "connectkit";
 
 const Header = dynamic(
   () => import('@components/Header'),
@@ -44,15 +45,26 @@ const Aurora: Chain = {
   testnet: true,
 }
 
-const { provider } = configureChains([Aurora], [
-  infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_API_KEY }),
-  publicProvider(),
-])
+// const { provider } = configureChains([Aurora], [
+//   infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_API_KEY }),
+//   publicProvider(),
+// ])
 
-const client = createClient({
-  autoConnect: true,
-  provider
-})
+const infuraId = process.env.NEXT_PUBLIC_INFURA_API_KEY
+const chains = [Aurora]
+
+// const client = createClient({
+//   autoConnect: true,
+//   provider
+// })
+
+const client = createClient(
+  getDefaultClient({
+    appName: "UnstableLabs",
+    infuraId,
+    chains,
+  }),
+);
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -75,19 +87,32 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <WagmiConfig client={client}>
-        <QueryClientProvider client={queryClient}>
-          <Toaster />
-          <PlayBackgroundMusic />
-          <div className="bg-black min-h-screen w-screen">
-            <Header />
-            <AppContext.Provider
-              value={{ request, setRequest, selectedImages, setSelectedImages, selectedImage, setSelectedImage }}>
-              <Component {...pageProps} />
-            </AppContext.Provider>
-            <Footer />
-          </div>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
+        <ConnectKitProvider customTheme={{
+          "--ck-font-family": '"Press Start 2P", sans',
+          "--ck-border-radius": 1,
+          "--ck-primary-button-border-radius": 1,
+          "--ck-secondary-button-border-radius": 1,
+          "--ck-connectbutton-border-radius": 1,
+          "--ck-connectbutton-background": "#b4e61d",
+          "--ck-connectbutton-hover-background": "#354407",
+          "--ck-connectbutton-font-size": "12px",
+          "--ck-body-disclaimer-font-size": "9px",
+          "--ck-body-font-size": "9px"
+        }}>
+          <QueryClientProvider client={queryClient}>
+            <Toaster />
+            <PlayBackgroundMusic />
+            <div className="bg-black min-h-screen w-screen">
+              <Header />
+              <AppContext.Provider
+                value={{ request, setRequest, selectedImages, setSelectedImages, selectedImage, setSelectedImage }}>
+                <Component {...pageProps} />
+              </AppContext.Provider>
+              <Footer />
+            </div>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </ConnectKitProvider>
       </WagmiConfig>
     </SessionProvider>
   );

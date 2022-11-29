@@ -23,6 +23,18 @@ const Test: NextPage = () => {
         }
     }, [clicked])
 
+    // customTheme={{
+    //   "--ck-font-family": '"Press Start 2P", sans',
+    //   "--ck-border-radius": 1,
+    //   "--ck-primary-button-border-radius": 1,
+    //   "--ck-secondary-button-border-radius": 1,
+    //   "--ck-connectbutton-border-radius": 1,
+    //   "--ck-connectbutton-background": "#b4e61d",
+    //   "--ck-connectbutton-hover-background": "#354407"
+    // "--ck-connectbutton-font-size":"15px"
+    // "--ck-body-disclaimer-font-size":"14px"
+    // }}>
+
     return (
         <>
             <Head>
