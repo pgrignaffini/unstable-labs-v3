@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useAccount } from 'wagmi'
 
 interface Props {
   className?: string
@@ -14,10 +15,11 @@ interface Props {
 function SolidButton({ className, onClick, text, rounded, label, type, loading, color }: Props) {
 
   const [clicked, setClicked] = useState(false)
+  const { isConnected } = useAccount()
 
   return (
     <>
-      <button type={type} disabled={loading} className={`relative ${className}`} onPointerOver={() => setClicked(false)} onClick={() => {
+      <button type={type} disabled={loading || !isConnected} className={`relative ${className}`} onPointerOver={() => setClicked(false)} onClick={() => {
         setClicked(true)
         onClick?.()
       }}>
