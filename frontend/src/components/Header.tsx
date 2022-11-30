@@ -44,9 +44,15 @@ function Header() {
                 </div>
                 {asPath === "/brewery" ?
                     <Link className='hidden md:inline-flex text-[0.5rem] space-x-1 items-center sm:text-sm xl:text-md 2xl:text-lg text-white cursor-pointer border-acid hover:border-b-2 ' href="/">
-                        <p>Lab</p>
+                        <div className='space-x-2 flex items-start'>
+                            <p>Lab</p>
+                            <img src="pc-animated-left.gif" alt="pc" className="w-6" />
+                        </div>
                     </Link> : <Link className='hidden md:inline-flex text-[0.5rem] sm:text-sm xl:text-md 2xl:text-lg text-white cursor-pointer border-acid hover:border-b-2 ' href="/brewery">
-                        Brewery
+                        <div className='space-x-2 flex items-start'>
+                            <p>Brewery</p>
+                            <img src="brewery-animated.gif" alt="brewery" className="w-6" />
+                        </div>
                     </Link>}
                 {isConnected && !session &&
                     <p className="hidden md:inline text-white cursor-pointer text-[0.5rem] sm:text-sm xl:text-md 2xl:text-lg border-acid hover:border-b-2" onClick={() => signIn("discord")}>

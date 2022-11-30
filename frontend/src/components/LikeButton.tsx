@@ -39,7 +39,7 @@ function LikeButton({ tokenId }: Props) {
                 :
                 <div className='flex items-center space-x-1'>
                     <img src="heart.png" className="h-4 lg:h-6" />
-                    <p className='text-[0.5rem] lg:text-sm text-white'>{displayLikes ?? "0"}</p>
+                    <p className='text-sm text-white'>{displayLikes ?? "0"}</p>
                 </div>
             }
         </>
