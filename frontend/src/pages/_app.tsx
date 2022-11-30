@@ -5,9 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { trpc } from "@utils/trpc";
 import "@styles/globals.css";
 import dynamic from 'next/dynamic'
-import { WagmiConfig, createClient, configureChains, Chain } from 'wagmi'
-import { infuraProvider } from 'wagmi/providers/infura'
-import { publicProvider } from 'wagmi/providers/public'
+import { WagmiConfig, createClient, Chain } from 'wagmi'
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { Toaster } from "react-hot-toast";
@@ -16,6 +14,8 @@ import type { Request } from "../types/types";
 import AppContext from "@context/AppContext"
 import PlayBackgroundMusic from "@components/PlayBackgroundMusic";
 import { ConnectKitProvider, getDefaultClient, } from "connectkit";
+import { Analytics } from '@vercel/analytics/react';
+
 
 const Header = dynamic(
   () => import('@components/Header'),
@@ -109,6 +109,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
               <AppContext.Provider
                 value={{ request, setRequest, selectedImages, setSelectedImages, selectedImage, setSelectedImage }}>
                 <Component {...pageProps} />
+                <Analytics />
               </AppContext.Provider>
               <Footer />
             </div>
