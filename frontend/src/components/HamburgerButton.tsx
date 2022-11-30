@@ -61,18 +61,17 @@ function HamburgerButton() {
             >
                 <div
                     className={`${genericHamburgerLine} ${isOpen
-                        ? "rotate-45 translate-y-3 opacity-50 group-hover:opacity-100"
-                        : "opacity-50 group-hover:opacity-100"
+                        ? "rotate-45 translate-y-3"
+                        : null
                         }`}
                 />
                 <div
-                    className={`${genericHamburgerLine} ${isOpen ? "opacity-0" : "opacity-50 group-hover:opacity-100"
-                        }`}
+                    className={genericHamburgerLine}
                 />
                 <div
                     className={`${genericHamburgerLine} ${isOpen
-                        ? "-rotate-45 -translate-y-3 opacity-50 group-hover:opacity-100"
-                        : "opacity-50 group-hover:opacity-100"
+                        ? "-rotate-45 -translate-y-3"
+                        : null
                         }`}
                 />
             </button>
