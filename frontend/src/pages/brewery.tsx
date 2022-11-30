@@ -27,7 +27,7 @@ const Brewery = () => {
                             <CollectionSideBarRow title="Vials" type='vial' selected={selectedTab === "vials"} onClick={() => { setSelectedTab('vials') }} />
                         </>
                     )}
-                    <CollectionSideBarRow title="Vial Shop" type='brewery' selected={selectedTab === "shop"} onClick={() => { setSelectedTab('shop') }} />
+                    <CollectionSideBarRow title="Vial Shop" type='shop' selected={selectedTab === "shop"} onClick={() => { setSelectedTab('shop') }} />
                     <CollectionSideBarRow title="Discover" type='microscope' selected={selectedTab === "discover"} onClick={() => { setSelectedTab('discover') }} />
                 </div>
             </div>

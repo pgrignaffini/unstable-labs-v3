@@ -1,7 +1,7 @@
 type Props = {
     title: string
     onClick?: () => void
-    type?: "blob" | "vial" | "brewery" | "microscope"
+    type?: "blob" | "vial" | "shop" | "microscope"
     selected?: boolean
 }
 
@@ -12,7 +12,7 @@ function CollectionSideBarRow({ title, onClick, type, selected }: Props) {
             <p className={`text-[0.4rem] md:text-md 2xl:text-lg whitespace-nowrap ${selected && "border-b-2 border-acid"}`}>{title}</p>
             {type === "blob" && <img src="/blob-animated.gif" className="w-6 h-6 lg:w-8 lg:h-8 bg-blue-" />}
             {type === "vial" && <img src="/flask-animated.gif" className="w-4 h-6 lg:w-6 lg:h-8" />}
-            {type === "brewery" && <img src="/brewery-animated.gif" className="w-6 h-6 lg:w-8 lg:h-8" />}
+            {type === "shop" && <img src="/shop.png" className="w-6 h-6 lg:w-8 lg:h-8" />}
             {type === "microscope" && <img src="/microscope-animated.gif" className="w-6 h-8 lg:w-8 lg:h-10" />}
         </div>
     )
