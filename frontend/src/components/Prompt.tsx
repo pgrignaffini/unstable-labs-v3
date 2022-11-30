@@ -18,7 +18,7 @@ function Prompt() {
 
     const { data: session } = useSession()
     const { selectedImage, setRequest, selectedImages } = useContext(AppContext)
-    const { vials, refetchVials, isFetchingVialsData, isLoadingVialsData } = useVials()
+    const { vials, refetchVials, isLoading } = useVials()
     const groupedVials = vials ? groupBy(vials, 'style') : []
     const [vialToBurn, setVialToBurn] = useState<Vial | undefined>(undefined);
     const [prompt, setPrompt] = useState<string>('')
@@ -130,7 +130,7 @@ function Prompt() {
                                 )
                             })}
                             <div className="w-full flex justify-center">
-                                {(isFetchingVialsData || isLoadingVialsData) ?
+                                {(isLoading) ?
                                     <img src="/flask.png" className="animate-tremble w-8" />
                                     : null}
                             </div>

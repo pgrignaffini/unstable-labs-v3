@@ -84,21 +84,23 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const [selectedImages, setSelectedImages] = useState<string[]>([])
   const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined)
 
+  const customTheme = {
+    "--ck-font-family": '"Press Start 2P", sans',
+    "--ck-border-radius": 1,
+    "--ck-primary-button-border-radius": 1,
+    "--ck-secondary-button-border-radius": 1,
+    "--ck-connectbutton-border-radius": 1,
+    "--ck-connectbutton-background": "#b4e61d",
+    "--ck-connectbutton-hover-background": "#354407",
+    "--ck-connectbutton-font-size": "12px",
+    "--ck-body-disclaimer-font-size": "9px",
+    "--ck-body-font-size": "9px"
+  }
+
   return (
     <SessionProvider session={session}>
       <WagmiConfig client={client}>
-        <ConnectKitProvider customTheme={{
-          "--ck-font-family": '"Press Start 2P", sans',
-          "--ck-border-radius": 1,
-          "--ck-primary-button-border-radius": 1,
-          "--ck-secondary-button-border-radius": 1,
-          "--ck-connectbutton-border-radius": 1,
-          "--ck-connectbutton-background": "#b4e61d",
-          "--ck-connectbutton-hover-background": "#354407",
-          "--ck-connectbutton-font-size": "12px",
-          "--ck-body-disclaimer-font-size": "9px",
-          "--ck-body-font-size": "9px"
-        }}>
+        <ConnectKitProvider customTheme={customTheme}>
           <QueryClientProvider client={queryClient}>
             <Toaster />
             <PlayBackgroundMusic />

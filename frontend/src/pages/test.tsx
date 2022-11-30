@@ -9,11 +9,13 @@ import { useLoadingImages } from "@hooks/useLoadingImages";
 import SelectedImages from "@components/SelectedImages";
 import { useEffect, useState } from "react";
 import PlayBackgroundMusic from "@components/PlayBackgroundMusic";
+import Modal from "@components/Modal";
 
 const Test: NextPage = () => {
 
     const { images } = useLoadingImages()
     const [clicked, setClicked] = useState(false)
+    const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
         if (clicked) {
@@ -23,18 +25,6 @@ const Test: NextPage = () => {
         }
     }, [clicked])
 
-    // customTheme={{
-    //   "--ck-font-family": '"Press Start 2P", sans',
-    //   "--ck-border-radius": 1,
-    //   "--ck-primary-button-border-radius": 1,
-    //   "--ck-secondary-button-border-radius": 1,
-    //   "--ck-connectbutton-border-radius": 1,
-    //   "--ck-connectbutton-background": "#b4e61d",
-    //   "--ck-connectbutton-hover-background": "#354407"
-    // "--ck-connectbutton-font-size":"15px"
-    // "--ck-body-disclaimer-font-size":"14px"
-    // }}>
-
     return (
         <>
             <Head>
@@ -42,12 +32,18 @@ const Test: NextPage = () => {
                 <meta name="description" content="" />
                 <link rel="icon" href="/flask.png" />
             </Head>
-            <main className="container mx-auto flex min-h-screen flex-col items-center space-y-10 justify-center p-4">
-                <img src="/ramen.png" alt="ramen"
+            <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
+                {/* <img src="/ramen.png" alt="ramen"
                     className={`w-24 cursor-pointer ${clicked ? "transform scale-125 animate-tremble" : ""}`}
-                    onClick={() => setClicked(!clicked)} />
-
-                <PlayBackgroundMusic />
+                    onClick={() => setClicked(!clicked)} /> */}
+                <button className="bg-slate-900 text-white p-2 rounded"
+                    onClick={() => setShowModal(true)}>Open Modal</button>
+                <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
+                    <div className="flex flex-col items-center space-y-4">
+                        <h1 className="text-2xl font-bold">Congratulations!</h1>
+                        <p className="text-center">You have successfully minted your first NFT. You can view it on OpenSea.</p>
+                    </div>
+                </Modal>
             </main>
         </>
     );

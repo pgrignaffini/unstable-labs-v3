@@ -52,15 +52,16 @@ function MintVialButton({ index, numberOfVials, style }: Props) {
 
     const { write: mintVials, data: vialData } = useContractWrite({
         ...config,
-        onError: (error) => {
-            console.log(error)
-            setIsMinting(false)
-            setIsLoading(false)
-        },
-        onSuccess: () => {
-            setIsMinting(true)
-        }
+        // onError: (error) => {
+        //     console.log(error)
+        //     setIsMinting(false)
+        //     setIsLoading(false)
+        // },
+        // onSuccess: () => {
+        //     setIsMinting(true)
+        // }
     })
+
 
     useWaitForTransaction({
         hash: vialData?.hash,
