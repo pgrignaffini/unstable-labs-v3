@@ -29,7 +29,7 @@ function Prompt() {
 
     const { hasClaimedVials, user } = useLoggedUser()
 
-    const { burnData, burnVial, setBurnData } = useBurnVial({ vialToBurn })
+    const { burnData, burnVial, setBurnData, isPending } = useBurnVial({ vialToBurn })
     const { progressData, isLoading: isLoadingImages } = useLoadingImages()
 
     useEffect(() => {
@@ -84,7 +84,7 @@ function Prompt() {
         setRequest(req)
     }
 
-    useWaitForTransaction({
+    const { isLoading: isLoadingTx } = useWaitForTransaction({
         hash: burnData?.hash,
         enabled: !!burnData?.hash,
         onSuccess: async () => {
@@ -177,15 +177,15 @@ function Prompt() {
                             <form className='flex space-x-5 items-center' onSubmit={(e) => {
                                 handleSubmit(e)
                             }}>
-                                <input onChange={(e) => setPrompt(e.target.value)} className='w-full p-4 bg-white text-black outline-none font-pixel' required placeholder="prompt..." />
-                                <SolidButton color="green" text="Brew" type="submit" className='text-white' />
+                                <input onChange={(e) => setPrompt(e.target.value)} className='p-4 bg-white text-black outline-none font-pixel' required placeholder="prompt..." />
+                                <SolidButton loading={isPending || isLoadingTx} color="green" text="Brew" type="submit" className='text-white' />
                             </form> :
                             vialToBurn && promptState === "remix" && selectedImage?.length ? (
                                 <form className='flex space-x-5 items-center' onSubmit={(e) => {
                                     handleSubmit(e)
                                 }}>
-                                    <input className='w-full p-4 bg-blue-300 placeholder:text-white outline-none' disabled placeholder="remixing current img" />
-                                    <SolidButton color="blue" text="Brew" type="submit" className='text-white' />
+                                    <input className='p-4 bg-blue-300 placeholder:text-white outline-none' disabled placeholder="remixing current img" />
+                                    <SolidButton loading={isPending || isLoadingTx} color="blue" text="Brew" type="submit" className='text-white' />
                                 </form>
                             ) : vialToBurn && promptState === "freestyle" ? (
                                 <form className='flex space-x-5 items-center' onSubmit={(e) => {

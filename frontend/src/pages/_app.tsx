@@ -103,7 +103,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <ConnectKitProvider customTheme={customTheme}>
           <QueryClientProvider client={queryClient}>
             <Toaster />
-            <PlayBackgroundMusic />
+            {/* <PlayBackgroundMusic /> */}
             <div className="bg-black min-h-screen w-screen">
               <Header />
               <AppContext.Provider

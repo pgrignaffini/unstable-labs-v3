@@ -77,7 +77,7 @@ function MintVialButton({ index, numberOfVials, style }: Props) {
         }
     })
 
-    const notEnoughBalanceMessage = `You don't have enough balance to mint this vial and pay for tx fees`
+    const notEnoughBalanceMessage = "You don't have enough balance to mint this vial and pay for tx fees"
 
     return (
         <div className='py-4'>

@@ -12,6 +12,7 @@ export const useBurnVial = ({ vialToBurn }: Props) => {
 
     const [isSuccess, setIsSuccess] = useState<boolean>(false)
     const [isError, setIsError] = useState<Error | undefined>(undefined)
+    const [isPending, setIsPending] = useState<boolean>(false)
     const [burnData, setBurnData] = useState<SendTransactionResult | undefined>(undefined)
 
     const { config } = usePrepareContractWrite({
@@ -30,14 +31,23 @@ export const useBurnVial = ({ vialToBurn }: Props) => {
 
     const { write: burnVial } = useContractWrite({
         ...config,
+        onMutate() {
+            setIsPending(true)
+            setIsError(undefined)
+            setIsSuccess(false)
+        },
         onError(error) {
             setIsError(error)
+            setIsPending(false)
+            setIsSuccess(false)
         },
         onSuccess(data) {
             setBurnData(data)
             setIsSuccess(true)
+            setIsPending(false)
+            setIsError(undefined)
         }
     })
 
-    return { burnData, setBurnData, burnVial, isSuccess, isError }
+    return { burnData, setBurnData, burnVial, isSuccess, isError, isPending }
 }
