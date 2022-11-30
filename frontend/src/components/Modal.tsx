@@ -21,7 +21,7 @@ function Modal({ isVisible, onClose, children }: Props) {
             id='wrapper' onClick={(e) => handleClose(e)}>
             <div className='w-auto flex flex-col'>
                 <button className='text-white text-xl place-self-end' onClick={() => onClose()}>X</button>
-                <div className='bg-slate-900 border-2 border-white p-4'>{children}</div>
+                <div className='bg-black border-2 border-white p-4'>{children}</div>
             </div>
         </div>
     )

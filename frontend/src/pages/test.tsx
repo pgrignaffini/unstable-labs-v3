@@ -10,6 +10,7 @@ import SelectedImages from "@components/SelectedImages";
 import { useEffect, useState } from "react";
 import PlayBackgroundMusic from "@components/PlayBackgroundMusic";
 import Modal from "@components/Modal";
+import HamburgerButton from "@components/HamburgerButton";
 
 const Test: NextPage = () => {
 
@@ -32,7 +33,7 @@ const Test: NextPage = () => {
                 <meta name="description" content="" />
                 <link rel="icon" href="/flask.png" />
             </Head>
-            <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
+            <main className="container mx-auto flex min-h-screen flex-col items-center space-y-10 justify-center p-4">
                 {/* <img src="/ramen.png" alt="ramen"
                     className={`w-24 cursor-pointer ${clicked ? "transform scale-125 animate-tremble" : ""}`}
                     onClick={() => setClicked(!clicked)} /> */}
@@ -44,6 +45,7 @@ const Test: NextPage = () => {
                         <p className="text-center">You have successfully minted your first NFT. You can view it on OpenSea.</p>
                     </div>
                 </Modal>
+                <HamburgerButton />
             </main>
         </>
     );

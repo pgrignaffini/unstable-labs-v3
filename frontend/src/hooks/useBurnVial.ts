@@ -1,8 +1,8 @@
-import { Vial } from "../types/types"
+import type { Vial } from "../types/types"
 import { useState } from "react"
 import vialContractInfo from "@abi/vial.json"
 import { usePrepareContractWrite, useContractWrite } from "wagmi"
-import { SendTransactionResult } from "@wagmi/core"
+import type { SendTransactionResult } from "@wagmi/core"
 
 type Props = {
     vialToBurn: Vial | undefined
