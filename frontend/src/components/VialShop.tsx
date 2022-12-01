@@ -15,14 +15,19 @@ function VialShop() {
     const [showConcepts, setShowConcepts] = useState<boolean>(false)
     const [showCollections, setShowCollections] = useState<boolean>(false)
 
+    const backToTop = () => {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+
     return (
         <>
             {!showConcepts && !showCollections &&
                 <><VialCard vial={FreestyleVial} name={FreestyleVial.name} buy={!hasFreestyle} />
-                    <div onClick={() => setShowCollections(true)}>
+                    <div onClick={() => { setShowCollections(true); backToTop() }}>
                         <VialCard vial={CollectionVial} name={CollectionVial.name} />
                     </div>
-                    <div onClick={() => setShowConcepts(true)}>
+                    <div onClick={() => { setShowConcepts(true); backToTop() }}>
                         <VialCard vial={ConceptVial} name={ConceptVial.name} />
                     </div>
                     <VialCard vial={RemixVial} name={RemixVial.name} buy />
@@ -32,7 +37,7 @@ function VialShop() {
             {showConcepts &&
                 <>
                     <div className='w-fit sticky z-10 top-20 md:top-5 bg-black text-acid border-acid border-2 cursor-pointer flex justify-center items-center p-1 h-14 lg:h-24'
-                        onClick={() => setShowConcepts(false)}>
+                        onClick={() => { setShowConcepts(false); backToTop() }}>
                         <img src="/arrow.png" className='w-12 h-8 md:w-20 md:h-14 -scale-x-95' />
                     </div>
                     {concepts.map((concept, index) => {
@@ -47,7 +52,7 @@ function VialShop() {
             {showCollections &&
                 <>
                     <div className='w-fit sticky z-10 top-20 md:top-5 bg-black text-acid border-acid border-2 cursor-pointer flex justify-center items-center p-1 h-14 lg:h-24'
-                        onClick={() => setShowCollections(false)}>
+                        onClick={() => { setShowCollections(false); backToTop() }}>
                         <img src="/arrow.png" className='w-12 h-8 md:w-20 md:h-14 -scale-x-95' />
                     </div>
                     {collections.map((collection, index) => {
