@@ -18,7 +18,7 @@ const Brewery = () => {
 
     return (
         <div className="grid grid-cols-4 lg:grid-cols-5 2xl:grid-cols-6 gap-2 lg:gap-8 p-4 lg:p-10 w-full mx-auto min-h-screen">
-            <div className="col-span-4 z-10 bg-black sticky top-0 md:col-span-1">
+            <div className="col-span-4 z-10 bg-black sticky top-2 md:col-span-1">
                 {/* sidebar */}
                 <div className='flex w-full md:flex-col col-span-1 lg:col-span-2 items-end md:space-y-8 md:w-fit md:items-start border-2 md:border-0 md:border-r-2 md:border-b-2 border-acid'>
                     {isConnected && (

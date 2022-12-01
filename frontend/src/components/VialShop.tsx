@@ -31,9 +31,9 @@ function VialShop() {
                     <VialCard vial={StylizeVial} name={StylizeVial.name} /></>}
             {showConcepts &&
                 <>
-                    <div className='border-2 hover:text-acid cursor-pointer hover:border-4 my-auto h-14 lg:h-24 flex justify-center items-center hover:border-acid'
+                    <div className='w-fit sticky z-10 top-20 md:top-5 bg-black text-acid border-acid border-2 cursor-pointer flex justify-center items-center p-1 h-14 lg:h-24'
                         onClick={() => setShowConcepts(false)}>
-                        <p className='text-sm md:text-lg xl:text-2xl'>Back</p>
+                        <img src="/arrow.png" className='w-12 h-8 md:w-20 md:h-14 -scale-x-95' />
                     </div>
                     {concepts.map((concept, index) => {
                         const base = concept.name
@@ -46,9 +46,9 @@ function VialShop() {
                 </>}
             {showCollections &&
                 <>
-                    <div className='border-2 hover:text-acid cursor-pointer hover:border-4 my-auto h-14 lg:h-24 flex justify-center items-center hover:border-acid'
+                    <div className='w-fit sticky z-10 top-20 md:top-5 bg-black text-acid border-acid border-2 cursor-pointer flex justify-center items-center p-1 h-14 lg:h-24'
                         onClick={() => setShowCollections(false)}>
-                        <p className='text-sm md:text-lg xl:text-2xl'>Back</p>
+                        <img src="/arrow.png" className='w-12 h-8 md:w-20 md:h-14 -scale-x-95' />
                     </div>
                     {collections.map((collection, index) => {
                         const base = collection.name
