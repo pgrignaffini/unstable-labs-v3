@@ -5,6 +5,7 @@ import Vials from "@components/Vials";
 import Experiments from "@components/Experiments";
 import Discover from "@components/Discover";
 import { useAccount } from "wagmi";
+import Library from "@components/Library";
 
 const CollectionSideBarRow = dynamic(
     () => import('@components/CollectionSideBarRow'),
@@ -29,6 +30,7 @@ const Brewery = () => {
                     )}
                     <CollectionSideBarRow title="Vial Shop" type='shop' selected={selectedTab === "shop"} onClick={() => { setSelectedTab('shop') }} />
                     <CollectionSideBarRow title="Discover" type='microscope' selected={selectedTab === "discover"} onClick={() => { setSelectedTab('discover') }} />
+                    <CollectionSideBarRow title="Library" underWork type='microscope' selected={selectedTab === "library"} onClick={() => { setSelectedTab('library') }} />
                 </div>
             </div>
             <div className="col-span-4 md:col-span-3 lg:col-span-4 2xl:col-span-5 grid auto-rows-auto gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5">
@@ -36,6 +38,7 @@ const Brewery = () => {
                 {selectedTab === 'vials' && <Vials />}
                 {selectedTab === 'shop' && <VialShop />}
                 {selectedTab === 'discover' && <Discover />}
+                {selectedTab === 'library' && <Library />}
             </div>
         </div>
     );
