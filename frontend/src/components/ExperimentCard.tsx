@@ -1,14 +1,25 @@
 import type { Experiment } from '../types/types'
 import Image from 'next/image'
 import LikeButton from '@components/LikeButton'
+import { useState } from 'react'
+import Modal from '@components/Modal'
+import NewPaper from '@components/NewPaper'
 
 type Props = {
     experiment: Experiment
+    owner?: boolean
 }
 
-function ExperimentCard({ experiment }: Props) {
+function ExperimentCard({ experiment, owner }: Props) {
 
     const src = "data:image/.webp;base64," + experiment?.image
+    const [showPaperModal, setShowPaperModal] = useState(false)
+
+    const paperModal = (
+        <Modal isVisible={showPaperModal} onClose={() => setShowPaperModal(false)}>
+            <NewPaper tokenId={experiment.tokenId as number} />
+        </Modal>
+    )
 
     const showExperimentModal = (
         <>
@@ -29,18 +40,20 @@ function ExperimentCard({ experiment }: Props) {
 
     return (
         <>
+            {paperModal}
             {showExperimentModal}
-            <label htmlFor={experiment.name} className='cursor-pointer space-y-2'>
-                <div className='h-72 lg:h-64 xl:h-72 2xl:h-96 w-auto flex flex-col space-y-2 justify-between items-center border-2 hover:border-4 hover:border-acid hover:-m-1 p-4'>
-                    <div className='relative w-full h-full'>
+            <div className='h-72 lg:h-64 xl:h-72 2xl:h-96 w-auto flex flex-col space-y-2 justify-between items-center border-2 hover:border-4 hover:border-acid hover:-m-1 p-4'>
+                {owner ? <img src="/post.png" onClick={() => setShowPaperModal(true)} className='z-10 w-6 h-8 place-self-end hover:border-2 hover:border-white p-1 cursor-pointer' /> : null}
+                <div className='relative w-full h-full'>
+                    <label htmlFor={experiment.name} className='cursor-pointer'>
                         <Image src={src} alt={experiment?.name} placeholder='blur' blurDataURL='/blur.jpeg' fill sizes='100vw' style={{ objectFit: 'contain' }} />
-                    </div>
-                    <div className='flex w-full items-center justify-center space-x-2 md:justify-between px-2'>
-                        <div className="text-white text-sm 2xl:text-md font-bold">{experiment?.name}</div>
-                        {experiment?.tokenId && <LikeButton tokenId={experiment.tokenId} />}
-                    </div>
+                    </label>
                 </div>
-            </label>
+                <div className='flex w-full items-center justify-center space-x-2 md:justify-between px-2'>
+                    <div className="text-white text-sm 2xl:text-md font-bold">{experiment?.name}</div>
+                    {experiment?.tokenId && <LikeButton tokenId={experiment.tokenId} />}
+                </div>
+            </div>
         </>
     )
 }

@@ -11,12 +11,21 @@ import { useEffect, useState } from "react";
 import PlayBackgroundMusic from "@components/PlayBackgroundMusic";
 import Modal from "@components/Modal";
 import HamburgerButton from "@components/HamburgerButton";
+import { usePapers } from "@hooks/usePapers";
+import { useSession } from "next-auth/react";
+import Paper from "@components/Paper";
+import NewPaper from "@components/NewPaper";
+import { useSingleExperiment } from "@hooks/useSingleExperiment";
 
 const Test: NextPage = () => {
 
     const { images } = useLoadingImages()
     const [clicked, setClicked] = useState(false)
     const [showModal, setShowModal] = useState(false)
+
+    const { allPapers } = usePapers()
+
+    const { experiment } = useSingleExperiment(1)
 
     useEffect(() => {
         if (clicked) {
@@ -33,19 +42,22 @@ const Test: NextPage = () => {
                 <meta name="description" content="" />
                 <link rel="icon" href="/flask.png" />
             </Head>
-            <main className="container mx-auto flex min-h-screen flex-col items-center space-y-10 justify-center p-4">
+            <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
                 {/* <img src="/ramen.png" alt="ramen"
                     className={`w-24 cursor-pointer ${clicked ? "transform scale-125 animate-tremble" : ""}`}
                     onClick={() => setClicked(!clicked)} /> */}
-                <button className="bg-slate-900 text-white p-2 rounded"
+                {/* <button className="bg-slate-900 text-white p-2 rounded"
                     onClick={() => setShowModal(true)}>Open Modal</button>
                 <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
-                    <div className="flex flex-col items-center space-y-4">
-                        <h1 className="text-2xl font-bold">Congratulations!</h1>
-                        <p className="text-center">You have successfully minted your first NFT. You can view it on OpenSea.</p>
-                    </div>
-                </Modal>
-                <HamburgerButton />
+                    <NewPaper tokenId={1} />
+                </Modal> */}
+                {/* <HamburgerButton /> */}
+                <div className="w-1/2 space-y-10">
+                    {allPapers?.map(paper => (
+                        <Paper paper={paper} key={paper.id} />
+                    ))}
+                </div>
+
             </main>
         </>
     );

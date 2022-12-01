@@ -14,7 +14,7 @@ function Experiments() {
                 </div> :
                 !experiments?.length ? <p>No experiments found</p> :
                     experiments?.map((experiment: Experiment, index: number) => (
-                        <ExperimentCard key={index} experiment={experiment} />
+                        <ExperimentCard key={index} experiment={experiment} owner />
                     ))}
         </>
     )

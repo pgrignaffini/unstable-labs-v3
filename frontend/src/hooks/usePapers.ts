@@ -1,0 +1,21 @@
+import { trpc } from '@utils/trpc'
+
+export const usePapers = () => {
+
+    const ctx = trpc.useContext();
+
+    const { data: userPapers, isLoading: isLoadingUserPapers } = trpc.paper.getUserPapers.useQuery()
+
+    const { data: allPapers, isLoading: isLoadingAllPapers } = trpc.paper.getAllPapers.useQuery()
+
+    const createPaperMutation = trpc.paper.createPaper.useMutation({
+        onMutate: () => {
+            ctx.paper.getUserPapers.invalidate()
+        },
+        onSettled: () => {
+            ctx.paper.getUserPapers.refetch()
+        }
+    })
+
+    return { userPapers, allPapers, createPaperMutation, isLoadingAllPapers, isLoadingUserPapers }
+}

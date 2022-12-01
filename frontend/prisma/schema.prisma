@@ -58,6 +58,8 @@ model User {
   hasClaimedVials Boolean?     @default(false)
   experiments     Experiment[]
   likes           Like[]
+  papers          Paper[]
+  comments        Comment[]
 }
 
 model VerificationToken {
@@ -74,6 +76,7 @@ model Experiment {
   creator   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   likes     Like[]
+  papers    Paper[]
 }
 
 model Like {
@@ -83,4 +86,28 @@ model Like {
   user       User       @relation(fields: [userId], references: [id])
   experiment Experiment @relation(fields: [tokenId], references: [tokenId])
   createdAt  DateTime   @default(now())
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  text      String
+  userId    String
+  paperId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  paper     Paper    @relation(fields: [paperId], references: [id])
+}
+
+model Paper {
+  id         String     @id @default(uuid())
+  title      String
+  text       String
+  userId     String
+  tokenId    Int
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @default(now()) @updatedAt
+  user       User       @relation(fields: [userId], references: [id])
+  experiment Experiment @relation(fields: [tokenId], references: [tokenId])
+  comments   Comment[]
 }

@@ -27,6 +27,7 @@ module.exports = {
       },
       fontFamily: {
         'sans': ['"Press Start 2P"', ...defaultTheme.fontFamily.sans],
+        'tinos': ['"Tinos"', ...defaultTheme.fontFamily.serif],
       },
       colors: {
         'acid': '#b4e61d',
