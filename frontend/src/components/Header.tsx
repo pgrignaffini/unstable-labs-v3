@@ -55,9 +55,9 @@ function Header() {
                         </div>
                     </Link>}
                 <Link className='hidden md:inline-flex text-[0.5rem] sm:text-sm xl:text-md 2xl:text-lg text-white cursor-pointer border-acid hover:border-b-2 ' href="/library">
-                    <div className='space-x-2 flex items-start'>
+                    <div className='space-x-2 flex items-center'>
                         <p>Library</p>
-                        <img src="book.png" alt="brewery" className="w-8" />
+                        <img src="book-animated.gif" alt="book" className="w-8" />
                     </div>
                 </Link>
                 {isConnected && !session &&
