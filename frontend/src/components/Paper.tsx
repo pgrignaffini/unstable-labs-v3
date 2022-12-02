@@ -18,10 +18,10 @@ function Paper({ paper }: Props) {
     const image = "data:image/.webp;base64," + experiment?.image
 
     return (
-        <div className='bg-slate-200 p-4'>
-            <div className={`cursor-pointer flex items-start space-x-3 ${showFullPaper ? "hidden" : "visible"}`} onClick={() => setShowFullPaper(true)}>
+        <button className='bg-slate-200 w-full p-4 border-t border-r border-l border-gray-500 group focus:outline-none '>
+            <div className="flex flex-1 items-center justify-between h-24 px-3 font-semibold">
                 <img src={image} className='w-28 h-28 object-contain' />
-                <div className='flex flex-1 flex-col items-center justify-between h-28'>
+                <div className='flex flex-1 flex-col items-center justify-between h-full'>
                     <div className='flex w-full items-center justify-center space-x-6'>
                         <img className='h-14 w-14 object-cover'
                             src={paper.user?.image ?? "https://links.papareact.com/gll"} alt="profile picture" />
@@ -29,17 +29,19 @@ function Paper({ paper }: Props) {
                             <p className='text-black'>{paper.user?.name}</p>
                             <TimeAgo
                                 className='text-[0.6rem] text-gray-500'
-                                date={paper.createdAt} />
+                                date={paper.createdAt}
+                                arabicForm="medial" />
                         </div>
                     </div>
                     <p className='font-tinos text-3xl text-black'>Title: {paper.title}</p>
                 </div>
+                <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
             </div>
-            <div className={`${showFullPaper ? "visible" : "hidden"} cursor-pointer`} onClick={() => setShowFullPaper(false)}>
+            <div className="max-h-0 mt-6 overflow-hidden duration-700 group-focus:max-h-screen">
                 <div className='flex flex-col space-y-5'>
                     <div className='flex items-center space-x-10 '>
-                        <img className="h-24 w-24 object-cover"
-                            src={paper.user?.image ?? "https://links.papareact.com/gll"} />
                         <div className='h-24 flex-1 flex justify-center items-center bg-slate-400'>
                             <p className='font-tinos text-black text-5xl text-center'>{experiment?.style}</p>
                         </div>
@@ -54,7 +56,7 @@ function Paper({ paper }: Props) {
                     </div>
                 </div>
             </div>
-        </div>
+        </button>
     )
 }
 

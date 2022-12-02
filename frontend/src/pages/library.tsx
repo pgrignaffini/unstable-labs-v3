@@ -2,19 +2,19 @@ import React from 'react'
 import { usePapers } from "@hooks/usePapers";
 import Paper from '@components/Paper';
 
-type Props = {}
 
-function Library({ }: Props) {
+function Library() {
 
     const { allPapers } = usePapers()
 
     return (
-        <div className="col-start-2 col-end-5 h-screen overflow-y-scroll space-y-5">
+        <div className="mt-24 w-1/2 mx-auto min-h-screen">
             {allPapers?.map(paper => (
-                <Paper paper={paper} key={paper.id} />
+                <div key={paper.id} className="w-full">
+                    <Paper paper={paper} />
+                </div>
             ))}
-        </div>
-    )
+        </div>)
 }
 
 export default Library

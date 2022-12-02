@@ -54,6 +54,12 @@ function Header() {
                             <img src="brewery-animated.gif" alt="brewery" className="w-6" />
                         </div>
                     </Link>}
+                <Link className='hidden md:inline-flex text-[0.5rem] sm:text-sm xl:text-md 2xl:text-lg text-white cursor-pointer border-acid hover:border-b-2 ' href="/library">
+                    <div className='space-x-2 flex items-start'>
+                        <p>Library</p>
+                        <img src="book.png" alt="brewery" className="w-8" />
+                    </div>
+                </Link>
                 {isConnected && !session &&
                     <p className="hidden md:inline text-white cursor-pointer text-[0.5rem] sm:text-sm xl:text-md 2xl:text-lg border-acid hover:border-b-2" onClick={() => signIn("discord")}>
                         Log in

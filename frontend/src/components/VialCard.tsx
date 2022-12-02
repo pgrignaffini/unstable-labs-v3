@@ -60,15 +60,18 @@ function VialCard({ vial, name, multiple, buy }: Props) {
                                 <div className="flex items-center justify-evenly">
                                     <p className='text-sm lg:text-md 2xl:text-lg text-black'>Quantity:</p>
                                     <input type="number" placeholder="Price" step={1}
+                                        min={1}
                                         value={numVials}
                                         className="bg-white w-1/3 bg-opacity-50 backdrop-blur-xl p-2
-                                    outline-none text-black placeholder:font-pixel text-sm lg:text-md 2xl:text-lg"
-                                        onChange={(e) => setNumVials(parseInt(e.target.value))} />
+                                        outline-none text-black placeholder:font-pixel text-sm lg:text-md 2xl:text-lg"
+                                        onChange={(e) => {
+                                            const num = parseInt(e.target.value)
+                                            num > 999 ? setNumVials(999) : setNumVials(num)
+                                        }} />
                                 </div>
                                 <div className="flex flex-col items-center space-x-8">
                                     <p className='text-sm lg:text-md 2xl:text-lg text-black'>Price: {price.toFixed(4)}</p>
-                                    {price > 0 &&
-                                        <MintVialButton index={vial.type as number} style={style} numberOfVials={numVials} />}
+                                    {price > 0 && <MintVialButton index={vial.type as number} style={style} numberOfVials={numVials} />}
                                 </div>
                             </div>
                         </div>

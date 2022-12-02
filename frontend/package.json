@@ -36,6 +36,7 @@
     "react-sound": "^1.2.0",
     "react-timeago": "^7.1.0",
     "superjson": "1.9.1",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "wagmi": "^0.8.8",
     "zod": "^3.18.0"
   },

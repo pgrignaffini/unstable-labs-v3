@@ -65,11 +65,8 @@ function HamburgerButton() {
                         : null
                         }`}
                 />
-                <div
-                    className={genericHamburgerLine}
-                />
-                <div
-                    className={`${genericHamburgerLine} ${isOpen
+                <div className={genericHamburgerLine}/>
+                <div className={`${genericHamburgerLine} ${isOpen
                         ? "-rotate-45 -translate-y-3"
                         : null
                         }`}

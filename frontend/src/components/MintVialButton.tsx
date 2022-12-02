@@ -52,14 +52,14 @@ function MintVialButton({ index, numberOfVials, style }: Props) {
 
     const { write: mintVials, data: vialData } = useContractWrite({
         ...config,
-        // onError: (error) => {
-        //     console.log(error)
-        //     setIsMinting(false)
-        //     setIsLoading(false)
-        // },
-        // onSuccess: () => {
-        //     setIsMinting(true)
-        // }
+        onError: (error) => {
+            console.log(error)
+            setIsMinting(false)
+            setIsLoading(false)
+        },
+        onSuccess: () => {
+            setIsMinting(true)
+        }
     })
 
 
@@ -82,7 +82,7 @@ function MintVialButton({ index, numberOfVials, style }: Props) {
     return (
         <div className='py-4'>
             <div className='flex flex-col space-y-4 items-center justify-evenly pt-3'>
-                <SolidButton type='button' color="green" onClick={() => {
+                <SolidButton type='submit' color="green" onClick={() => {
                     if (balance?.value && txValue && balance?.value.lt(txValue)) {
                         toast.custom((t) => <Toast toastInfo={t} message={notEnoughBalanceMessage} />)
                         return
