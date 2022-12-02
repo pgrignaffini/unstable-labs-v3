@@ -6,7 +6,7 @@ type Props = {
     children: React.ReactNode;
 }
 
-function Modal({ isVisible, onClose, children }: Props) {
+function PaperModal({ isVisible, onClose, children }: Props) {
 
     if (!isVisible) return null
 
@@ -19,12 +19,12 @@ function Modal({ isVisible, onClose, children }: Props) {
     return (
         <div className='z-50 fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center'
             id='wrapper' onClick={(e) => handleClose(e)}>
-            <div className='flex flex-col w-auto'>
+            <div className='flex flex-col w-1/2'>
                 <button className='text-white text-xl place-self-end' onClick={() => onClose()}>X</button>
-                <div className='bg-black border-2 border-white p-4'>{children}</div>
+                <div className='border-2 bg-[#BBA469] border-white p-4'>{children}</div>
             </div>
         </div>
     )
 }
 
-export default Modal
+export default PaperModal

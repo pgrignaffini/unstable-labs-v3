@@ -16,7 +16,7 @@ function Library() {
             setTimeout(() => {
                 setScroll(false)
                 setScrollBack(false)
-            }, 500)
+            }, 600)
         }
     }, [scroll, scrollBack])
 
@@ -25,7 +25,7 @@ function Library() {
 
     return (
         <div className='flex items-center px-14'>
-            <button disabled={scrolling} className='bg-acid p-2' onClick={() => setScrollBack(true)}>
+            <button disabled={scrolling} className='bg-acid p-2 hover:bg-dark-acid' onClick={() => setScrollBack(true)}>
                 <img src="/arrow.png" className='w-12 h-8 md:w-20 md:h-14 -scale-x-95' />
             </button>
             <div className='overflow-hidden w-2/3 h-auto mx-auto -mt-6'>
@@ -40,7 +40,7 @@ function Library() {
                     </div>
                 </div>
             </div>
-            <button disabled={scrolling} className='bg-acid p-2' onClick={() => setScroll(true)}>
+            <button disabled={scrolling} className='bg-acid p-2 hover:bg-dark-acid' onClick={() => setScroll(true)}>
                 <img src="/arrow.png" className='w-12 h-8 md:w-20 md:h-14' />
             </button>
         </div>
