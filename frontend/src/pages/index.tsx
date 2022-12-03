@@ -6,6 +6,7 @@ import Airdrop from "@components/Airdrop";
 import Prompt from "@components/Prompt";
 import { useLoadingImages } from "@hooks/useLoadingImages";
 import SelectedImages from "@components/SelectedImages";
+import SoundButton from "@components/SoundButton";
 
 const Home: NextPage = () => {
 
@@ -26,6 +27,7 @@ const Home: NextPage = () => {
             <p className="text-sm lg:text-lg text-std text-center">a lab to brew AI-generated NFTs</p>
           </div>
           <p className="absolute top-0 lg:bottom-2 right-2 text-white text-[0.5rem]">artwork by <Link className="text-acid underline" href="https://www.pixilart.com/w0ah" target="_blank">w0ah</Link></p>
+          <SoundButton className="hidden md:inline absolute top-4 left-2" />
         </div>
         <div className="flex flex-col justify-center items-center ">
           <p className="font-bold text-lg lg:text-3xl text-white">Step into the Lab!</p>

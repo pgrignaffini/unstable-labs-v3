@@ -12,7 +12,6 @@ import { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import type { Request } from "../types/types";
 import AppContext from "@context/AppContext"
-import PlayBackgroundMusic from "@components/PlayBackgroundMusic";
 import { ConnectKitProvider, getDefaultClient, } from "connectkit";
 import { Analytics } from '@vercel/analytics/react';
 
@@ -83,6 +82,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const [request, setRequest] = useState<Request | undefined>(undefined)
   const [selectedImages, setSelectedImages] = useState<string[]>([])
   const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined)
+  const [isPlaying, setIsPlaying] = useState(false)
 
   const customTheme = {
     "--ck-font-family": '"Press Start 2P", sans',
@@ -103,11 +103,15 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <ConnectKitProvider customTheme={customTheme}>
           <QueryClientProvider client={queryClient}>
             <Toaster />
-            {/* <PlayBackgroundMusic /> */}
             <div className="bg-black min-h-screen w-screen">
               <Header />
               <AppContext.Provider
-                value={{ request, setRequest, selectedImages, setSelectedImages, selectedImage, setSelectedImage }}>
+                value={{
+                  request, setRequest,
+                  selectedImages, setSelectedImages,
+                  selectedImage, setSelectedImage,
+                  isPlaying, setIsPlaying
+                }}>
                 <Component {...pageProps} />
                 <Analytics />
               </AppContext.Provider>

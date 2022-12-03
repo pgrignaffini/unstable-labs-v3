@@ -46,7 +46,7 @@ function Paper({ paper }: Props) {
     return (
         <>
             {paperModal}
-            <button className='bg-[#F0E1B2] hover:bg-[#e6d6ac] hover:shadow-xl w-full p-4 border-b border-[#592323]'
+            <button className='bg-transparent hover:bg-[#e6d6ac] hover:shadow-xl w-full p-4 border-b border-[#592323]'
                 onClick={() => setShowModal(true)}>
                 <div className="flex flex-1 items-center justify-between font-semibold">
                     <img className='h-14 w-14 object-cover'

@@ -8,6 +8,8 @@ type AppContextType = {
     setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>
     selectedImage: string | undefined,
     setSelectedImage: React.Dispatch<React.SetStateAction<string | undefined>>
+    isPlaying: boolean,
+    setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const iAppContextState = {
@@ -16,7 +18,9 @@ const iAppContextState = {
     selectedImages: [],
     setSelectedImages: () => { },
     selectedImage: undefined,
-    setSelectedImage: () => { }
+    setSelectedImage: () => { },
+    isPlaying: false,
+    setIsPlaying: () => { }
 }
 
 const AppContext = createContext<AppContextType>(iAppContextState)
