@@ -1,7 +1,6 @@
 import { useContext, useState, useEffect } from "react"
 import useSound from "use-sound";
 import AppContext from "@context/AppContext";
-import { Howl, Howler } from 'howler';
 
 type Props = {
     className?: string
@@ -11,12 +10,7 @@ function SoundButton({ className }: Props) {
 
     const { isPlaying, setIsPlaying } = useContext(AppContext)
     const [clicked, setClicked] = useState(false)
-    // const [play, { stop, sound }] = useSound("/sounds/ULabs-Background.mp3", { soundEnabled: true, volume: 0.5, interrupt: true, loop: true });
-
-    const sound = new Howl({
-        src: ['/sounds/ULabs-Background.mp3'],
-        volume: 0.5,
-    });
+    const [play, { stop, sound }] = useSound("/sounds/ULabs-Background.mp3", { soundEnabled: true, volume: 0.5, interrupt: true, loop: true });
 
 
     useEffect(() => {
@@ -30,7 +24,7 @@ function SoundButton({ className }: Props) {
         <div className={`${className}`}>
             <button className="relative outline-none w-10 lg:w-12 xl:w-14 2xl:w-16" onPointerOver={() => setClicked(false)} onClick={() => {
                 setClicked(true)
-                isPlaying ? sound?.stop() : sound?.play()
+                isPlaying ? stop() : play()
             }}>
                 <div className="absolute inset-x-0 h-full -bottom-2 bg-dark-acid rounded-full" />
                 <div className={`rounded-full relative bg-acid

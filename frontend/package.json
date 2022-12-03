@@ -26,7 +26,6 @@
     "daisyui": "^2.31.0",
     "ethereum-blockies-base64": "^1.0.2",
     "ethers": "^5.7.2",
-    "howler": "^2.2.3",
     "next": "13.0.2",
     "next-auth": "^4.15.1",
     "next-connect": "^0.13.0",
