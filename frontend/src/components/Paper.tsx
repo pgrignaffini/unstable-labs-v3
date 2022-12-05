@@ -16,7 +16,7 @@ type Props = {
 function Paper({ paper }: Props) {
 
     const [showModal, setShowModal] = useState(false)
-    const { experiment } = useSingleExperiment(paper.experiment.tokenId)
+    const { experiment, isLoadingExperiment } = useSingleExperiment(paper.experiment.tokenId)
     const image = "data:image/.webp;base64," + experiment?.image
 
     const paperModal = (
@@ -63,7 +63,7 @@ function Paper({ paper }: Props) {
                         </div>
                         <p className='font-tinos text-3xl text-black italic'>&quot;{paper.title}&quot;</p>
                     </div>
-                    <img src={image} className='w-28 h-28 object-contain border-[#EBCB00] border-4' />
+                    {isLoadingExperiment ? <div className='animation-pulse w-28 h-28 bg-[#e6d6ac]' /> : <img src={image} className='w-28 h-28 object-contain border-[#EBCB00] border-4' />}
                 </div>
             </button>
         </>

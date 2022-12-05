@@ -1,12 +1,11 @@
 import Link from 'next/link'
-import ConnectWallet from '@components/ConnectWallet'
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useAccount } from 'wagmi'
 import { useRouter } from 'next/router';
 import { ConnectKitButton, } from 'connectkit';
 import { useState } from 'react'
 import Modal from '@components/Modal';
-import HamburgerButton from './HamburgerButton';
+import HamburgerButton from '@components/HamburgerButton';
 
 function Header() {
 

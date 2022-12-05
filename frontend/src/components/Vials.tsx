@@ -2,7 +2,7 @@ import type { Vial } from "../types/types"
 import { groupBy } from '@utils/helpers'
 import { useVials } from "@hooks/useVials"
 import VialCard from '@components/VialCard'
-import VialCardSkeleton from "./skeletons/VialCardSkeleton"
+import VialCardSkeleton from "@components/skeletons/VialCardSkeleton"
 
 
 function Vials() {
