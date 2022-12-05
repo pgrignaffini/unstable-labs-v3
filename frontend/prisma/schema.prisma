@@ -92,7 +92,7 @@ model Comment {
   id        String   @id @default(uuid())
   text      String
   userId    String
-  paperId   String
+  paperId   Int
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
   user      User     @relation(fields: [userId], references: [id])
@@ -100,7 +100,7 @@ model Comment {
 }
 
 model Paper {
-  id         String     @id @default(uuid())
+  id         Int        @id @default(autoincrement())
   title      String
   text       String
   userId     String

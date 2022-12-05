@@ -61,4 +61,46 @@ export const paperRouter = router({
                 }
             })
         }),
+    getNumberOfPapers: publicProcedure
+        .query(({ ctx }) => {
+            return ctx.prisma.paper.count()
+        }),
+    getPaginatedPapers: publicProcedure
+        .input(z.object({
+            limit: z.number().min(1).max(100).nullish(),
+            cursor: z.number().nullish(), // <-- "cursor" needs to exist, but can be any type
+        }))
+        .query(async ({ ctx, input }) => {
+            const limit = input.limit ?? 8;
+            const { cursor } = input;
+            const papers = await ctx.prisma.paper.findMany({
+                include: {
+                    experiment: true,
+                    user: true,
+                },
+                orderBy: {
+                    id: "asc",
+                },
+                take: limit + 1,
+                cursor: cursor ? { id: cursor } : undefined,
+            })
+            let nextCursor, prevCursor: typeof cursor | undefined = undefined;
+            if (papers.length > limit) {
+                const nextItem = papers.pop()
+                nextCursor = nextItem!.id;
+            }
+            if (papers.length > 0) {
+                const prevItem = papers[0]
+                if (prevItem!.id > limit) {
+                    prevCursor = prevItem!.id - limit;
+                } else {
+                    prevCursor = 1;
+                }
+            }
+            return {
+                papers,
+                nextCursor,
+                prevCursor,
+            };
+        })
 });
