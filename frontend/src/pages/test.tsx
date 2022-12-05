@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import { usePapers } from "@hooks/usePapers";
 import { useSingleExperiment } from "@hooks/useSingleExperiment";
 import { trpc } from "@utils/trpc";
+import PaperSkeleton from "@components/skeletons/PaperSkeleton";
+import VialCardSkeleton from "@components/skeletons/VialCardSkeleton";
+import ExperimentCardSkeleton from "@components/skeletons/ExperimentCardSkeleton";
 
 const Test: NextPage = () => {
 
@@ -32,7 +35,8 @@ const Test: NextPage = () => {
                 <link rel="icon" href="/flask.png" />
             </Head>
             <main className="container mx-auto min-h-screen flex flex-col space-y-3 items-center justify-center p-4">
-
+                {/* <ExperimentCardSkeleton cards={4} /> */}
+                <VialCardSkeleton cards={4} />
             </main>
         </>
     );

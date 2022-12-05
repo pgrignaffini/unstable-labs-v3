@@ -2,6 +2,7 @@ import type { Vial } from "../types/types"
 import { groupBy } from '@utils/helpers'
 import { useVials } from "@hooks/useVials"
 import VialCard from '@components/VialCard'
+import VialCardSkeleton from "./skeletons/VialCardSkeleton"
 
 
 function Vials() {
@@ -14,9 +15,7 @@ function Vials() {
     return (
         <>
             {isLoading ?
-                <div className='flex justify-center items-center'>
-                    <img src='/flask-animated.gif' className='w-12' />
-                </div> :
+                <VialCardSkeleton cards={10} /> :
                 Object.keys(groupedVials).map((key, index) => {
                     const vials: Vial[] = groupedVials[key]
                     const canBuy = key === "freestyle" ? !hasFreestyle : true

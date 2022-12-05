@@ -79,7 +79,7 @@ export const paperRouter = router({
                     user: true,
                 },
                 orderBy: {
-                    id: "asc",
+                    id: "desc",
                 },
                 take: limit + 1,
                 cursor: cursor ? { id: cursor } : undefined,
