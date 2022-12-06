@@ -14,7 +14,7 @@ export const paperRouter = router({
             if (!ctx.session?.user) {
                 new TRPCError({
                     code: "FORBIDDEN",
-                    message: "You must be logged in to create a project",
+                    message: "You must be logged in to publish a paper",
                 })
             }
             return ctx.prisma.paper.create({

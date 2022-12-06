@@ -59,7 +59,7 @@ model User {
   experiments     Experiment[]
   likes           Like[]
   papers          Paper[]
-  comments        Comment[]
+  reviews         Review[]
 }
 
 model VerificationToken {
@@ -88,7 +88,7 @@ model Like {
   createdAt  DateTime   @default(now())
 }
 
-model Comment {
+model Review {
   id        String   @id @default(uuid())
   text      String
   userId    String
@@ -109,5 +109,5 @@ model Paper {
   updatedAt  DateTime   @default(now()) @updatedAt
   user       User       @relation(fields: [userId], references: [id])
   experiment Experiment @relation(fields: [tokenId], references: [tokenId])
-  comments   Comment[]
+  reviews    Review[]
 }

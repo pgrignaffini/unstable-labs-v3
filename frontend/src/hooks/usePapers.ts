@@ -1,6 +1,6 @@
 import { trpc } from '@utils/trpc'
 
-export const usePapers = (pageSize?: number, pageNumber?: number) => {
+export const usePapers = () => {
 
     const ctx = trpc.useContext();
 

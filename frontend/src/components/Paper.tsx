@@ -4,6 +4,7 @@ import TimeAgo from 'react-timeago'
 import { useSingleExperiment } from '@hooks/useSingleExperiment'
 import Modal from './Modal'
 import PaperModal from './PaperModal'
+import Reviews from './Reviews'
 
 export type PaperWithInfo = Prisma.PaperGetPayload<{
     include: { user: true, experiment: true }
@@ -23,7 +24,7 @@ function Paper({ paper }: Props) {
         <PaperModal isVisible={showModal} onClose={() => setShowModal(false)}>
             <div className='bg-[#F0E1B2] p-4'>
                 <div className='flex flex-col space-y-5'>
-                    <div className='flex items-center space-x-10 '>
+                    <div className='flex items-center space-x-10'>
                         <img className="h-24 w-24 object-cover"
                             src={paper.user?.image ?? "https://links.papareact.com/gll"} />
                         <div className='h-24 flex-1 flex justify-center items-center bg-[#665053]'>
@@ -31,14 +32,15 @@ function Paper({ paper }: Props) {
                         </div>
                     </div>
                     <div className='w-full bg-black h-1' />
-                    <div className="flex flex-1 flex-col space-y-4" >
+                    <div className="flex flex-1 flex-col space-y-4 " >
                         <p className="p-2 font-tinos italic bg-transparent text-4xl outline-none border-b-2 border-black text-center text-black">{paper.title}</p>
                         <div className='flex space-x-6'>
                             <img src={image} alt="experiment" className='w-96 h-96 object-contain' />
-                            <p className="p-2 flex-1 font-tinos italic bg-slate-100 text-xl outline-none text-black">{paper.text}</p>
+                            <Reviews paperId={paper.id} />
                         </div>
                     </div>
                 </div>
+                <p className="p-2 mt-6 flex-1 font-tinos italic text-center text-xl outline-none text-black">{paper.text}</p>
             </div>
         </PaperModal>
     )
