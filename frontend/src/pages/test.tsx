@@ -8,6 +8,8 @@ import { trpc } from "@utils/trpc";
 import PaperSkeleton from "@components/skeletons/PaperSkeleton";
 import VialCardSkeleton from "@components/skeletons/VialCardSkeleton";
 import ExperimentCardSkeleton from "@components/skeletons/ExperimentCardSkeleton";
+import { toast } from 'react-hot-toast'
+import Toast from '@components/Toast'
 
 const Test: NextPage = () => {
 
@@ -27,6 +29,17 @@ const Test: NextPage = () => {
         }
     }, [clicked])
 
+    const handleClick = () => {
+        toast.custom((t) => <Toast toastInfo={t} message={"Toast"} loading />, {
+            id: "review-toast",
+        })
+        setTimeout(() => {
+            toast.custom((t) => <Toast toastInfo={t} message={"Toast"} error />, {
+                id: "review-toast",
+            })
+        }, 2000)
+    }
+
     return (
         <>
             <Head>
@@ -35,8 +48,10 @@ const Test: NextPage = () => {
                 <link rel="icon" href="/flask.png" />
             </Head>
             <main className="container mx-auto min-h-screen flex flex-col space-y-3 items-center justify-center p-4">
-                {/* <ExperimentCardSkeleton cards={4} /> */}
-                <VialCardSkeleton cards={4} />
+                <button className="p-2 bg-acid" onClick={() => handleClick()}>
+                    Toast
+                </button>
+
             </main>
         </>
     );

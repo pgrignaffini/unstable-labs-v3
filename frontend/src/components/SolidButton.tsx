@@ -24,7 +24,7 @@ function SolidButton({ className, onClick, text, rounded, label, type, loading, 
       <button type={type} disabled={loading} className={`relative outline-none ${className}`} onPointerOver={() => setClicked(false)} onClick={() => {
         setClicked(true)
         if (!isConnected) {
-          toast.custom((t) => <Toast toastInfo={t} message="You need to connect your wallet to perform this action" />)
+          toast.custom((t) => <Toast toastInfo={t} message="You need to connect your wallet to perform this action" error />)
           return
         }
         onClick?.()

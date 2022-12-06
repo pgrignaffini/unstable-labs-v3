@@ -4,6 +4,8 @@ import LikeButton from '@components/LikeButton'
 import { useState } from 'react'
 import Modal from '@components/Modal'
 import NewPaper from '@components/NewPaper'
+import NewFile from '@components/NewFile'
+import FileModal from './FileModal'
 
 type Props = {
     experiment: Experiment
@@ -18,6 +20,7 @@ function ExperimentCard({ experiment, owner }: Props) {
     const paperModal = (
         <Modal isVisible={showPaperModal} onClose={() => setShowPaperModal(false)}>
             <NewPaper tokenId={experiment.tokenId as number} />
+            {/* <NewFile tokenId={experiment.tokenId as number} /> */}
         </Modal>
     )
 

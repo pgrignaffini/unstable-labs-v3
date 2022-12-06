@@ -80,12 +80,14 @@ model Experiment {
 }
 
 model Like {
-  id         String     @id @default(uuid())
+  id         String      @id @default(uuid())
   userId     String
-  tokenId    Int
-  user       User       @relation(fields: [userId], references: [id])
-  experiment Experiment @relation(fields: [tokenId], references: [tokenId])
-  createdAt  DateTime   @default(now())
+  tokenId    Int?
+  paperId    Int?
+  user       User        @relation(fields: [userId], references: [id])
+  experiment Experiment? @relation(fields: [tokenId], references: [tokenId])
+  paper      Paper?      @relation(fields: [paperId], references: [id])
+  createdAt  DateTime    @default(now())
 }
 
 model Review {
@@ -110,4 +112,5 @@ model Paper {
   user       User       @relation(fields: [userId], references: [id])
   experiment Experiment @relation(fields: [tokenId], references: [tokenId])
   reviews    Review[]
+  likes      Like[]
 }

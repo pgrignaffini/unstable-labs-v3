@@ -36,7 +36,7 @@ function VialShop() {
                     <VialCard vial={StylizeVial} name={StylizeVial.name} /></>}
             {showConcepts &&
                 <>
-                    <div className='w-fit sticky z-10 top-20 md:top-5 bg-black text-acid border-acid border-2 cursor-pointer flex justify-center items-center p-1 h-14 lg:h-24'
+                    <div className='w-fit sticky z-10 top-20 md:top-5 bg-black text-acid border-acid border-2 cursor-pointer flex justify-center items-center py-8 lg:p-1 h-14 lg:h-24'
                         onClick={() => { setShowConcepts(false); backToTop() }}>
                         <img src="/arrow.png" className='w-12 h-8 md:w-20 md:h-14 -scale-x-95' />
                     </div>
@@ -51,7 +51,7 @@ function VialShop() {
                 </>}
             {showCollections &&
                 <>
-                    <div className='w-fit sticky z-10 top-20 md:top-5 bg-black text-acid border-acid border-2 cursor-pointer flex justify-center items-center p-1 h-14 lg:h-24'
+                    <div className='w-fit sticky z-10 top-20 md:top-5 bg-black text-acid border-acid border-2 cursor-pointer flex justify-center items-center py-8 lg:p-1 h-14 lg:h-24'
                         onClick={() => { setShowCollections(false); backToTop() }}>
                         <img src="/arrow.png" className='w-12 h-8 md:w-20 md:h-14 -scale-x-95' />
                     </div>

@@ -84,7 +84,7 @@ function MintVialButton({ index, numberOfVials, style }: Props) {
             <div className='flex flex-col space-y-4 items-center justify-evenly pt-3'>
                 <SolidButton type='submit' color="green" onClick={() => {
                     if (balance?.value && txValue && balance?.value.lt(txValue)) {
-                        toast.custom((t) => <Toast toastInfo={t} message={notEnoughBalanceMessage} />)
+                        toast.custom((t) => <Toast toastInfo={t} message={notEnoughBalanceMessage} error />)
                         return
                     }
                     setIsLoading(true)

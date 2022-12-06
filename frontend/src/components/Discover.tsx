@@ -1,6 +1,7 @@
 import type { Experiment } from "../types/types"
 import { useExperiments } from '@hooks/useExperiments'
-import ExperimentCard from './ExperimentCard'
+import ExperimentCard from '@components/ExperimentCard'
+import ExperimentCardSkeleton from "@components/skeletons/ExperimentCardSkeleton"
 
 function Experiments() {
 
@@ -9,9 +10,7 @@ function Experiments() {
     return (
         <>
             {isLoadingAll ?
-                <div className='flex justify-center items-center'>
-                    <img src='/blob-animated.gif' className='w-12 ' />
-                </div> :
+                <ExperimentCardSkeleton cards={10} /> :
                 allExperiments?.map((experiment: Experiment, index: number) => (
                     <ExperimentCard key={index} experiment={experiment} />
                 ))}
