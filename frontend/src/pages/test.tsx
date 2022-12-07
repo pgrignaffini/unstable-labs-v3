@@ -44,29 +44,26 @@ const Test: NextPage = () => {
                 <meta name="description" content="" />
                 <link rel="icon" href="/flask.png" />
             </Head>
-            <main className="container mx-auto min-h-screen flex flex-col space-y-3 items-center justify-center p-4">
-                <div className="h-screen w-full overflow-y-scroll scrollbar-hide p-1 bg-paper" onScroll={(e) => handleScroll(e)}>
-                    {
-                        paginatedPapers?.pages.map((page, index) => (
-                            <div key={index} className="flex flex-col space-y-3">
-                                {page.papers.map((paper, index) => (
-                                    <Paper key={index} paper={paper} />
-                                ))}
-                                {showLoading && hasNextPage && index === paginatedPapers.pages.length - 1 && (
-                                    <div className="flex justify-center items-center">
-                                        <img src="/flask.png" className="animate-tremble h-10 w-8" />
-                                    </div>)}
-                                {!hasNextPage && index === paginatedPapers.pages.length - 1 && (
-                                    <div className="flex justify-center items-center">
-                                        <p className="font-tinos text-center text-xl">No more papers to show</p>
-                                    </div>
-                                )
-                                }
-                            </div>
-                        ))
-                    }
-                </div>
-
+            <main className="container h-screen flex flex-col space-y-3 items-center justify-center p-4 overflow-y-scroll scrollbar-hide bg-paper " onScroll={(e) => handleScroll(e)}>
+                {
+                    paginatedPapers?.pages.map((page, index) => (
+                        <div key={index}>
+                            {page.papers.map((paper, index) => (
+                                <Paper key={index} paper={paper} />
+                            ))}
+                            {showLoading && hasNextPage && index === paginatedPapers.pages.length - 1 && (
+                                <div className="flex justify-center items-center">
+                                    <img src="/flask.png" className="animate-tremble h-10 w-8" />
+                                </div>)}
+                            {!hasNextPage && index === paginatedPapers.pages.length - 1 && (
+                                <div className="flex justify-center items-center">
+                                    <p className="font-tinos text-center text-xl">No more papers to show</p>
+                                </div>
+                            )
+                            }
+                        </div>
+                    ))
+                }
             </main>
         </>
     );
