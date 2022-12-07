@@ -36,6 +36,12 @@ export const paperRouter = router({
         }),
     getUserPapers: publicProcedure
         .query(({ ctx }) => {
+            if (!ctx.session?.user) {
+                new TRPCError({
+                    code: "FORBIDDEN",
+                    message: "You must be logged in to get your papers",
+                })
+            }
             return ctx.prisma.paper.findMany({
                 where: {
                     userId: ctx.session?.user?.id,

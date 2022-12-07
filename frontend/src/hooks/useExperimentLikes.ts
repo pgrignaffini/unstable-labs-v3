@@ -1,7 +1,6 @@
 import { trpc } from '@utils/trpc'
-import { useLoggedUser } from '@hooks/useLoggedUser'
 
-export const useLikes = (tokenId: number) => {
+export const useExperimentLikes = (tokenId: number) => {
 
     const ctx = trpc.useContext();
 
@@ -9,7 +8,7 @@ export const useLikes = (tokenId: number) => {
 
     const { data: hasLiked } = trpc.like.getUserExperimentLikes.useQuery({ tokenId })
 
-    const addLikeMutation = trpc.like.addLike.useMutation({
+    const addLikeMutation = trpc.like.addExperimentLike.useMutation({
         onMutate: () => {
             ctx.like.getExperimentLikesCount.invalidate({ tokenId })
             ctx.like.getUserExperimentLikes.invalidate({ tokenId })

@@ -6,7 +6,7 @@ type Props = {
     tokenId: number;
 }
 
-function LikeButton({ tokenId }: Props) {
+function ExperimentLikeButton({ tokenId }: Props) {
 
     const { user } = useLoggedUser()
     const [disabled, setDisabled] = useState(false)
@@ -30,7 +30,7 @@ function LikeButton({ tokenId }: Props) {
                 <button className="flex hover:border space-x-1 items-center p-3 cursor-pointer"
                     disabled={disabled} onClick={() => {
                         setDisabled(true)
-                        setDisplayLikes(displayLikes + 1)
+                        if (!hasLiked) setDisplayLikes(displayLikes + 1)
                         addLike()
                     }}>
                     {(hasLiked || disabled) ? <img src="heart-filled.png" className="h-4 lg:h-6" /> : <img src="heart.png" className="h-4 lg:h-6" />}
@@ -46,4 +46,4 @@ function LikeButton({ tokenId }: Props) {
     )
 }
 
-export default LikeButton
+export default ExperimentLikeButton

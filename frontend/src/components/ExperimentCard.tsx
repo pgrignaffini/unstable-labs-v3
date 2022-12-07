@@ -1,11 +1,9 @@
 import type { Experiment } from '../types/types'
 import Image from 'next/image'
-import LikeButton from '@components/LikeButton'
+import ExperimentLikeButton from '@components/buttons/ExperimentLikeButton'
 import { useState } from 'react'
 import Modal from '@components/Modal'
 import NewPaper from '@components/NewPaper'
-import NewFile from '@components/NewFile'
-import FileModal from './FileModal'
 
 type Props = {
     experiment: Experiment
@@ -54,7 +52,7 @@ function ExperimentCard({ experiment, owner }: Props) {
                 </div>
                 <div className='flex w-full items-center justify-center space-x-2 md:justify-between px-2'>
                     <div className="text-white text-sm 2xl:text-md font-bold">{experiment?.name}</div>
-                    {experiment?.tokenId && <LikeButton tokenId={experiment.tokenId} />}
+                    {experiment?.tokenId && <ExperimentLikeButton tokenId={experiment.tokenId} />}
                 </div>
             </div>
         </>
