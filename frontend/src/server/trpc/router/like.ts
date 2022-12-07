@@ -7,13 +7,12 @@ export const likeRouter = router({
     addLike: publicProcedure
         .input(z.object({
             tokenId: z.number().min(1),
-            userId: z.string().min(1),
         }))
         .mutation(({ ctx, input }) => {
             if (!ctx.session?.user) {
                 new TRPCError({
                     code: "FORBIDDEN",
-                    message: "You must be logged in to create a project",
+                    message: "You must be logged in to add a like",
                 })
             }
             return ctx.prisma.like.create({
@@ -31,4 +30,36 @@ export const likeRouter = router({
                 }
             })
         }),
+    getExperimentLikesCount: publicProcedure
+        .input(z.object({
+            tokenId: z.number().min(1),
+        }))
+        .query(({ ctx, input }) => {
+            return ctx.prisma.like.count({
+                where: {
+                    tokenId: input.tokenId,
+                }
+            })
+        }),
+    getUserExperimentLikes: publicProcedure
+        .input(z.object({
+            tokenId: z.number().min(1),
+        }))
+        .query(({ ctx, input }) => {
+            if (!ctx.session?.user) {
+                new TRPCError({
+                    code: "FORBIDDEN",
+                    message: "You must be logged in to get your likes",
+                })
+            }
+            return ctx.prisma.like.findFirst({
+                where: {
+                    userId: ctx.session?.user?.id,
+                    AND: {
+                        tokenId: input.tokenId,
+                    }
+                },
+            })
+        }),
+
 });

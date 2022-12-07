@@ -11,17 +11,17 @@ function LikeButton({ tokenId }: Props) {
     const { user } = useLoggedUser()
     const [disabled, setDisabled] = useState(false)
     const [displayLikes, setDisplayLikes] = useState(0)
-    const { like, likes, addLikeMutation } = useLikes(tokenId)
+    const { hasLiked, numOfLikes, addLikeMutation } = useLikes(tokenId)
 
     useEffect(() => {
-        if (likes) {
-            setDisplayLikes(likes)
+        if (numOfLikes) {
+            setDisplayLikes(numOfLikes)
         }
-    }, [likes])
+    }, [numOfLikes])
 
     const addLike = () => {
-        if (like) return
-        else { addLikeMutation.mutate({ tokenId, userId: user?.id as string }) }
+        if (hasLiked) return
+        else { addLikeMutation.mutate({ tokenId }) }
     }
 
     return (
@@ -33,7 +33,7 @@ function LikeButton({ tokenId }: Props) {
                         setDisplayLikes(displayLikes + 1)
                         addLike()
                     }}>
-                    {(like || disabled) ? <img src="heart-filled.png" className="h-4 lg:h-6" /> : <img src="heart.png" className="h-4 lg:h-6" />}
+                    {(hasLiked || disabled) ? <img src="heart-filled.png" className="h-4 lg:h-6" /> : <img src="heart.png" className="h-4 lg:h-6" />}
                     <p className='text-[0.5rem] lg:text-sm text-white'>{displayLikes ?? "0"}</p>
                 </button>
                 :

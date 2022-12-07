@@ -26,18 +26,4 @@ export const experimentRouter = router({
                 },
             })
         }),
-    getExperimentLikes: publicProcedure
-        .input(z.object({
-            tokenId: z.number().min(1),
-        }))
-        .query(({ ctx, input }) => {
-            return ctx.prisma.experiment.findUnique({
-                where: {
-                    tokenId: input.tokenId,
-                },
-                include: {
-                    likes: true,
-                },
-            })
-        }),
 });

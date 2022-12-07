@@ -3,25 +3,22 @@ import { useLoggedUser } from '@hooks/useLoggedUser'
 
 export const useLikes = (tokenId: number) => {
 
-    const { user } = useLoggedUser()
     const ctx = trpc.useContext();
 
-    const { data: like } = trpc.experiment.getExperimentLikes.useQuery({ tokenId }, {
-        select: (data) => !!data?.likes.find(like => like.userId === user?.id),
-    })
+    const { data: numOfLikes } = trpc.like.getExperimentLikesCount.useQuery({ tokenId })
 
-    const { data: likes } = trpc.experiment.getExperimentLikes.useQuery({ tokenId }, {
-        select: (data) => data?.likes.length
-    })
+    const { data: hasLiked } = trpc.like.getUserExperimentLikes.useQuery({ tokenId })
 
     const addLikeMutation = trpc.like.addLike.useMutation({
         onMutate: () => {
-            ctx.experiment.getExperimentLikes.invalidate({ tokenId })
+            ctx.like.getExperimentLikesCount.invalidate({ tokenId })
+            ctx.like.getUserExperimentLikes.invalidate({ tokenId })
         },
         onSettled: () => {
-            ctx.experiment.getExperimentLikes.refetch({ tokenId })
+            ctx.like.getExperimentLikesCount.refetch({ tokenId })
+            ctx.like.getUserExperimentLikes.refetch({ tokenId })
         }
     })
 
-    return { like, likes, addLikeMutation }
+    return { hasLiked, numOfLikes, addLikeMutation }
 }
