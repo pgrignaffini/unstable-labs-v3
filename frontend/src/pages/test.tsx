@@ -1,43 +1,40 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useLoadingImages } from "@hooks/useLoadingImages";
-import { useEffect, useState } from "react";
-import { usePapers } from "@hooks/usePapers";
-import { useSingleExperiment } from "@hooks/useSingleExperiment";
 import { trpc } from "@utils/trpc";
-import PaperSkeleton from "@components/skeletons/PaperSkeleton";
-import VialCardSkeleton from "@components/skeletons/VialCardSkeleton";
-import ExperimentCardSkeleton from "@components/skeletons/ExperimentCardSkeleton";
-import { toast } from 'react-hot-toast'
-import Toast from '@components/Toast'
+import { useState } from "react";
+import Paper from "@components/Paper";
+import type { UIEvent } from "react";
 
 const Test: NextPage = () => {
 
-    const { images } = useLoadingImages()
-    const { numberOfPapers } = usePapers()
-    const [clicked, setClicked] = useState(false)
-    const [showModal, setShowModal] = useState(false)
-
-    const { experiment } = useSingleExperiment(1)
-
-
-    useEffect(() => {
-        if (clicked) {
-            setTimeout(() => {
-                setClicked(false)
-            }, 500)
+    const [showLoading, setShowLoading] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [visitedPages, setVisitedPages] = useState<number[]>([1])
+    const limit = 10
+    const { data: paginatedPapers, fetchNextPage, hasNextPage } = trpc.paper.getPaginatedPapers.useInfiniteQuery({
+        limit,
+    }, {
+        getNextPageParam: (lastPage) => {
+            return lastPage.nextCursor
+        },
+        getPreviousPageParam: (firstPage) => {
+            return firstPage.prevCursor
+        },
+        onSuccess: () => {
+            setShowLoading(false)
         }
-    }, [clicked])
+    })
 
-    const handleClick = () => {
-        toast.custom((t) => <Toast toastInfo={t} message={"Toast"} loading />, {
-            id: "review-toast",
-        })
-        setTimeout(() => {
-            toast.custom((t) => <Toast toastInfo={t} message={"Toast"} error />, {
-                id: "review-toast",
-            })
-        }, 2000)
+    const handleScroll = (e: UIEvent) => {
+        const { offsetHeight, scrollTop, scrollHeight } = e.target as HTMLDivElement
+        if (offsetHeight + scrollTop >= scrollHeight) {
+            setShowLoading(true)
+            if (!visitedPages.includes(currentPage + 1)) {
+                setVisitedPages([...visitedPages, currentPage + 1])
+                fetchNextPage()
+            }
+            setCurrentPage(currentPage + 1)
+        }
     }
 
     return (
@@ -48,9 +45,27 @@ const Test: NextPage = () => {
                 <link rel="icon" href="/flask.png" />
             </Head>
             <main className="container mx-auto min-h-screen flex flex-col space-y-3 items-center justify-center p-4">
-                <button className="p-2 bg-acid" onClick={() => handleClick()}>
-                    Toast
-                </button>
+                <div className="h-screen w-full overflow-y-scroll scrollbar-hide p-1 bg-paper" onScroll={(e) => handleScroll(e)}>
+                    {
+                        paginatedPapers?.pages.map((page, index) => (
+                            <div key={index} className="flex flex-col space-y-3">
+                                {page.papers.map((paper, index) => (
+                                    <Paper key={index} paper={paper} />
+                                ))}
+                                {showLoading && hasNextPage && index === paginatedPapers.pages.length - 1 && (
+                                    <div className="flex justify-center items-center">
+                                        <img src="/flask.png" className="animate-tremble h-10 w-8" />
+                                    </div>)}
+                                {!hasNextPage && index === paginatedPapers.pages.length - 1 && (
+                                    <div className="flex justify-center items-center">
+                                        <p className="font-tinos text-center text-xl">No more papers to show</p>
+                                    </div>
+                                )
+                                }
+                            </div>
+                        ))
+                    }
+                </div>
 
             </main>
         </>

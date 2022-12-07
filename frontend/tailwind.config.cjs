@@ -6,6 +6,10 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     minWidth: { "1/5": "20%" },
+    screens: {
+      '3xl': '1600px',
+      ...defaultTheme.screens,
+    },
     extend: {
       animation: {
         'tremble': 'shake 0.5s infinite',
@@ -33,7 +37,8 @@ module.exports = {
       colors: {
         'acid': '#b4e61d',
         'dark-acid': '#354407',
-        'std': '#9ca3af'
+        'std': '#9ca3af',
+        'paper': '#F0E1B2'
       },
     }
   },

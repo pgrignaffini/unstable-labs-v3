@@ -7,7 +7,7 @@ import PaperSkeleton from '@components/skeletons/PaperSkeleton';
 
 function Library() {
 
-    const [playSound] = useSound('/sounds/book-flipping.wav', { sprite: { flip: [0, 1100] } });
+    // const [playSound] = useSound('/sounds/book-flipping.wav', { sprite: { flip: [0, 1100] } });
     const { numberOfPapers } = usePapers()
     const [scroll, setScroll] = useState(false)
     const [scrollBack, setScrollBack] = useState(false)
@@ -41,7 +41,7 @@ function Library() {
             <div className='flex items-center px-14'>
                 <button disabled={scrolling} className='bg-acid p-2 hover:bg-dark-acid' onClick={() => {
                     setScrollBack(true)
-                    playSound({ id: 'flip' })
+                    // playSound({ id: 'flip' })
                     if (currentPage > 1) {
                         if (!visitedPages.includes(currentPage - 1)) {
                             setVisitedPages([...visitedPages, currentPage - 1])
@@ -55,7 +55,7 @@ function Library() {
                 <div className='overflow-hidden w-2/3 h-auto mx-auto -mt-6'>
                     <div className={`w-full h-screen m-auto bg-contain bg-center bg-no-repeat flex flex-col items-center justify-center px-14
                 ${scroll ? "bg-[url('/book-animated.gif')]" : scrollBack ? "bg-[url('/book-animated-back.gif')]" : "bg-[url('/book.png')]"} `}>
-                        <div className='w-full px-2 h-3/4 mt-14 grid grid-cols-2 grid-rows-3 xl:grid-rows-4 2xl:grid-rows-5 gap-12 grid-flow-col'>
+                        <div className='w-full h-fit px-2 mt-14 grid grid-cols-2 grid-rows-5 gap-2 lg:gap-6 xl:gap-8 2xl:gap-10 3xl:gap-12 grid-flow-col '>
                             {scrolling ? null :
                                 isLoading || isFetchingNextPage ? (<PaperSkeleton cards={limit} />) :
                                     paginatedPapers?.pages[currentPage - 1]?.papers.map((paper, index) => (
@@ -66,7 +66,7 @@ function Library() {
                 </div>
                 <button disabled={scrolling} className='bg-acid p-2 hover:bg-dark-acid' onClick={() => {
                     setScroll(true)
-                    playSound({ id: 'flip' })
+                    // playSound({ id: 'flip' })
                     if (currentPage < Math.ceil(numberOfPapers as number / limit)) {
                         if (!visitedPages.includes(currentPage + 1)) {
                             setVisitedPages([...visitedPages, currentPage + 1])

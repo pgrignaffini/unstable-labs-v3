@@ -42,7 +42,7 @@ function NewPaper({ tokenId }: Props) {
     }
 
     return (
-        <div className='container flex flex-col space-y-5 bg-[#F0E1B2] p-6'>
+        <div className='container flex flex-col space-y-5 bg-paper p-6'>
             <div className='flex items-center space-x-10 '>
                 <img className="h-24 w-24 object-cover"
                     src={session?.user?.image ?? "https://links.papareact.com/gll"} />
