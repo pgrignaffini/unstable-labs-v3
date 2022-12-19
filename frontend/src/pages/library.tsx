@@ -4,6 +4,7 @@ import Paper from '@components/Paper';
 import { useSound } from 'use-sound';
 import { trpc } from "@utils/trpc";
 import PaperSkeleton from '@components/skeletons/PaperSkeleton';
+import SearchBook from '@components/SearchBook';
 
 function Library() {
 
@@ -11,6 +12,7 @@ function Library() {
     const { numberOfPapers } = usePapers()
     const [scroll, setScroll] = useState(false)
     const [scrollBack, setScrollBack] = useState(false)
+    const [user, setUser] = useState<string>()
     const scrolling = scroll || scrollBack
 
     useEffect(() => {
@@ -24,9 +26,10 @@ function Library() {
 
     const [currentPage, setCurrentPage] = useState(1)
     const [visitedPages, setVisitedPages] = useState<number[]>([1])
-    const limit = 10
-    const { data: paginatedPapers, fetchNextPage, fetchPreviousPage, isLoading, isFetchingNextPage } = trpc.paper.getPaginatedPapers.useInfiniteQuery({
+    const limit = 2
+    const { data: paginatedPapers, fetchNextPage, fetchPreviousPage, isLoading, isFetchingNextPage } = trpc.paper.getUserPaginatedPapers.useInfiniteQuery({
         limit,
+        user,
     }, {
         getNextPageParam: (lastPage) => {
             return lastPage.nextCursor
@@ -38,6 +41,9 @@ function Library() {
 
     return (
         <div className='flex flex-col'>
+            <div className='flex flex-1 justify-center mt-2'>
+                <SearchBook placeholder='Search for a user...' setUser={setUser} />
+            </div>
             <div className='flex items-center px-14'>
                 <button disabled={scrolling} className='bg-acid p-2 hover:bg-dark-acid' onClick={() => {
                     setScrollBack(true)
@@ -55,7 +61,7 @@ function Library() {
                 <div className='overflow-hidden w-2/3 h-auto mx-auto -mt-6'>
                     <div className={`w-full h-screen m-auto bg-contain bg-center bg-no-repeat flex flex-col items-center justify-center px-14
                 ${scroll ? "bg-[url('/book-animated.gif')]" : scrollBack ? "bg-[url('/book-animated-back.gif')]" : "bg-[url('/book.png')]"} `}>
-                        <div className='w-full h-fit px-2 mt-14 grid grid-cols-2 grid-rows-5 gap-2 lg:gap-6 xl:gap-8 2xl:gap-10 3xl:gap-12 grid-flow-col '>
+                        <div className='w-full h-fit px-2 mt-14 grid grid-cols-2 grid-rows-1 gap-2 lg:gap-6 xl:gap-8 2xl:gap-10 3xl:gap-12 grid-flow-col '>
                             {scrolling ? null :
                                 isLoading || isFetchingNextPage ? (<PaperSkeleton cards={limit} />) :
                                     paginatedPapers?.pages[currentPage - 1]?.papers.map((paper, index) => (

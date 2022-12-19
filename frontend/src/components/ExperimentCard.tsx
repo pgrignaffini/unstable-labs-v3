@@ -4,6 +4,7 @@ import ExperimentLikeButton from '@components/buttons/ExperimentLikeButton'
 import { useState } from 'react'
 import Modal from '@components/Modal'
 import NewPaper from '@components/NewPaper'
+import NewFile from '@components/NewFile'
 
 type Props = {
     experiment: Experiment

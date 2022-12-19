@@ -57,7 +57,7 @@ function NewPaper({ tokenId }: Props) {
                     onChange={(e) => setTitle(e.target.value)}
                     type="text" placeholder="Paper title..."
                     className="p-2 font-tinos italic bg-transparent text-4xl outline-none border-b-2 border-black text-center text-black" required />
-                <div className='flex iems-center space-x-6'>
+                <div className='flex items-center space-x-6'>
                     {isLoadingExperiment ?
                         <div className='w-96 h-96 flex justify-center items-center'>
                             <img src='/flask.png' className="animate-tremble h-14 w-10" />
@@ -67,7 +67,7 @@ function NewPaper({ tokenId }: Props) {
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         placeholder="Research description..."
-                        className="p-2 flex-1 font-tinos italic bg-slate-100 text-xl outline-none text-black" required />
+                        className="p-2 h-96 flex-1 font-tinos italic bg-slate-100 text-xl outline-none text-black" required />
                 </div>
                 <div className="place-self-end">
                     <SolidButton type="submit" color='green' text='Publish' className='text-white' />

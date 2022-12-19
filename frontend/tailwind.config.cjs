@@ -38,7 +38,8 @@ module.exports = {
         'acid': '#b4e61d',
         'dark-acid': '#354407',
         'std': '#9ca3af',
-        'paper': '#F0E1B2'
+        'paper': '#F0E1B2',
+        'dark-paper': '#BBA469',
       },
     }
   },

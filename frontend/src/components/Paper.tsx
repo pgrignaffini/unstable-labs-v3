@@ -54,7 +54,29 @@ function Paper({ paper }: Props) {
 
     return (
         <>
-            {paperModal}
+            <div className='bg-paper p-4'>
+                <div className='flex flex-col'>
+                    <div className='flex items-center space-x-10 pb-4 border-b-2 border-black'>
+                        <img className="h-16 w-16 object-cover"
+                            src={paper.user?.image ?? "https://links.papareact.com/gll"} />
+                        <div className='h-16 flex-1 flex justify-center items-center bg-[#665053] '>
+                            <p className='font-tinos text-black text-3xl text-center'>{experiment?.style ?? "Collection name"}</p>
+                        </div>
+                    </div>
+                    <div className="flex flex-1 flex-col space-y-4" >
+                        <div className='border-b-2 pb-2 border-black flex items-center justify-between'>
+                            <PaperLikeButton paperId={paper.id} />
+                            <p className="font-tinos italic text-4xl text-black">{paper.title}</p>
+                            <Reviews paperId={paper.id} />
+                        </div>
+                        <div className='flex justify-center'>
+                            <img src={image} alt="experiment" className='w-full object-contain' />
+                        </div>
+                    </div>
+                </div>
+                <p className="p-2 mt-6 flex-1 font-tinos italic text-center text-xl outline-none text-black">{paper.text}</p>
+            </div>
+            {/* {paperModal}
             <button className='bg-transparent hover:bg-[#e6d6ac] hover:shadow-xl w-full border-b -mb-1 border-[#592323]'
                 onClick={() => setShowModal(true)}>
                 <div className="flex flex-1 items-center justify-between font-semibold">
@@ -88,7 +110,7 @@ function Paper({ paper }: Props) {
                     </div>
                     {isLoadingExperiment ? <div className='animation-pulse w-20 h-20 2xl:w-28 2xl:h-28 bg-paper' /> : <img src={image} className='w-16 h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 2xl:w-28 2xl:h-28 object-contain border-[#EBCB00] border-4' />}
                 </div>
-            </button>
+            </button> */}
         </>
     )
 }

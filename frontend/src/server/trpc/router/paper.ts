@@ -71,8 +71,9 @@ export const paperRouter = router({
         .query(({ ctx }) => {
             return ctx.prisma.paper.count()
         }),
-    getPaginatedPapers: publicProcedure
+    getUserPaginatedPapers: publicProcedure
         .input(z.object({
+            user: z.string().optional(),
             limit: z.number().min(1).max(100).nullish(),
             cursor: z.number().nullish(), // <-- "cursor" needs to exist, but can be any type
         }))
@@ -80,6 +81,9 @@ export const paperRouter = router({
             const limit = input.limit ?? 8;
             const { cursor } = input;
             const papers = await ctx.prisma.paper.findMany({
+                where: {
+                    userId: input.user ?? ctx.session?.user?.id,
+                },
                 include: {
                     experiment: true,
                     user: true,
