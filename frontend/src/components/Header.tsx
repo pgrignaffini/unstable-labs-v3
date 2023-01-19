@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useAccount } from "wagmi";
@@ -18,7 +19,11 @@ function Header() {
   const logOutModal = (
     <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
       <div className="flex h-full w-full flex-col items-center justify-center space-y-4">
-        <img src={session?.user?.image as string} className="h-auto w-auto" />
+        <img
+          src={session?.user?.image as string}
+          alt="user"
+          className="h-auto w-auto"
+        />
         <p className="text-md text-center">
           Logged in as: {session?.user?.name}
         </p>
@@ -99,6 +104,7 @@ function Header() {
               onClick={() => setShowModal(true)}
               src={session?.user?.image as string}
               className="h-8 w-8 cursor-pointer"
+              alt="user"
             />
             {/* </NovuProvider> */}
           </div>

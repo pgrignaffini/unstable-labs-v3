@@ -10,7 +10,7 @@ export const useExperiments = () => {
 
   const {
     data: tokenIds,
-    refetch: refetchAllExperiments,
+    refetch: refetchAllIds,
     isLoading: isLoadingAllTokenIds,
   } = useContractRead({
     address: experimentContractInfo.address,
@@ -21,18 +21,20 @@ export const useExperiments = () => {
     },
   });
 
-  const { data: tokenURIs, isLoading: isLoadingAllTokenURIs } = useContractRead(
-    {
-      address: experimentContractInfo.address,
-      abi: experimentContractInfo.abi,
-      functionName: "getTokenURIs",
-      args: [tokenIds],
-      enabled: !!tokenIds,
-      onSuccess(data) {
-        console.log("Token uris: ", data);
-      },
-    }
-  );
+  const {
+    data: tokenURIs,
+    refetch: refetchAllTokenURIs,
+    isLoading: isLoadingAllTokenURIs,
+  } = useContractRead({
+    address: experimentContractInfo.address,
+    abi: experimentContractInfo.abi,
+    functionName: "getTokenURIs",
+    args: [tokenIds],
+    enabled: !!tokenIds,
+    onSuccess(data) {
+      console.log("Token uris: ", data);
+    },
+  });
 
   const getAllExperiments = async (): Promise<Experiment[]> => {
     const allExperiments = await Promise.all(
@@ -47,7 +49,7 @@ export const useExperiments = () => {
 
   const {
     data: ownedTokenIds,
-    refetch: refetchExperiments,
+    refetch: refetchIDs,
     isLoading: isLoadingTokenIds,
   } = useContractRead({
     address: experimentContractInfo.address,
@@ -59,17 +61,20 @@ export const useExperiments = () => {
     },
   });
 
-  const { data: ownedTokenURIs, isLoading: isLoadingTokenURIs } =
-    useContractRead({
-      address: experimentContractInfo.address,
-      abi: experimentContractInfo.abi,
-      functionName: "getTokenURIs",
-      args: [ownedTokenIds],
-      enabled: !!ownedTokenIds,
-      onSuccess(data) {
-        // console.log('Token uris: ', data)
-      },
-    });
+  const {
+    data: ownedTokenURIs,
+    refetch: refetchTokenURIs,
+    isLoading: isLoadingTokenURIs,
+  } = useContractRead({
+    address: experimentContractInfo.address,
+    abi: experimentContractInfo.abi,
+    functionName: "getTokenURIs",
+    args: [ownedTokenIds],
+    enabled: !!ownedTokenIds,
+    onSuccess(data) {
+      // console.log('Token uris: ', data)
+    },
+  });
 
   const getOwnedExperiments = async (): Promise<Experiment[]> => {
     const ownedExperiments = await Promise.all(
@@ -82,25 +87,37 @@ export const useExperiments = () => {
     return ownedExperiments;
   };
 
-  const { data: allExperiments, isLoading: isLoadingAllExperiments } = useQuery(
-    "all-experiments",
-    getAllExperiments,
-    {
-      enabled: !!tokenURIs,
-      refetchOnWindowFocus: true,
-      refetchInterval: 10000,
-    }
-  );
+  const {
+    data: allExperiments,
+    refetch: refetchAllExp,
+    isLoading: isLoadingAllExperiments,
+  } = useQuery("all-experiments", getAllExperiments, {
+    enabled: !!tokenURIs,
+    refetchOnWindowFocus: true,
+    refetchInterval: 10000,
+  });
 
-  const { data: experiments, isLoading: isLoadingExperiments } = useQuery(
-    ["your-experiments", address],
-    getOwnedExperiments,
-    {
-      enabled: !!ownedTokenURIs,
-      refetchOnWindowFocus: true,
-      refetchInterval: 10000,
-    }
-  );
+  const {
+    data: experiments,
+    refetch: refetchExp,
+    isLoading: isLoadingExperiments,
+  } = useQuery(["your-experiments", address], getOwnedExperiments, {
+    enabled: !!ownedTokenURIs,
+    refetchOnWindowFocus: true,
+    refetchInterval: 10000,
+  });
+
+  const refetchAllExperiments = async () => {
+    await refetchAllIds();
+    await refetchAllTokenURIs();
+    await refetchAllExp();
+  };
+
+  const refetchExperiments = async () => {
+    await refetchIDs();
+    await refetchTokenURIs();
+    await refetchExp();
+  };
 
   const isLoading =
     isLoadingTokenIds || isLoadingTokenURIs || isLoadingExperiments;

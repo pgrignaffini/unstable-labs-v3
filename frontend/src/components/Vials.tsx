@@ -5,10 +5,8 @@ import VialCard from "@components/VialCard";
 import VialCardSkeleton from "@components/skeletons/VialCardSkeleton";
 
 function Vials() {
-  const { vials, isLoading, refetchVials } = useVials();
-  refetchVials();
+  const { vials, isLoading } = useVials();
   const groupedVials = vials ? groupBy(vials, "style") : [];
-
   const hasFreestyle = groupedVials["freestyle"]?.length > 0;
 
   return (

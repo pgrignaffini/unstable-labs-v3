@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useAccount } from "wagmi";
 import Toast from "@components/Toast";
 
 interface Props {
@@ -79,7 +79,11 @@ function SolidButton({
           >
             <p>{text}</p>
             {loading ? (
-              <img src="/flask.png" className="h-7 w-5 animate-tremble" />
+              <img
+                src="/flask.png"
+                alt="flask"
+                className="h-7 w-5 animate-tremble"
+              />
             ) : (
               <></>
             )}

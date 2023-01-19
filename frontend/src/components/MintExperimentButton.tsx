@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
 import experimentContractInfo from "@abi/experiment.json";
 import {
@@ -7,7 +8,8 @@ import {
   useContractEvent,
   useAccount,
 } from "wagmi";
-import { Metadata, uploadMetadataToIPFS } from "@utils/pinata";
+import type { Metadata } from "@utils/pinata";
+import { uploadMetadataToIPFS } from "@utils/pinata";
 import TxHash from "@components/TxHash";
 import { trpc } from "@utils/trpc";
 import type { BigNumber } from "ethers";
@@ -32,11 +34,7 @@ const MintExperimentButton = ({ image, id, className }: Props) => {
   const createExperimentMutation =
     trpc.experiment.createExperiment.useMutation();
 
-  const {
-    write: createToken,
-    data: tokenData,
-    error: errorMintToken,
-  } = useContractWrite({
+  const { write: createToken, data: tokenData } = useContractWrite({
     mode: "recklesslyUnprepared",
     address: experimentContractInfo.address,
     abi: experimentContractInfo.abi,
