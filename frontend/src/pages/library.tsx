@@ -24,6 +24,11 @@ function Library() {
         }
     }, [scroll, scrollBack])
 
+    useEffect(() => {
+        setCurrentPage(1)
+        setVisitedPages([1])
+    }, [user])
+
     const [currentPage, setCurrentPage] = useState(1)
     const [visitedPages, setVisitedPages] = useState<number[]>([1])
     const limit = 2

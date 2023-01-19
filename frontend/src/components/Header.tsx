@@ -6,6 +6,8 @@ import { ConnectKitButton, } from 'connectkit';
 import { useState } from 'react'
 import Modal from '@components/Modal';
 import HamburgerButton from '@components/HamburgerButton';
+import { NovuProvider } from "@novu/notification-center";
+import Notifications from '@components/Notifications';
 
 function Header() {
 
@@ -65,14 +67,12 @@ function Header() {
                     </p>}
                 {session &&
                     (<div className="hidden md:inline-flex space-x-4 items-center lg:items-end">
-                        <button className="text-white cursor-pointer text-[0.5rem] sm:text-sm xl:text-md 2xl:text-lg border-acid hover:border-b-2" onClick={() => signOut()}>
-                            <p>Log out</p>
-                        </button>
-                        <img onClick={() => setShowModal(true)} src={session?.user?.image as string} className="w-8 h-8 cursor-pointer" />
+                        <NovuProvider subscriberId={session?.user?.id} applicationIdentifier={process.env.NEXT_PUBLIC_APP_ID}>
+                            <Notifications />
+                            <img onClick={() => setShowModal(true)} src={session?.user?.image as string} className="w-8 h-8 cursor-pointer" />
+                        </NovuProvider>
                     </div>)}
-                <div className='w-min bg-blue-500'>
-                    <ConnectKitButton showAvatar={false} />
-                </div>
+                <ConnectKitButton showAvatar={false} />
             </div>
         </>
     )

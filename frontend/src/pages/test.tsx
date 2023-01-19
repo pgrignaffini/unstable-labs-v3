@@ -10,7 +10,8 @@ function Test() {
 
 
     return (
-        <main className="container mx-auto flex min-h-screen items-center justify-evenly lg:justify-center p-4">
+        <main className="container mx-auto flex min-h-screen space-x-1 items-center justify-evenly lg:justify-center p-4">
+            <img src="/potion.svg" alt="Potion" className="w-24" />
         </main>
     )
 }
