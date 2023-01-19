@@ -17,18 +17,18 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    async signIn(user) {
-      const novu = new Novu(process.env.NOVU_API_KEY);
-      const { status } = await novu.subscribers.identify(user?.user?.id, {
-        email: user?.user?.email as string || undefined,
-        firstName: user?.user?.name as string || undefined,
-      })
-      if (status === 201) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+    // async signIn(user) {
+    //   const novu = new Novu(process.env.NOVU_API_KEY);
+    //   const { status } = await novu.subscribers.identify(user?.user?.id, {
+    //     email: user?.user?.email as string || undefined,
+    //     firstName: user?.user?.name as string || undefined,
+    //   })
+    //   if (status === 201) {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // }
   },
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
