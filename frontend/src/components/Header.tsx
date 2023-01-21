@@ -106,6 +106,7 @@ function Header() {
               className="h-8 w-8 cursor-pointer"
               alt="user"
             />
+            <p className="text-sm">{session.user?.name}</p>
             {/* </NovuProvider> */}
           </div>
         )}

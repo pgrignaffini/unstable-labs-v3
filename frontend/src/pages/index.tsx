@@ -9,8 +9,7 @@ import SelectedImages from "@components/SelectedImages";
 import SoundButton from "@components/SoundButton";
 
 const Home: NextPage = () => {
-
-  const { images } = useLoadingImages()
+  const { images } = useLoadingImages();
 
   return (
     <>
@@ -19,19 +18,43 @@ const Home: NextPage = () => {
         <meta name="description" content="" />
         <link rel="icon" href="/flask.png" />
       </Head>
-      <main className="container mx-auto flex min-h-screen flex-col items-center space-y-10 justify-evenly lg:justify-center p-4">
+      <main className="container mx-auto flex min-h-screen flex-col items-center justify-evenly space-y-10 p-4 lg:justify-center">
         <div className="relative w-full">
           <img src="/lab-top.png" alt="lab-top" className="w-full" />
-          <div className="w-full lg:absolute bg-black lg:bottom-1/2 ">
-            <p className="text-lg lg:text-3xl text-white text-center">Welcome to <span className="text-acid">Unstable</span>Labs!</p>
-            <p className="text-sm lg:text-lg text-std text-center">a lab to brew AI-generated NFTs</p>
+          <div className="w-full bg-black lg:absolute lg:bottom-1/2 ">
+            <p className="text-center text-lg text-white lg:text-3xl">
+              Welcome to <span className="text-acid">Unstable</span>Labs!
+            </p>
+            <p className="text-center text-sm text-std lg:text-lg">
+              a lab to brew AI-generated NFTs
+            </p>
           </div>
-          <p className="absolute top-0 lg:bottom-2 right-2 text-white text-[0.5rem]">artwork by <Link className="text-acid underline" href="https://www.pixilart.com/w0ah" target="_blank">w0ah</Link></p>
-          <SoundButton className="hidden md:inline absolute top-4 left-2" />
+          <p className="absolute top-0 right-2 text-[0.5rem] text-white lg:bottom-2">
+            artwork by{" "}
+            <Link
+              className="text-acid underline"
+              href="https://www.pixilart.com/w0ah"
+              target="_blank"
+            >
+              w0ah
+            </Link>
+          </p>
+          <SoundButton className="absolute top-4 left-2 hidden md:inline" />
         </div>
-        <div className="flex flex-col justify-center items-center ">
-          <p className="font-bold text-lg lg:text-3xl text-white">Step into the Lab!</p>
-          <p className="text-std text-[0.4rem] lg:text-[0.6rem] ">Don&apos;t know where to find some Aurora ETH? Check out <Link href="https://aurora.dev/faucet" target="_blank" className="underline text-acid">here</Link></p>
+        <div className="flex flex-col items-center justify-center ">
+          <p className="text-lg font-bold text-white lg:text-3xl">
+            Step into the Lab!
+          </p>
+          <p className="text-[0.4rem] text-std lg:text-[0.6rem] ">
+            Don&apos;t know where to find some Mumbai MATIC? Check out{" "}
+            <Link
+              href="https://mumbaifaucet.com/"
+              target="_blank"
+              className="text-acid underline"
+            >
+              here
+            </Link>
+          </p>
         </div>
         <div className="container mx-auto">
           <Prompt />
@@ -44,7 +67,7 @@ const Home: NextPage = () => {
         </div>
         <div className="relative w-full">
           <img src="/lab-bottom.png" className="w-full" />
-          <div className="w-full absolute p-4 bottom-1/3 ">
+          <div className="absolute bottom-1/3 w-full p-4 ">
             <Airdrop />
           </div>
         </div>
@@ -82,5 +105,3 @@ export default Home;
 //     </div>
 //   );
 // };
-
-
