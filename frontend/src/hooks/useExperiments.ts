@@ -44,7 +44,7 @@ export const useExperiments = () => {
         return { tokenId, ...nft } as Experiment;
       })
     );
-    return allExperiments;
+    return allExperiments.reverse();
   };
 
   const {
