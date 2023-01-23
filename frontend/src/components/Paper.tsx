@@ -1,82 +1,100 @@
-import { useState } from 'react'
-import { Prisma } from '@prisma/client'
-import TimeAgo from 'react-timeago'
-import { useSingleExperiment } from '@hooks/useSingleExperiment'
-import Modal from './Modal'
-import PaperModal from './PaperModal'
-import Reviews from './Reviews'
-import PaperLikeButton from './buttons/PaperLikeButton'
-import { usePaperLikes } from '@hooks/usePaperLikes'
-import { useReviews } from '@hooks/useReviews'
+import { useState } from "react";
+import { Prisma } from "@prisma/client";
+import TimeAgo from "react-timeago";
+import { useSingleExperiment } from "@hooks/useSingleExperiment";
+import Modal from "./Modal";
+import PaperModal from "./PaperModal";
+import Reviews from "./Reviews";
+import PaperLikeButton from "./buttons/PaperLikeButton";
+import { usePaperLikes } from "@hooks/usePaperLikes";
+import { useReviews } from "@hooks/useReviews";
 
 export type PaperWithInfo = Prisma.PaperGetPayload<{
-    include: { user: true, experiment: true }
-}>
+  include: { user: true; experiment: true };
+}>;
 
 type Props = {
-    paper: PaperWithInfo
-}
+  paper: PaperWithInfo;
+};
 
 function Paper({ paper }: Props) {
+  const [showModal, setShowModal] = useState(false);
+  const { experiment, isLoadingExperiment } = useSingleExperiment(
+    paper.experiment.tokenId
+  );
+  const image = "data:image/.webp;base64," + experiment?.image;
+  const { numOfLikes } = usePaperLikes(paper.id);
+  const { numberOfReviews } = useReviews(paper.id);
 
-    const [showModal, setShowModal] = useState(false)
-    const { experiment, isLoadingExperiment } = useSingleExperiment(paper.experiment.tokenId)
-    const image = "data:image/.webp;base64," + experiment?.image
-    const { numOfLikes } = usePaperLikes(paper.id)
-    const { numberOfReviews } = useReviews(paper.id)
-
-    const paperModal = (
-        <PaperModal isVisible={showModal} onClose={() => setShowModal(false)}>
-            <div className='bg-paper p-4'>
-                <div className='flex flex-col space-y-5'>
-                    <div className='flex items-center space-x-10 pb-4 border-b-2 border-black'>
-                        <img className="h-24 w-24 object-cover"
-                            src={paper.user?.image ?? "https://links.papareact.com/gll"} />
-                        <div className='h-24 flex-1 flex justify-center items-center bg-[#665053] '>
-                            <p className='font-tinos text-black text-5xl text-center'>{experiment?.style ?? "Collection name"}</p>
-                        </div>
-                    </div>
-                    <div className="flex flex-1 flex-col space-y-4" >
-                        <div className='border-b-2 pb-2 border-black'>
-                            <p className="p-2 font-tinos italic bg-transparent text-center text-4xl outline-none text-black">{paper.title}</p>
-                            <div className='flex justify-end mr-4'><PaperLikeButton paperId={paper.id} /></div>
-                        </div>
-                        <div className='flex space-x-6'>
-                            <img src={image} alt="experiment" className='w-96 h-96 object-contain' />
-                            <Reviews paperId={paper.id} />
-                        </div>
-                    </div>
-                </div>
-                <p className="p-2 mt-6 flex-1 font-tinos italic text-center text-xl outline-none text-black">{paper.text}</p>
+  const paperModal = (
+    <PaperModal isVisible={showModal} onClose={() => setShowModal(false)}>
+      <div className="bg-paper p-4">
+        <div className="flex flex-col space-y-5">
+          <div className="flex items-center space-x-10 border-b-2 border-black pb-4">
+            <img
+              className="h-24 w-24 object-cover"
+              src={paper.user?.image ?? "https://links.papareact.com/gll"}
+            />
+            <div className="flex h-24 flex-1 items-center justify-center bg-[#665053] ">
+              <p className="text-center font-tinos text-5xl text-black">
+                {experiment?.style ?? "Collection name"}
+              </p>
             </div>
-        </PaperModal>
-    )
-
-    return (
-        <>
-            <div className='bg-paper p-4'>
-                <div className='flex flex-col'>
-                    <div className='flex items-center space-x-10 pb-4 border-b-2 border-black'>
-                        <img className="h-16 w-16 object-cover"
-                            src={paper.user?.image ?? "https://links.papareact.com/gll"} />
-                        <div className='h-16 flex-1 flex justify-center items-center bg-[#665053] '>
-                            <p className='font-tinos text-black text-3xl text-center'>{experiment?.style ?? "Collection name"}</p>
-                        </div>
-                    </div>
-                    <div className="flex flex-1 flex-col space-y-4" >
-                        <div className='border-b-2 pb-2 border-black flex items-center justify-between'>
-                            <PaperLikeButton paperId={paper.id} />
-                            <p className="font-tinos italic text-4xl text-black">{paper.title}</p>
-                            <Reviews paperId={paper.id} />
-                        </div>
-                        <div className='flex justify-center'>
-                            <img src={image} alt="experiment" className='w-full object-contain' />
-                        </div>
-                    </div>
-                </div>
-                <p className="p-2 mt-6 flex-1 font-tinos italic text-center text-xl outline-none text-black">{paper.text}</p>
+          </div>
+          <div className="flex flex-1 flex-col space-y-4">
+            <div className="border-b-2 border-black pb-2">
+              <p className="bg-transparent p-2 text-center font-tinos text-4xl italic text-black outline-none">
+                {paper.title}
+              </p>
+              <div className="mr-4 flex justify-end">
+                <PaperLikeButton paperId={paper.id} />
+              </div>
             </div>
-            {/* {paperModal}
+            <div className="flex space-x-6">
+              <img
+                src={image}
+                alt="experiment"
+                className="h-96 w-96 object-contain"
+              />
+              <Reviews paperId={paper.id} />
+            </div>
+          </div>
+        </div>
+        <p className="mt-6 flex-1 p-2 text-center font-tinos text-xl italic text-black outline-none">
+          {paper.text}
+        </p>
+      </div>
+    </PaperModal>
+  );
+
+  return (
+    <>
+      <div className="bg-paper p-4">
+        <div className="flex flex-1 flex-col space-y-4">
+          <div className="flex items-center justify-between border-b-2 border-black pb-2">
+            <img
+              className="h-12 w-12 object-cover"
+              src={paper.user?.image ?? "https://links.papareact.com/gll"}
+            />
+            <PaperLikeButton paperId={paper.id} />
+            <p className="font-tinos text-3xl italic text-black">
+              {paper.title}
+            </p>
+            <Reviews paperId={paper.id} />
+          </div>
+          <div className="flex justify-center">
+            <img
+              src={image}
+              alt="experiment"
+              className="w-full object-contain"
+            />
+          </div>
+        </div>
+        <p className="mt-6 max-h-32 flex-1 overflow-y-scroll p-2 text-center font-tinos text-xl italic text-black outline-none">
+          {paper.text}
+        </p>
+      </div>
+      {/* {paperModal}
             <button className='bg-transparent hover:bg-[#e6d6ac] hover:shadow-xl w-full border-b -mb-1 border-[#592323]'
                 onClick={() => setShowModal(true)}>
                 <div className="flex flex-1 items-center justify-between font-semibold">
@@ -111,8 +129,8 @@ function Paper({ paper }: Props) {
                     {isLoadingExperiment ? <div className='animation-pulse w-20 h-20 2xl:w-28 2xl:h-28 bg-paper' /> : <img src={image} className='w-16 h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 2xl:w-28 2xl:h-28 object-contain border-[#EBCB00] border-4' />}
                 </div>
             </button> */}
-        </>
-    )
+    </>
+  );
 }
 
-export default Paper
+export default Paper;
